@@ -206,6 +206,22 @@ h2 {
     top: -10%;
     right: -8%;
     border-radius: 10px;
-    /* border: 1px solid lightgrey; */
 }
+
+#home .subcontent {
+    width: 100%;  
+}
+
+#home .subcontent img {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+#home .subcontent p {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 
