@@ -2,7 +2,7 @@
     --background-main: rgb(74, 136, 60);
     --dark: rgba(41, 66, 36, 1);
     --dark-light: rgb(78, 121, 71);
-    --text-main: rgb(185, 185, 185);
+    --text-main: rgb(204, 204, 204);
     --text-selected: #303030;
     --padding-top: 20px;
 
@@ -85,7 +85,6 @@ body {
 #home .content {
     width: 70vw;
     margin: auto;
-    /* overflow: hidden; */
     background: var(--background-main);
     color: var(--text-main);
     padding: 1%;
@@ -121,8 +120,6 @@ h2 {
     width: 45vw;
     background: var(--background-main);
     color: var(--text-main);
-    /* background-color: rgba(255, 255, 255, 0.3);
-    backdrop-filter: blur(var(--blur-size)); */
     border-left: 4px solid lightgray;
     border-right: 4px solid lightgray;
 }
@@ -166,31 +163,6 @@ h2 {
     height: 100%;
 }
 
-.contact-container {
-    width: 100%;
-    padding: 0 5% 5% 5%;
-    /* text-align: center; */
-    display: flex;
-    justify-content: center;
-}
-
-.contact-container div {
-   margin: auto;
-}
-
-.contacts {
-    width: 40%;
-}
-
-#map {
-    width: 60%;
-    height: auto;
-}
-
-#map img {
-    width: 100%;
-}
-
 #home .content::after {
     content: "Local";
     text-align: center;
@@ -212,7 +184,7 @@ h2 {
     width: 100%;  
 }
 
-#home .subcontent img {
+img {
     max-width: 100%;
     max-height: 100%;
 }
@@ -224,4 +196,7 @@ h2 {
     align-items: center;
 }
 
+.greater-height {
+    padding-bottom: 10%;
+}
 
