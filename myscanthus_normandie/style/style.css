@@ -88,12 +88,9 @@ body {
 }
 
 #home .content {
-    width: 70vw;
-    margin: auto;
     background: var(--background-main);
     color: var(--text-main);
     padding: 1%;
-    border: 2px solid lightgrey;
     transform: translateY(-50%);
 }
 
@@ -122,25 +119,12 @@ h2 {
 }
 
 .subpage .content {
-    width: 45vw;
     background: var(--background-main);
     color: var(--text-main);
-    border-left: 4px solid lightgray;
-    border-right: 4px solid lightgray;
 }
 
 .subpage .content div {
     padding: 2%;
-}
-
-.right {
-    margin-left: 45vw;
-    padding-top: 3vh;
-}
-
-.left {
-    margin-left: 10vw;
-    padding-bottom: 3vh;
 }
 
 .background {
@@ -222,10 +206,6 @@ h2 {
     color: var(--dark);
 }
 
-.menu-icon {
-    visibility: hidden;
-}
-
 .small-screen {
     visibility: hidden;
 }
@@ -238,10 +218,32 @@ h2 {
     visibility: hidden;
 }
 
+
+.vignette {
+    right: 3%;
+    transform: translate(0, -50%);
+}
+
+.content {
+    width: 100% !important;
+    margin-left: 0;
+    border: 2px solid lightgrey;
+    border-left: none;
+    border-right: none;
+}
+
+.content:not(:first-child) {
+    margin-top: 20%;
+}
+
+.background {
+    padding-top: 20%;
+    padding-bottom: 20%;
+}
+
 @media only screen and (max-width: 1220px) {
     .menu-icon {
         visibility: visible;
-        /* width: 100%; */
         text-align: center;
         transform: translate(50%);
         position: absolute;
@@ -279,64 +281,6 @@ h2 {
 
     .small-screen-visible {
         visibility: visible !important;
-    }
-    
-    .subpage .content {
-        width: 45vw;
-        background: var(--background-main);
-        color: var(--text-main);
-        border-left: 4px solid lightgray;
-        border-right: 4px solid lightgray;
-    }
-    
-    .subpage .content div {
-        padding: 2%;
-    }
-    
-    .right {
-        margin-left: 45vw;
-        padding-top: 3vh;
-    }
-    
-    .left {
-        margin-left: 10vw;
-        padding-bottom: 3vh;
-    }
-
-    .vignette {
-        right: 3%;
-        transform: translate(0, -50%);
-    }
-
-
-    #home .content {
-        width: 100% !important;
-        margin-left: 0;
-        border: 2px solid lightgrey;
-        border-left: none;
-        border-right: none;
-    }
-
-    .subpage .content {
-        width: 100% !important;
-        margin-left: 0;
-        border: 2px solid lightgrey;
-        border-left: none;
-        border-right: none;
-    }
-
-    .right, .left {
-        /* background-color: red !important; */
-        /* margin-top: 20%; */
-    }
-
-    .left {
-        margin-top: 20%;
-    }
-
-    .background {
-        padding-top: 20%;
-        padding-bottom: 20%;
     }
 }
 
