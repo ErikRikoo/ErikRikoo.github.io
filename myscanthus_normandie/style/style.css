@@ -20,14 +20,12 @@
 }
 
 body {
-    /* width: 100%; */
+    min-width: 100%;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
-    /* position: fixed; */
 }
 
 .navbar {
     background-color: var(--background-main);
-    /* height: calc(2 * var(--padding-top) + 2em); */
     height: var(--navbar-height);
     border-bottom: 4px solid var(--dark-light);
 }
@@ -109,7 +107,7 @@ h2 {
 
 #home p {
     text-align: center;
-    font-size: largerr;
+    font-size: larger;
 }
 
 .subpage {
@@ -153,6 +151,7 @@ h2 {
     height: 100%;
 }
 
+
 .vignette {
     background-color: var(--dark);
     color: var(--text-main);
@@ -174,6 +173,11 @@ h2 {
 
     margin-left:8px;
     margin-right:8px;
+}
+
+.vignette {
+    right: 3%;
+    transform: translate(0, -50%);
 }
 
 #home .subcontent {
@@ -221,12 +225,6 @@ h2 {
 
 .menu-icon {
     visibility: hidden;
-}
-
-
-.vignette {
-    right: 3%;
-    transform: translate(0, -50%);
 }
 
 .content {
