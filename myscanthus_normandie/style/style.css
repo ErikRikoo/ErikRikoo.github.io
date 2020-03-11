@@ -280,9 +280,7 @@ h2 {
     .small-screen-visible {
         visibility: visible !important;
     }
-}
-
-@media only screen and (max-width: 790px) {
+    
     .subpage .content {
         width: 45vw;
         background: var(--background-main);
@@ -351,3 +349,5 @@ h2 {
         transform: translate(-50%, 50%);
     }
 }
+
+
