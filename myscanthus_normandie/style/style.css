@@ -13,6 +13,9 @@
     --width: calc(var(--logo-width) / var(--logo-resize-ratio));
     --height: calc(var(--logo-height) / var(--logo-resize-ratio));
 
+    --navbar-height: 7vh;
+    --navbar-height-extended: 50vh;
+
     --blur-size: 7px;
 }
 
@@ -23,13 +26,14 @@ body {
 
 .navbar {
     background-color: var(--background-main);
-    height: calc(2 * var(--padding-top) + 2em);
+    /* height: calc(2 * var(--padding-top) + 2em); */
+    height: var(--navbar-height);
     border-bottom: 4px solid var(--dark-light);
 }
 
 .nav-link {
     color: var(--text-main);
-    font-size: large;
+    font-size: larger;
 }
 
 .nav-link.active {
@@ -48,10 +52,11 @@ body {
     background-repeat: no-repeat;
     background-position: top center;
     position: absolute;
-    top: 15%;
+    bottom: 0%;
     left: 50%;
     margin-left: calc(var(--width) / -2);
     background-color: var(--background-main);
+    transform: translateY(50%);
 
     --border-radius: calc(var(--width) * 0.3 );
     border-radius: var(--border-radius);
@@ -73,7 +78,7 @@ body {
 
 
 #home {
-    background: url(../images/miscanthus-background.jpg);
+    background: center url(../images/miscanthus-background.jpg);
     background-size: 100vw 100vh;
     background-repeat: no-repeat;
     height: 100vh;
@@ -106,7 +111,7 @@ h2 {
 
 #home p {
     text-align: center;
-    font-size: larger;
+    font-size: largerr;
 }
 
 .subpage {
@@ -139,7 +144,7 @@ h2 {
 }
 
 .background {
-    background: url(../images/miscanthus-background.jpg);
+    background: center url(../images/miscanthus-background.jpg);
     background-size: 100% 100%;
     background-repeat: no-repeat;
 }
@@ -215,4 +220,134 @@ h2 {
 
 .subpage h1 {
     color: var(--dark);
+}
+
+.menu-icon {
+    visibility: hidden;
+}
+
+.small-screen {
+    visibility: hidden;
+}
+
+.big-screen {
+    visibility: visible;
+}
+
+.small-screen-visible {
+    visibility: hidden;
+}
+
+@media only screen and (max-width: 1220px) {
+    .menu-icon {
+        visibility: visible;
+        /* width: 100%; */
+        text-align: center;
+        transform: translate(50%);
+        position: absolute;
+        bottom: 0%;
+        right: 25%;
+
+        font-size: 300%;
+    }
+
+    .small-screen {
+        visibility: visible;
+    }
+
+    .big-screen {
+        visibility: hidden;
+    }
+
+    .nav-items.small-screen {
+        visibility: hidden;
+        margin: auto;
+        text-align: center;
+    }
+
+    .nav-items.small-screen ul {
+        padding: 10%;
+    }
+
+    .nav-item {
+        font-size: larger;
+    }
+
+    .navbar-extended {
+        height: auto;
+    }
+
+    .small-screen-visible {
+        visibility: visible !important;
+    }
+}
+
+@media only screen and (max-width: 790px) {
+    .subpage .content {
+        width: 45vw;
+        background: var(--background-main);
+        color: var(--text-main);
+        border-left: 4px solid lightgray;
+        border-right: 4px solid lightgray;
+    }
+    
+    .subpage .content div {
+        padding: 2%;
+    }
+    
+    .right {
+        margin-left: 45vw;
+        padding-top: 3vh;
+    }
+    
+    .left {
+        margin-left: 10vw;
+        padding-bottom: 3vh;
+    }
+
+    .vignette {
+        right: 3%;
+        transform: translate(0, -50%);
+    }
+
+
+    #home .content {
+        width: 100% !important;
+        margin-left: 0;
+        border: 2px solid lightgrey;
+        border-left: none;
+        border-right: none;
+    }
+
+    .subpage .content {
+        width: 100% !important;
+        margin-left: 0;
+        border: 2px solid lightgrey;
+        border-left: none;
+        border-right: none;
+    }
+
+    .right, .left {
+        /* background-color: red !important; */
+        /* margin-top: 20%; */
+    }
+
+    .left {
+        margin-top: 20%;
+    }
+
+    .background {
+        padding-top: 20%;
+        padding-bottom: 20%;
+    }
+}
+
+@media only screen and (max-width: 700px) {
+    .vignette {
+        top: unset;
+        right: unset;
+        bottom: 0;
+        left: 50%;
+        transform: translate(-50%, 50%);
+    }
 }
