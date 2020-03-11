@@ -20,8 +20,9 @@
 }
 
 body {
-    width: 100%;
+    /* width: 100%; */
     font-family: Verdana, Geneva, Tahoma, sans-serif;
+    /* position: fixed; */
 }
 
 .navbar {
@@ -79,9 +80,9 @@ body {
 
 #home {
     background: center url(../images/miscanthus-background.jpg);
-    background-size: 100vw 100vh;
+    background-size: 100% 100%;
     background-repeat: no-repeat;
-    height: 100vh;
+    height: 100%;
     width: 100%;
 
     padding-top: 50vh;
@@ -97,13 +98,13 @@ body {
 h1 {
     color: var(--text-main);
     text-align: center;
-    margin-bottom: 5vh;
+    margin-bottom: 5%;
 }
 
 h2 {
     color: var(--text-main);
     text-align: center;
-    margin-bottom: 2vh;
+    margin-bottom: 2%;
 }
 
 #home p {
@@ -115,7 +116,7 @@ h2 {
     width: 100%;
     border-top: 4px solid var(--dark);
     background-color: white;
-    padding-top: 5vh;
+    padding-top: 5%;
 }
 
 .subpage .content {
@@ -215,6 +216,10 @@ h2 {
 }
 
 .small-screen-visible {
+    visibility: hidden;
+}
+
+.menu-icon {
     visibility: hidden;
 }
 
