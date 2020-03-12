@@ -244,14 +244,19 @@ h2 {
     padding-bottom: 20%;
 }
 
+/* #map {
+    max-width: 100%;
+    height: auto;
+} */
+
 @media only screen and (max-width: 1220px) {
     .menu-icon {
         visibility: visible;
         text-align: center;
-        transform: translate(50%);
+        /* transform: translate(50%); */
         position: absolute;
         bottom: 0%;
-        right: 25%;
+        right: 5%;
 
         font-size: 300%;
     }
