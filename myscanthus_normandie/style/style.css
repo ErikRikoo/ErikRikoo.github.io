@@ -13,23 +13,26 @@
     --width: calc(var(--logo-width) / var(--logo-resize-ratio));
     --height: calc(var(--logo-height) / var(--logo-resize-ratio));
 
+    --navbar-height: 7vh;
+    --navbar-height-extended: 50vh;
+
     --blur-size: 7px;
 }
 
 body {
-    width: 100%;
+    min-width: 100%;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
 .navbar {
     background-color: var(--background-main);
-    height: calc(2 * var(--padding-top) + 2em);
+    height: var(--navbar-height);
     border-bottom: 4px solid var(--dark-light);
 }
 
 .nav-link {
     color: var(--text-main);
-    font-size: large;
+    font-size: larger;
 }
 
 .nav-link.active {
@@ -48,10 +51,11 @@ body {
     background-repeat: no-repeat;
     background-position: top center;
     position: absolute;
-    top: 15%;
+    bottom: 0%;
     left: 50%;
     margin-left: calc(var(--width) / -2);
     background-color: var(--background-main);
+    transform: translateY(50%);
 
     --border-radius: calc(var(--width) * 0.3 );
     border-radius: var(--border-radius);
@@ -73,35 +77,32 @@ body {
 
 
 #home {
-    background: url(../images/miscanthus-background.jpg);
-    background-size: 100vw 100vh;
+    background: center url(../images/miscanthus-background.jpg);
+    background-size: 100% 100%;
     background-repeat: no-repeat;
-    height: 100vh;
+    height: 100%;
     width: 100%;
 
     padding-top: 50vh;
 }
 
 #home .content {
-    width: 70vw;
-    margin: auto;
     background: var(--background-main);
     color: var(--text-main);
     padding: 1%;
-    border: 2px solid lightgrey;
     transform: translateY(-50%);
 }
 
 h1 {
     color: var(--text-main);
     text-align: center;
-    margin-bottom: 5vh;
+    margin-bottom: 5%;
 }
 
 h2 {
     color: var(--text-main);
     text-align: center;
-    margin-bottom: 2vh;
+    margin-bottom: 2%;
 }
 
 #home p {
@@ -113,33 +114,20 @@ h2 {
     width: 100%;
     border-top: 4px solid var(--dark);
     background-color: white;
-    padding-top: 5vh;
+    padding-top: 5%;
 }
 
 .subpage .content {
-    width: 45vw;
     background: var(--background-main);
     color: var(--text-main);
-    border-left: 4px solid lightgray;
-    border-right: 4px solid lightgray;
 }
 
 .subpage .content div {
     padding: 2%;
 }
 
-.right {
-    margin-left: 45vw;
-    padding-top: 3vh;
-}
-
-.left {
-    margin-left: 10vw;
-    padding-bottom: 3vh;
-}
-
 .background {
-    background: url(../images/miscanthus-background.jpg);
+    background: center url(../images/miscanthus-background.jpg);
     background-size: 100% 100%;
     background-repeat: no-repeat;
 }
@@ -163,6 +151,7 @@ h2 {
     height: 100%;
 }
 
+
 .vignette {
     background-color: var(--dark);
     color: var(--text-main);
@@ -184,6 +173,11 @@ h2 {
 
     margin-left:8px;
     margin-right:8px;
+}
+
+.vignette {
+    right: 3%;
+    transform: translate(0, -50%);
 }
 
 #home .subcontent {
@@ -216,3 +210,102 @@ h2 {
 .subpage h1 {
     color: var(--dark);
 }
+
+.small-screen {
+    visibility: hidden;
+}
+
+.big-screen {
+    visibility: visible;
+}
+
+.small-screen-visible {
+    visibility: hidden;
+}
+
+.menu-icon {
+    visibility: hidden;
+}
+
+.content {
+    width: 100% !important;
+    margin-left: 0;
+    border: 2px solid lightgrey;
+    border-left: none;
+    border-right: none;
+}
+
+.content:not(:first-child) {
+    margin-top: 20%;
+}
+
+.background {
+    padding-top: 20%;
+    padding-bottom: 20%;
+}
+
+.div-centered {
+    width: auto;
+    margin-left: 50%;
+    transform: translateX(-50%);
+}
+
+/* #map {
+    max-width: 100%;
+    height: auto;
+} */
+
+@media only screen and (max-width: 1550px) {
+    .menu-icon {
+        visibility: visible;
+        text-align: center;
+        /* transform: translate(50%); */
+        position: absolute;
+        bottom: 0%;
+        right: 5%;
+
+        font-size: 300%;
+    }
+
+    .small-screen {
+        visibility: visible;
+    }
+
+    .big-screen {
+        visibility: hidden;
+    }
+
+    .nav-items.small-screen {
+        visibility: hidden;
+        margin: auto;
+        text-align: center;
+    }
+
+    .nav-items.small-screen ul {
+        padding: 10%;
+    }
+
+    .nav-item {
+        font-size: larger;
+    }
+
+    .navbar-extended {
+        height: auto;
+    }
+
+    .small-screen-visible {
+        visibility: visible !important;
+    }
+}
+
+@media only screen and (max-width: 700px) {
+    .vignette {
+        top: unset;
+        right: unset;
+        bottom: 0;
+        left: 50%;
+        transform: translate(-50%, 50%);
+    }
+}
+
+
