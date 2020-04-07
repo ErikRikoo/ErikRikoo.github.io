@@ -138,6 +138,7 @@ h2 {
 
 #mulch-background {
     background: center url(../images/mulch.jpg);
+    background-size: contain;
 }
 
 #litter-background {
@@ -147,6 +148,7 @@ h2 {
 
 #food-background {
     background: center url(../images/food.jpeg);
+    background-size: cover;
 }
 
 .centered {
@@ -288,6 +290,9 @@ h2 {
 }
 
 #carousel img {
+    /* width:100px; */
+    /* height: 100px; */
+    image-orientation: from-image;
     max-height: 100%;
     max-width: auto;
 } 
