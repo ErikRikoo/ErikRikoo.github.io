@@ -1,5 +1,7 @@
 :root {
     --background-main: rgb(74, 136, 60);
+    --form-background: rgb(150, 196, 140);
+    --form-text: rgb(226, 222, 222);
     --dark: rgba(41, 66, 36, 1);
     --dark-light: rgb(78, 121, 71);
     --text-main: rgb(204, 204, 204);
@@ -296,6 +298,42 @@ h2 {
     max-height: 100%;
     max-width: auto;
 } 
+
+.mail-form {
+    margin-top: 2%;
+}
+
+.mail-form input {
+    border: none;
+    border-radius: 0px;
+    border-bottom: 2px solid var(--dark-light);
+    transition: ease-in 0.3s;
+}
+
+.mail-form input:focus {
+    border: none;
+    border-radius: 0px;
+    border-bottom: 2px solid var(--dark-light);
+    background-color: var(--form-background);
+    color: var(--form-text);
+}
+
+.mail-form textarea {
+    border: none;
+    border-radius: 0px;
+    border-bottom: 2px solid var(--dark-light);
+    transition: ease-in 0.3s;
+}
+
+.mail-form input:invalid {
+    border-bottom: 2px solid rgb(238, 126, 113);
+}
+
+.mail-form .submit-button {
+    background-color: var(--form-background);
+    border-radius: 0px;
+    border: none;
+}
 
 @media only screen and (max-width: 1550px) {
     .menu-icon {
