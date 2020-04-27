@@ -241,7 +241,7 @@ h2 {
 }
 
 .small-screen-visible {
-    visibility: hidden;
+    display: none;
 }
 
 .menu-icon {
@@ -336,6 +336,46 @@ h2 {
 }
 
 @media only screen and (max-width: 1550px) {
+    .nav-item {
+        font-size: 14px;
+    }
+}
+
+@media only screen and (max-width: 1390px) {
+    .nav-item {
+        font-size: 12px;
+    }
+}
+
+@media only screen and (max-width: 1390px) {
+    .nav-item {
+        font-size: 10px;
+    }
+}
+
+@media only screen and (max-width: 1135px) {
+    .nav-items.small-screen {
+        visibility: hidden;
+        margin: auto;
+        text-align: center;
+    }
+
+    .nav-items.small-screen ul {
+        padding: 10%;
+    }
+
+    .small-screen {
+        visibility: visible;
+    }
+
+    .big-screen {
+        visibility: hidden;
+    }
+
+    .navbar-extended {
+        height: auto;
+    }
+
     .menu-icon {
         visibility: visible;
         text-align: center;
@@ -347,38 +387,18 @@ h2 {
         font-size: 300%;
     }
 
-    .small-screen {
-        visibility: visible;
-    }
-
-    .big-screen {
-        visibility: hidden;
-    }
-
-    .nav-items.small-screen {
-        visibility: hidden;
-        margin: auto;
-        text-align: center;
-    }
-
-    .nav-items.small-screen ul {
-        padding: 10%;
-    }
-
     .nav-item {
-        font-size: larger;
+        font-size: 16px;
     }
 
-    .navbar-extended {
-        height: auto;
-    }
 
-    .small-screen-visible {
-        visibility: visible !important;
-    }
 }
 
-@media only screen and (max-width: 700px) {
+@media only screen and (max-width: 750px) {
+    .small-screen-visible {
+        display: block !important;
+    }
+
     .vignette {
         top: unset;
         right: unset;
