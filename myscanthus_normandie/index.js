@@ -9,12 +9,504 @@ function $extend(from, fields) {
 	if( fields.toString !== Object.prototype.toString ) proto.toString = fields.toString;
 	return proto;
 }
-var Main = function() { };
-Main.__name__ = true;
-Main.main = function() {
-	ReactDOM.render({ $$typeof : $$tre, type : view_App, props : { }, key : null, ref : null},window.document.getElementById("app"));
+var EReg = function(r,opt) {
+	this.r = new RegExp(r,opt.split("u").join(""));
+};
+EReg.__name__ = true;
+EReg.prototype = {
+	match: function(s) {
+		if(this.r.global) {
+			this.r.lastIndex = 0;
+		}
+		this.r.m = this.r.exec(s);
+		this.r.s = s;
+		return this.r.m != null;
+	}
+	,matched: function(n) {
+		if(this.r.m != null && n >= 0 && n < this.r.m.length) {
+			return this.r.m[n];
+		} else {
+			throw new js__$Boot_HaxeError("EReg::matched");
+		}
+	}
+	,__class__: EReg
+};
+var HxOverrides = function() { };
+HxOverrides.__name__ = true;
+HxOverrides.cca = function(s,index) {
+	var x = s.charCodeAt(index);
+	if(x != x) {
+		return undefined;
+	}
+	return x;
+};
+HxOverrides.substr = function(s,pos,len) {
+	if(len == null) {
+		len = s.length;
+	} else if(len < 0) {
+		if(pos == 0) {
+			len = s.length + len;
+		} else {
+			return "";
+		}
+	}
+	return s.substr(pos,len);
+};
+HxOverrides.iter = function(a) {
+	return { cur : 0, arr : a, hasNext : function() {
+		return this.cur < this.arr.length;
+	}, next : function() {
+		return this.arr[this.cur++];
+	}};
+};
+var Lambda = function() { };
+Lambda.__name__ = true;
+Lambda.exists = function(it,f) {
+	var x = $getIterator(it);
+	while(x.hasNext()) {
+		var x1 = x.next();
+		if(f(x1)) {
+			return true;
+		}
+	}
+	return false;
 };
 Math.__name__ = true;
+var Reflect = function() { };
+Reflect.__name__ = true;
+Reflect.field = function(o,field) {
+	try {
+		return o[field];
+	} catch( e ) {
+		var e1 = ((e) instanceof js__$Boot_HaxeError) ? e.val : e;
+		return null;
+	}
+};
+Reflect.fields = function(o) {
+	var a = [];
+	if(o != null) {
+		var hasOwnProperty = Object.prototype.hasOwnProperty;
+		for( var f in o ) {
+		if(f != "__id__" && f != "hx__closures__" && hasOwnProperty.call(o,f)) {
+			a.push(f);
+		}
+		}
+	}
+	return a;
+};
+Reflect.isFunction = function(f) {
+	if(typeof(f) == "function") {
+		return !(f.__name__ || f.__ename__);
+	} else {
+		return false;
+	}
+};
+Reflect.compare = function(a,b) {
+	if(a == b) {
+		return 0;
+	} else if(a > b) {
+		return 1;
+	} else {
+		return -1;
+	}
+};
+Reflect.compareMethods = function(f1,f2) {
+	if(f1 == f2) {
+		return true;
+	}
+	if(!Reflect.isFunction(f1) || !Reflect.isFunction(f2)) {
+		return false;
+	}
+	if(f1.scope == f2.scope && f1.method == f2.method) {
+		return f1.method != null;
+	} else {
+		return false;
+	}
+};
+Reflect.isEnumValue = function(v) {
+	if(v != null) {
+		return v.__enum__ != null;
+	} else {
+		return false;
+	}
+};
+Reflect.copy = function(o) {
+	if(o == null) {
+		return null;
+	}
+	var o2 = { };
+	var _g = 0;
+	var _g1 = Reflect.fields(o);
+	while(_g < _g1.length) {
+		var f = _g1[_g];
+		++_g;
+		o2[f] = Reflect.field(o,f);
+	}
+	return o2;
+};
+var Std = function() { };
+Std.__name__ = true;
+Std.string = function(s) {
+	return js_Boot.__string_rec(s,"");
+};
+Std.parseInt = function(x) {
+	if(x != null) {
+		var _g = 0;
+		var _g1 = x.length;
+		while(_g < _g1) {
+			var i = _g++;
+			var c = x.charCodeAt(i);
+			if(c <= 8 || c >= 14 && c != 32 && c != 45) {
+				var v = parseInt(x, (x[(i + 1)]=="x" || x[(i + 1)]=="X") ? 16 : 10);
+				if(isNaN(v)) {
+					return null;
+				} else {
+					return v;
+				}
+			}
+		}
+	}
+	return null;
+};
+Std.random = function(x) {
+	if(x <= 0) {
+		return 0;
+	} else {
+		return Math.floor(Math.random() * x);
+	}
+};
+var StringTools = function() { };
+StringTools.__name__ = true;
+StringTools.startsWith = function(s,start) {
+	if(s.length >= start.length) {
+		return s.lastIndexOf(start,0) == 0;
+	} else {
+		return false;
+	}
+};
+StringTools.endsWith = function(s,end) {
+	var elen = end.length;
+	var slen = s.length;
+	if(slen >= elen) {
+		return s.indexOf(end,slen - elen) == slen - elen;
+	} else {
+		return false;
+	}
+};
+StringTools.isSpace = function(s,pos) {
+	var c = HxOverrides.cca(s,pos);
+	if(!(c > 8 && c < 14)) {
+		return c == 32;
+	} else {
+		return true;
+	}
+};
+StringTools.ltrim = function(s) {
+	var l = s.length;
+	var r = 0;
+	while(r < l && StringTools.isSpace(s,r)) ++r;
+	if(r > 0) {
+		return HxOverrides.substr(s,r,l - r);
+	} else {
+		return s;
+	}
+};
+StringTools.rtrim = function(s) {
+	var l = s.length;
+	var r = 0;
+	while(r < l && StringTools.isSpace(s,l - r - 1)) ++r;
+	if(r > 0) {
+		return HxOverrides.substr(s,0,l - r);
+	} else {
+		return s;
+	}
+};
+StringTools.trim = function(s) {
+	return StringTools.ltrim(StringTools.rtrim(s));
+};
+StringTools.replace = function(s,sub,by) {
+	return s.split(sub).join(by);
+};
+var Type = function() { };
+Type.__name__ = true;
+Type.enumParameters = function(e) {
+	var enm = $hxEnums[e.__enum__];
+	var ctorName = enm.__constructs__[e._hx_index];
+	var params = enm[ctorName].__params__;
+	if(params != null) {
+		var _g = [];
+		var _g1 = 0;
+		while(_g1 < params.length) {
+			var p = params[_g1];
+			++_g1;
+			_g.push(e[p]);
+		}
+		return _g;
+	} else {
+		return [];
+	}
+};
+var client_Main = function() { };
+client_Main.__name__ = true;
+client_Main.main = function() {
+	ReactDOM.render({ $$typeof : $$tre, type : client_view_App, props : { }, key : null, ref : null},window.document.getElementById("app"));
+};
+var client_model_Content = function() { };
+client_model_Content.__name__ = true;
+var client_view_App = function(props) {
+	React.Component.call(this,props);
+	this.jquery = $(window.document);
+	window.document.addEventListener("scroll",$bind(this,this.onScroll));
+	client_view_App.subpagesId.reverse();
+};
+client_view_App.__name__ = true;
+client_view_App.__super__ = React.Component;
+client_view_App.prototype = $extend(React.Component.prototype,{
+	render: function() {
+		return { $$typeof : $$tre, type : "div", props : { children : [{ $$typeof : $$tre, type : client_view_NavBar, props : { }, key : null, ref : null},{ $$typeof : $$tre, type : client_view_Home, props : { }, key : null, ref : null},{ $$typeof : $$tre, type : client_view_MyscanthusPresentation, props : { }, key : null, ref : null},{ $$typeof : $$tre, type : client_view_Mulch, props : { }, key : null, ref : null},{ $$typeof : $$tre, type : client_view_Litter, props : { }, key : null, ref : null},{ $$typeof : $$tre, type : client_view_Food, props : { }, key : null, ref : null},{ $$typeof : $$tre, type : client_view_Gallery, props : { }, key : null, ref : null},{ $$typeof : $$tre, type : client_view_Contact, props : { }, key : null, ref : null}]}, key : null, ref : null};
+	}
+	,onScroll: function() {
+		var _g = 0;
+		var _g1 = client_view_App.subpagesId;
+		while(_g < _g1.length) {
+			var id = _g1[_g];
+			++_g;
+			var elementScrollPlace = $("#" + id).offset().top;
+			if(this.jquery.scrollTop() >= elementScrollPlace) {
+				var currentActive = $(".active");
+				if(currentActive.attr("href") != "#" + id) {
+					currentActive.removeClass("active");
+					$(".nav-link[href=\"#" + id + "\"]").addClass("active");
+				}
+				break;
+			}
+		}
+	}
+	,__class__: client_view_App
+});
+var client_view_Contact = function(props) {
+	React.Component.call(this,props);
+};
+client_view_Contact.__name__ = true;
+client_view_Contact.__super__ = React.Component;
+client_view_Contact.prototype = $extend(React.Component.prototype,{
+	render: function() {
+		return { $$typeof : $$tre, type : "div", props : { 'class' : "subpage greater-height", children : [{ $$typeof : $$tre, type : "span", props : { id : "contact", 'class' : "anchor"}, key : null, ref : null},{ $$typeof : $$tre, type : "h1", props : { children : " Contact "}, key : null, ref : null},{ $$typeof : $$tre, type : "div", props : { 'class' : "container", children : [{ $$typeof : $$tre, type : "div", props : { 'class' : "row", children : { $$typeof : $$tre, type : "div", props : { 'class' : "col", children : { $$typeof : $$tre, type : "div", props : { 'class' : "div-centered", children : [{ $$typeof : $$tre, type : "h3", props : { children : "En direct de l'exploitation agricole"}, key : null, ref : null},{ $$typeof : $$tre, type : "p", props : { children : ["à Fleury sur Orne ",{ $$typeof : $$tre, type : "br", props : { 'class' : "small-screen-visible"}, key : null, ref : null}," (49.156560, -0.369117)",{ $$typeof : $$tre, type : "br", props : { }, key : null, ref : null},"38 avenue d'Harcourt"," ",{ $$typeof : $$tre, type : "br", props : { 'class' : "small-screen-visible"}, key : null, ref : null}," ","(adresse d'accès)",{ $$typeof : $$tre, type : "br", props : { }, key : null, ref : null},"5 chemin des Coteaux"," ",{ $$typeof : $$tre, type : "br", props : { 'class' : "small-screen-visible"}, key : null, ref : null}," ","(adresse postale)",{ $$typeof : $$tre, type : "br", props : { }, key : null, ref : null},"14123 Fleury sur Orne ",{ $$typeof : $$tre, type : "br", props : { }, key : null, ref : null},"dans l'agglomération caennaise",{ $$typeof : $$tre, type : "br", props : { }, key : null, ref : null},"possibilité de livraison"]}, key : null, ref : null},{ $$typeof : $$tre, type : "p", props : { children : ["et Moulins-en-Bessin ",{ $$typeof : $$tre, type : "br", props : { 'class' : "small-screen-visible"}, key : null, ref : null}," (49.250342, -0.561784)",{ $$typeof : $$tre, type : "br", props : { }, key : null, ref : null},"Rue de Vaux"]}, key : null, ref : null},{ $$typeof : $$tre, type : "h4", props : { children : " Martin Pomikal "}, key : null, ref : null},{ $$typeof : $$tre, type : "p", props : { children : ["07 89 85 00 04",{ $$typeof : $$tre, type : "br", props : { }, key : null, ref : null},"martin.pomikal@gmail.com",{ $$typeof : $$tre, type : "br", props : { }, key : null, ref : null}]}, key : null, ref : null},{ $$typeof : $$tre, type : "h4", props : { children : " Lydie Pomikal "}, key : null, ref : null},{ $$typeof : $$tre, type : "p", props : { children : " 06 08 05 92 38 "}, key : null, ref : null},{ $$typeof : $$tre, type : "h4", props : { children : " Henri Pomikal "}, key : null, ref : null},{ $$typeof : $$tre, type : "p", props : { children : " 06 07 16 12 24 "}, key : null, ref : null}]}, key : null, ref : null}}, key : null, ref : null}}, key : null, ref : null},{ $$typeof : $$tre, type : "div", props : { 'class' : "row", children : { $$typeof : $$tre, type : "img", props : { src : "images/map.png", 'class' : "img-fluid div-centered"}, key : null, ref : null}}, key : null, ref : null},{ $$typeof : $$tre, type : "div", props : { 'class' : "row", children : { $$typeof : $$tre, type : client_view_MailForm, props : { }, key : null, ref : null}}, key : null, ref : null}]}, key : null, ref : null}]}, key : null, ref : null};
+	}
+	,__class__: client_view_Contact
+});
+var client_view_Food = function(props) {
+	React.Component.call(this,props);
+};
+client_view_Food.__name__ = true;
+client_view_Food.__super__ = React.Component;
+client_view_Food.prototype = $extend(React.Component.prototype,{
+	render: function() {
+		return { $$typeof : $$tre, type : "div", props : { 'class' : "subpage", children : [{ $$typeof : $$tre, type : "span", props : { id : "food", 'class' : "anchor"}, key : null, ref : null},{ $$typeof : $$tre, type : "h1", props : { children : [" ",client_model_Content.food.header," "]}, key : null, ref : null},{ $$typeof : $$tre, type : "p", props : { 'class' : "centered", children : [" ",client_model_Content.food.quote," "]}, key : null, ref : null},{ $$typeof : $$tre, type : "p", props : { 'class' : "centered", children : ["Voir ",{ $$typeof : $$tre, type : "a", props : { href : "#packaging", children : "conditionnement"}, key : null, ref : null}]}, key : null, ref : null},{ $$typeof : $$tre, type : "div", props : { id : "food-background", 'class' : "background", children : [{ $$typeof : $$tre, type : "div", props : { 'class' : "content", children : { $$typeof : $$tre, type : "div", props : { children : [{ $$typeof : $$tre, type : "h2", props : { children : [" ",client_model_Content.food.use.header," "]}, key : null, ref : null},{ $$typeof : $$tre, type : "ul", props : { children : this.createChildren(client_model_Content.food.use.content)}, key : null, ref : null}]}, key : null, ref : null}}, key : null, ref : null},{ $$typeof : $$tre, type : "div", props : { 'class' : "content", children : { $$typeof : $$tre, type : "div", props : { children : [{ $$typeof : $$tre, type : "h2", props : { children : [" ",client_model_Content.food.pros.header," "]}, key : null, ref : null},{ $$typeof : $$tre, type : "ul", props : { children : this.createChildren(client_model_Content.food.pros.content)}, key : null, ref : null}]}, key : null, ref : null}}, key : null, ref : null}]}, key : null, ref : null}]}, key : null, ref : null};
+	}
+	,createChildren: function(items) {
+		var _g = [];
+		var _g1 = 0;
+		while(_g1 < items.length) {
+			var item = items[_g1];
+			++_g1;
+			_g.push({ $$typeof : $$tre, type : "li", props : { children : item}, key : null, ref : null});
+		}
+		return _g;
+	}
+	,__class__: client_view_Food
+});
+var client_view_Gallery = function(props) {
+	React.Component.call(this,props);
+	this.delayInSeconds = 3;
+	this._imagesName = ["cheval miscanthus 1 2.jpg","cheval miscanthus 2.JPG","conditionnement miscanthus 2.jpg","IMG-1029.jpeg","IMG-1030.jpeg","IMG-4545.png","IMG_2958.png","IMG_2959.png","IMG_2960.JPG","litter.jpg","novabiom_miscanthus_usages_paillis[1].jpg","P1010326.JPG","P1010331.JPG","P1010361.JPG","P1010364.JPG","P1010384.JPG","P1010392.JPG","P1010403.JPG","P1010409.JPG","P1010416.JPG","P1010438.JPG","P1020652.JPG","photo 2[1].JPG","unnamed.jpg","unnamed1.jpg","unnamed2.jpg","unnamed3.jpg","unnamed32.jpg","unnamed33.jpg","unnamed4.jpg","unnamed5.png"];
+	this.timer = new haxe_Timer(this.delayInSeconds * 1000);
+};
+client_view_Gallery.__name__ = true;
+client_view_Gallery.__super__ = React.Component;
+client_view_Gallery.prototype = $extend(React.Component.prototype,{
+	componentDidMount: function() {
+		this.carousel = $("#carousel");
+		this.carouselImages = $("#carousel img");
+		this.carouselLastElement = this.carouselImages.length - 1;
+		this.current = 0;
+		this.carouselImages.css("display","none");
+		var currentImg = this.carouselImages.eq(this.current);
+		currentImg.css("display","initial");
+		this.timer.run = $bind(this,this.next);
+	}
+	,next: function() {
+		var currentImg = this.carouselImages.eq(this.current);
+		currentImg.css("display","none");
+		this.current = this.current == this.carouselLastElement ? 0 : this.current + 1;
+		var currentImg1 = this.carouselImages.eq(this.current);
+		currentImg1.css("display","initial");
+	}
+	,render: function() {
+		return { $$typeof : $$tre, type : "div", props : { 'class' : "subpage fullsize", children : [{ $$typeof : $$tre, type : "span", props : { id : "gallery", 'class' : "anchor"}, key : null, ref : null},{ $$typeof : $$tre, type : "h1", props : { children : " Galerie "}, key : null, ref : null},{ $$typeof : $$tre, type : "div", props : { id : "carousel", children : { $$typeof : $$tre, type : "ul", props : { children : this.createChildren()}, key : null, ref : null}}, key : null, ref : null}]}, key : null, ref : null};
+	}
+	,createChildren: function() {
+		var _g = [];
+		var _g1 = 0;
+		var _g2 = this._imagesName;
+		while(_g1 < _g2.length) {
+			var item = _g2[_g1];
+			++_g1;
+			_g.push({ $$typeof : $$tre, type : "li", props : { children : { $$typeof : $$tre, type : "img", props : { src : "./images/gallery/" + item}, key : null, ref : null}}, key : null, ref : null});
+		}
+		return _g;
+	}
+	,__class__: client_view_Gallery
+});
+var client_view_Home = function(props) {
+	React.Component.call(this,props);
+};
+client_view_Home.__name__ = true;
+client_view_Home.__super__ = React.Component;
+client_view_Home.prototype = $extend(React.Component.prototype,{
+	render: function() {
+		return { $$typeof : $$tre, type : "div", props : { id : "home", children : { $$typeof : $$tre, type : "div", props : { 'class' : "content", children : [{ $$typeof : $$tre, type : "h1", props : { children : client_model_Content.home.header}, key : null, ref : null},{ $$typeof : $$tre, type : "p", props : { children : client_model_Content.home.content}, key : null, ref : null},{ $$typeof : $$tre, type : "span", props : { 'class' : "vignette", children : { $$typeof : $$tre, type : "span", props : { children : "Local"}, key : null, ref : null}}, key : null, ref : null},{ $$typeof : $$tre, type : "div", props : { 'class' : "subcontent container-fluid", children : { $$typeof : $$tre, type : "div", props : { 'class' : "row", children : [{ $$typeof : $$tre, type : "div", props : { 'class' : "col", children : { $$typeof : $$tre, type : "div", props : { 'class' : "thumbnail", children : [{ $$typeof : $$tre, type : "img", props : { src : "./images/normandy_flag.png"}, key : null, ref : null},{ $$typeof : $$tre, type : "div", props : { 'class' : "caption", children : { $$typeof : $$tre, type : "p", props : { children : "Produit Normand"}, key : null, ref : null}}, key : null, ref : null}]}, key : null, ref : null}}, key : null, ref : null},{ $$typeof : $$tre, type : "div", props : { 'class' : "col", children : { $$typeof : $$tre, type : "div", props : { 'class' : "thumbnail", children : [{ $$typeof : $$tre, type : "img", props : { src : "./images/logoeuropeenpantoneab.jpg"}, key : null, ref : null},{ $$typeof : $$tre, type : "div", props : { 'class' : "caption", children : { $$typeof : $$tre, type : "p", props : { children : ["Agriculture Biologique",{ $$typeof : $$tre, type : "br", props : { }, key : null, ref : null},"FR-BIO-13"]}, key : null, ref : null}}, key : null, ref : null}]}, key : null, ref : null}}, key : null, ref : null}]}, key : null, ref : null}}, key : null, ref : null}]}, key : null, ref : null}}, key : null, ref : null};
+	}
+	,__class__: client_view_Home
+});
+var client_view_Litter = function(props) {
+	React.Component.call(this,props);
+};
+client_view_Litter.__name__ = true;
+client_view_Litter.__super__ = React.Component;
+client_view_Litter.prototype = $extend(React.Component.prototype,{
+	render: function() {
+		return { $$typeof : $$tre, type : "div", props : { 'class' : "subpage", children : [{ $$typeof : $$tre, type : "span", props : { id : "litter", 'class' : "anchor"}, key : null, ref : null},{ $$typeof : $$tre, type : "h1", props : { children : [" ",client_model_Content.litter.header," "]}, key : null, ref : null},{ $$typeof : $$tre, type : "p", props : { 'class' : "centered", children : [" ",client_model_Content.litter.quote," "]}, key : null, ref : null},{ $$typeof : $$tre, type : "p", props : { 'class' : "centered", children : ["Voir ",{ $$typeof : $$tre, type : "a", props : { href : "#packaging", children : "conditionnement"}, key : null, ref : null}]}, key : null, ref : null},{ $$typeof : $$tre, type : "div", props : { id : "litter-background", 'class' : "background", children : [{ $$typeof : $$tre, type : "div", props : { 'class' : "content right", children : { $$typeof : $$tre, type : "div", props : { children : [{ $$typeof : $$tre, type : "h2", props : { children : [" ",client_model_Content.litter.eco.header," "]}, key : null, ref : null},{ $$typeof : $$tre, type : "ul", props : { children : this.createTextChildren(client_model_Content.litter.eco.content)}, key : null, ref : null}]}, key : null, ref : null}}, key : null, ref : null},{ $$typeof : $$tre, type : "div", props : { 'class' : "content left", children : { $$typeof : $$tre, type : "div", props : { children : [{ $$typeof : $$tre, type : "h2", props : { children : [" ",client_model_Content.litter.pros.header," "]}, key : null, ref : null},{ $$typeof : $$tre, type : "ul", props : { children : this.createTextChildren(client_model_Content.litter.pros.content)}, key : null, ref : null}]}, key : null, ref : null}}, key : null, ref : null}]}, key : null, ref : null}]}, key : null, ref : null};
+	}
+	,createTextChildren: function(items) {
+		var _g = [];
+		var _g1 = 0;
+		while(_g1 < items.length) {
+			var item = items[_g1];
+			++_g1;
+			_g.push({ $$typeof : $$tre, type : "li", props : { children : item}, key : null, ref : null});
+		}
+		return _g;
+	}
+	,__class__: client_view_Litter
+});
+var client_view_MailForm = function(props) {
+	React.Component.call(this,props);
+};
+client_view_MailForm.__name__ = true;
+client_view_MailForm.__super__ = React.Component;
+client_view_MailForm.prototype = $extend(React.Component.prototype,{
+	componentDidMount: function() {
+		$("#submit-button").on("click",null,$bind(this,this.onSubmit));
+	}
+	,render: function() {
+		return { $$typeof : $$tre, type : "div", props : { 'class' : "container mail-form", children : { $$typeof : $$tre, type : "div", props : { 'class' : "row justify-content-center", children : { $$typeof : $$tre, type : "form", props : { name : "mail-form", children : [{ $$typeof : $$tre, type : "div", props : { 'class' : "form-row", children : [{ $$typeof : $$tre, type : "div", props : { 'class' : "form-group col-6", children : { $$typeof : $$tre, type : "input", props : { type : "text", required : true, placeholder : "Nom*", name : "name", id : "mail-form-name", 'class' : "form-control"}, key : null, ref : null}}, key : null, ref : null},{ $$typeof : $$tre, type : "div", props : { 'class' : "form-group col-6", children : { $$typeof : $$tre, type : "input", props : { type : "email", required : true, placeholder : "Email*", name : "mail", id : "mail-form-mail", 'class' : "form-control"}, key : null, ref : null}}, key : null, ref : null}]}, key : null, ref : null},{ $$typeof : $$tre, type : "div", props : { 'class' : "form-group", children : { $$typeof : $$tre, type : "input", props : { type : "text", placeholder : "Sujet", name : "subject", id : "mail-form-subject", 'class' : "form-control"}, key : null, ref : null}}, key : null, ref : null},{ $$typeof : $$tre, type : "div", props : { 'class' : "form-group", children : { $$typeof : $$tre, type : "textarea", props : { rows : "2", placeholder : "Message", name : "message", id : "mail-form-message", 'class' : "form-control"}, key : null, ref : null}}, key : null, ref : null},{ $$typeof : $$tre, type : "button", props : { type : "button", id : "submit-button", 'class' : "btn btn-primary submit-button", children : "Envoyer"}, key : null, ref : null}]}, key : null, ref : null}}, key : null, ref : null}}, key : null, ref : null};
+	}
+	,onSubmit: function() {
+		var data = { name : (js_Boot.__cast(window.document.getElementById("mail-form-name") , HTMLInputElement)).value, mail : (js_Boot.__cast(window.document.getElementById("mail-form-mail") , HTMLInputElement)).value, subject : (js_Boot.__cast(window.document.getElementById("mail-form-subject") , HTMLInputElement)).value, message : (js_Boot.__cast(window.document.getElementById("mail-form-message") , HTMLTextAreaElement)).value};
+		tink_http__$Fetch_FetchResponse_$Impl_$.all(tink_http_Fetch.fetch(tink__$Url_Url_$Impl_$.fromString("http://localhost/send-mail"),{ method : "POST", headers : [new tink_http_HeaderField("content-type","application/json")], body : new tink_streams_Single(new tink_core__$Lazy_LazyConst(tink_chunk_ByteChunk.of(haxe_io_Bytes.ofString(new tink_json_Writer0().write(data)))))})).handle(function(o) {
+			switch(o._hx_index) {
+			case 0:
+				var res = o.data;
+				console.log("src/client/view/MailForm.hx:64:",res.header.statusCode);
+				break;
+			case 1:
+				var e = o.failure;
+				console.log("src/client/view/MailForm.hx:66:",e);
+				break;
+			}
+			return;
+		});
+	}
+	,__class__: client_view_MailForm
+});
+var client_view_Mulch = function(props) {
+	React.Component.call(this,props);
+};
+client_view_Mulch.__name__ = true;
+client_view_Mulch.__super__ = React.Component;
+client_view_Mulch.prototype = $extend(React.Component.prototype,{
+	render: function() {
+		return { $$typeof : $$tre, type : "div", props : { 'class' : "subpage", children : [{ $$typeof : $$tre, type : "span", props : { id : "mulch", 'class' : "anchor"}, key : null, ref : null},{ $$typeof : $$tre, type : "h1", props : { children : [" ",client_model_Content.mulch.header," "]}, key : null, ref : null},{ $$typeof : $$tre, type : "p", props : { 'class' : "centered", children : [" ",client_model_Content.mulch.quote," "]}, key : null, ref : null},{ $$typeof : $$tre, type : "div", props : { id : "mulch-background", 'class' : "background", children : [{ $$typeof : $$tre, type : "div", props : { 'class' : "content right", children : { $$typeof : $$tre, type : "div", props : { children : [{ $$typeof : $$tre, type : "h2", props : { children : [" ",client_model_Content.mulch.eco.header," "]}, key : null, ref : null},{ $$typeof : $$tre, type : "ul", props : { children : this.createTextChildren(client_model_Content.mulch.eco.content)}, key : null, ref : null}]}, key : null, ref : null}}, key : null, ref : null},{ $$typeof : $$tre, type : "div", props : { 'class' : "content left", children : { $$typeof : $$tre, type : "div", props : { children : [{ $$typeof : $$tre, type : "h2", props : { children : [" ",client_model_Content.mulch.aesthetic.header," "]}, key : null, ref : null},{ $$typeof : $$tre, type : "ul", props : { children : this.createTextChildren(client_model_Content.mulch.aesthetic.content)}, key : null, ref : null}]}, key : null, ref : null}}, key : null, ref : null},{ $$typeof : $$tre, type : "div", props : { 'class' : "content", children : { $$typeof : $$tre, type : "div", props : { children : [{ $$typeof : $$tre, type : "span", props : { id : "packaging", 'class' : "anchor"}, key : null, ref : null},{ $$typeof : $$tre, type : "h2", props : { children : [" ",client_model_Content.mulch.packaging.header," "]}, key : null, ref : null},{ $$typeof : $$tre, type : "ul", props : { children : this.createTextChildren(client_model_Content.mulch.packaging.content)}, key : null, ref : null}]}, key : null, ref : null}}, key : null, ref : null}]}, key : null, ref : null}]}, key : null, ref : null};
+	}
+	,createTextChildren: function(items) {
+		var _g = [];
+		var _g1 = 0;
+		while(_g1 < items.length) {
+			var item = items[_g1];
+			++_g1;
+			_g.push({ $$typeof : $$tre, type : "li", props : { children : item}, key : null, ref : null});
+		}
+		return _g;
+	}
+	,__class__: client_view_Mulch
+});
+var client_view_MyscanthusPresentation = function(props) {
+	React.Component.call(this,props);
+};
+client_view_MyscanthusPresentation.__name__ = true;
+client_view_MyscanthusPresentation.__super__ = React.Component;
+client_view_MyscanthusPresentation.prototype = $extend(React.Component.prototype,{
+	render: function() {
+		return { $$typeof : $$tre, type : "div", props : { 'class' : "subpage", children : [{ $$typeof : $$tre, type : "span", props : { id : "myscanthus", 'class' : "anchor"}, key : null, ref : null},{ $$typeof : $$tre, type : "h1", props : { children : [" ",client_model_Content.miscanthus.header," "]}, key : null, ref : null},{ $$typeof : $$tre, type : "div", props : { id : "mys-background", 'class' : "background", children : [{ $$typeof : $$tre, type : "div", props : { 'class' : "content right", children : { $$typeof : $$tre, type : "div", props : { children : [{ $$typeof : $$tre, type : "h2", props : { children : [" ",client_model_Content.miscanthus.farming.header," "]}, key : null, ref : null},{ $$typeof : $$tre, type : "p", props : { children : client_model_Content.miscanthus.farming.content}, key : null, ref : null}]}, key : null, ref : null}}, key : null, ref : null},{ $$typeof : $$tre, type : "div", props : { 'class' : "content left", children : { $$typeof : $$tre, type : "div", props : { children : [{ $$typeof : $$tre, type : "h2", props : { children : [" ",client_model_Content.miscanthus.prosEnvironnement.header," "]}, key : null, ref : null},{ $$typeof : $$tre, type : "p", props : { children : [client_model_Content.miscanthus.prosEnvironnement.content.description,{ $$typeof : $$tre, type : "ul", props : { children : this.createChildren()}, key : null, ref : null}]}, key : null, ref : null}]}, key : null, ref : null}}, key : null, ref : null}]}, key : null, ref : null}]}, key : null, ref : null};
+	}
+	,createChildren: function() {
+		var _g = [];
+		var _g1 = 0;
+		var _g2 = client_model_Content.miscanthus.prosEnvironnement.content.items;
+		while(_g1 < _g2.length) {
+			var item = _g2[_g1];
+			++_g1;
+			_g.push({ $$typeof : $$tre, type : "li", props : { children : item}, key : null, ref : null});
+		}
+		return _g;
+	}
+	,__class__: client_view_MyscanthusPresentation
+});
+var client_view_ScreenSize = $hxEnums["client.view.ScreenSize"] = { __ename__ : true, __constructs__ : ["Small","Big"]
+	,Small: {_hx_index:0,__enum__:"client.view.ScreenSize",toString:$estr}
+	,Big: {_hx_index:1,__enum__:"client.view.ScreenSize",toString:$estr}
+};
+var client_view_NavBar = function(props) {
+	this.visible = false;
+	React.Component.call(this,props);
+};
+client_view_NavBar.__name__ = true;
+client_view_NavBar.__super__ = React.Component;
+client_view_NavBar.prototype = $extend(React.Component.prototype,{
+	render: function() {
+		return { $$typeof : $$tre, type : "div", props : { 'class' : "navbar sticky-top", children : [this.getNavbar(client_view_ScreenSize.Big),this.getNavbar(client_view_ScreenSize.Small),{ $$typeof : $$tre, type : "a", props : { href : "#", 'class' : "logo"}, key : null, ref : null},{ $$typeof : $$tre, type : "i", props : { onClick : $bind(this,this.toggleMenu), 'class' : "material-icons menu-icon small-screen-visble", children : "menu"}, key : null, ref : null}]}, key : null, ref : null};
+	}
+	,toggleMenu: function() {
+		this.visible = !this.visible;
+		if(this.visible) {
+			$(".nav-items.small-screen").addClass("small-screen-visible");
+			$(".navbar").addClass("navbar-extended");
+		} else {
+			$(".nav-items.small-screen").removeClass("small-screen-visible");
+			$(".navbar").removeClass("navbar-extended");
+		}
+	}
+	,getNavbar: function(screenSize) {
+		switch(screenSize._hx_index) {
+		case 0:
+			return { $$typeof : $$tre, type : "div", props : { 'class' : "nav-items small-screen", children : { $$typeof : $$tre, type : "ul", props : { 'class' : "nav flex-column", children : [{ $$typeof : $$tre, type : "li", props : { 'class' : "nav-item", children : { $$typeof : $$tre, type : "a", props : { href : "#home", 'class' : "nav-link active", children : "Accueil"}, key : null, ref : null}}, key : null, ref : null},{ $$typeof : $$tre, type : "li", props : { 'class' : "nav-item", children : { $$typeof : $$tre, type : "a", props : { href : "#myscanthus", 'class' : "nav-link", children : "Miscanthus"}, key : null, ref : null}}, key : null, ref : null},{ $$typeof : $$tre, type : "li", props : { 'class' : "nav-item", children : { $$typeof : $$tre, type : "a", props : { href : "#mulch", 'class' : "nav-link", children : "Paillage Environnemental"}, key : null, ref : null}}, key : null, ref : null},{ $$typeof : $$tre, type : "li", props : { 'class' : "nav-item", children : { $$typeof : $$tre, type : "a", props : { href : "#litter", 'class' : "nav-link", children : "Litière Animale"}, key : null, ref : null}}, key : null, ref : null},{ $$typeof : $$tre, type : "li", props : { 'class' : "nav-item", children : { $$typeof : $$tre, type : "a", props : { href : "#food", 'class' : "nav-link", children : "Complément Alimentaire Animaux"}, key : null, ref : null}}, key : null, ref : null},{ $$typeof : $$tre, type : "li", props : { 'class' : "nav-item", children : { $$typeof : $$tre, type : "a", props : { href : "#gallery", 'class' : "nav-link", children : "Galerie"}, key : null, ref : null}}, key : null, ref : null},{ $$typeof : $$tre, type : "li", props : { 'class' : "nav-item", children : { $$typeof : $$tre, type : "a", props : { href : "#contact", 'class' : "nav-link", children : "Contact"}, key : null, ref : null}}, key : null, ref : null}]}, key : null, ref : null}}, key : null, ref : null};
+		case 1:
+			return { $$typeof : $$tre, type : "div", props : { 'class' : "nav-items big-screen", children : [{ $$typeof : $$tre, type : "ul", props : { id : "left-navbar", 'class' : "nav", children : [{ $$typeof : $$tre, type : "li", props : { 'class' : "nav-item", children : { $$typeof : $$tre, type : "a", props : { href : "#home", 'class' : "nav-link active", children : "Accueil"}, key : null, ref : null}}, key : null, ref : null},{ $$typeof : $$tre, type : "li", props : { 'class' : "nav-item", children : { $$typeof : $$tre, type : "a", props : { href : "#myscanthus", 'class' : "nav-link", children : "Miscanthus"}, key : null, ref : null}}, key : null, ref : null},{ $$typeof : $$tre, type : "li", props : { 'class' : "nav-item", children : { $$typeof : $$tre, type : "a", props : { href : "#mulch", 'class' : "nav-link", children : "Paillage Environnemental"}, key : null, ref : null}}, key : null, ref : null},{ $$typeof : $$tre, type : "li", props : { 'class' : "nav-item", children : { $$typeof : $$tre, type : "a", props : { href : "#litter", 'class' : "nav-link", children : "Litière Animale"}, key : null, ref : null}}, key : null, ref : null}]}, key : null, ref : null},{ $$typeof : $$tre, type : "ul", props : { id : "right-navbar", 'class' : "nav", children : [{ $$typeof : $$tre, type : "li", props : { 'class' : "nav-item", children : { $$typeof : $$tre, type : "a", props : { href : "#food", 'class' : "nav-link", children : "Complément Alimentaire Animaux"}, key : null, ref : null}}, key : null, ref : null},{ $$typeof : $$tre, type : "li", props : { 'class' : "nav-item", children : { $$typeof : $$tre, type : "a", props : { href : "#gallery", 'class' : "nav-link", children : "Galerie"}, key : null, ref : null}}, key : null, ref : null},{ $$typeof : $$tre, type : "li", props : { 'class' : "nav-item", children : { $$typeof : $$tre, type : "a", props : { href : "#contact", 'class' : "nav-link", children : "Contact"}, key : null, ref : null}}, key : null, ref : null}]}, key : null, ref : null}]}, key : null, ref : null};
+		}
+	}
+	,__class__: client_view_NavBar
+});
+var haxe_StackItem = $hxEnums["haxe.StackItem"] = { __ename__ : true, __constructs__ : ["CFunction","Module","FilePos","Method","LocalFunction"]
+	,CFunction: {_hx_index:0,__enum__:"haxe.StackItem",toString:$estr}
+	,Module: ($_=function(m) { return {_hx_index:1,m:m,__enum__:"haxe.StackItem",toString:$estr}; },$_.__params__ = ["m"],$_)
+	,FilePos: ($_=function(s,file,line,column) { return {_hx_index:2,s:s,file:file,line:line,column:column,__enum__:"haxe.StackItem",toString:$estr}; },$_.__params__ = ["s","file","line","column"],$_)
+	,Method: ($_=function(classname,method) { return {_hx_index:3,classname:classname,method:method,__enum__:"haxe.StackItem",toString:$estr}; },$_.__params__ = ["classname","method"],$_)
+	,LocalFunction: ($_=function(v) { return {_hx_index:4,v:v,__enum__:"haxe.StackItem",toString:$estr}; },$_.__params__ = ["v"],$_)
+};
+var haxe_IMap = function() { };
+haxe_IMap.__name__ = true;
+haxe_IMap.__isInterface__ = true;
 var haxe_Timer = function(time_ms) {
 	var me = this;
 	this.id = setInterval(function() {
@@ -22,8 +514,642 @@ var haxe_Timer = function(time_ms) {
 	},time_ms);
 };
 haxe_Timer.__name__ = true;
+haxe_Timer.delay = function(f,time_ms) {
+	var t = new haxe_Timer(time_ms);
+	t.run = function() {
+		t.stop();
+		f();
+	};
+	return t;
+};
 haxe_Timer.prototype = {
-	run: function() {
+	stop: function() {
+		if(this.id == null) {
+			return;
+		}
+		clearInterval(this.id);
+		this.id = null;
+	}
+	,run: function() {
+	}
+	,__class__: haxe_Timer
+};
+var haxe_io_Bytes = function(data) {
+	this.length = data.byteLength;
+	this.b = new Uint8Array(data);
+	this.b.bufferValue = data;
+	data.hxBytes = this;
+	data.bytes = this.b;
+};
+haxe_io_Bytes.__name__ = true;
+haxe_io_Bytes.ofString = function(s,encoding) {
+	if(encoding == haxe_io_Encoding.RawNative) {
+		var buf = new Uint8Array(s.length << 1);
+		var _g = 0;
+		var _g1 = s.length;
+		while(_g < _g1) {
+			var i = _g++;
+			var c = s.charCodeAt(i);
+			buf[i << 1] = c & 255;
+			buf[i << 1 | 1] = c >> 8;
+		}
+		return new haxe_io_Bytes(buf.buffer);
+	}
+	var a = [];
+	var i1 = 0;
+	while(i1 < s.length) {
+		var c1 = s.charCodeAt(i1++);
+		if(55296 <= c1 && c1 <= 56319) {
+			c1 = c1 - 55232 << 10 | s.charCodeAt(i1++) & 1023;
+		}
+		if(c1 <= 127) {
+			a.push(c1);
+		} else if(c1 <= 2047) {
+			a.push(192 | c1 >> 6);
+			a.push(128 | c1 & 63);
+		} else if(c1 <= 65535) {
+			a.push(224 | c1 >> 12);
+			a.push(128 | c1 >> 6 & 63);
+			a.push(128 | c1 & 63);
+		} else {
+			a.push(240 | c1 >> 18);
+			a.push(128 | c1 >> 12 & 63);
+			a.push(128 | c1 >> 6 & 63);
+			a.push(128 | c1 & 63);
+		}
+	}
+	return new haxe_io_Bytes(new Uint8Array(a).buffer);
+};
+haxe_io_Bytes.ofData = function(b) {
+	var hb = b.hxBytes;
+	if(hb != null) {
+		return hb;
+	}
+	return new haxe_io_Bytes(b);
+};
+haxe_io_Bytes.prototype = {
+	blit: function(pos,src,srcpos,len) {
+		if(pos < 0 || srcpos < 0 || len < 0 || pos + len > this.length || srcpos + len > src.length) {
+			throw new js__$Boot_HaxeError(haxe_io_Error.OutsideBounds);
+		}
+		if(srcpos == 0 && len == src.b.byteLength) {
+			this.b.set(src.b,pos);
+		} else {
+			this.b.set(src.b.subarray(srcpos,srcpos + len),pos);
+		}
+	}
+	,sub: function(pos,len) {
+		if(pos < 0 || len < 0 || pos + len > this.length) {
+			throw new js__$Boot_HaxeError(haxe_io_Error.OutsideBounds);
+		}
+		return new haxe_io_Bytes(this.b.buffer.slice(pos + this.b.byteOffset,pos + this.b.byteOffset + len));
+	}
+	,getString: function(pos,len,encoding) {
+		if(pos < 0 || len < 0 || pos + len > this.length) {
+			throw new js__$Boot_HaxeError(haxe_io_Error.OutsideBounds);
+		}
+		if(encoding == null) {
+			encoding = haxe_io_Encoding.UTF8;
+		}
+		var s = "";
+		var b = this.b;
+		var i = pos;
+		var max = pos + len;
+		switch(encoding._hx_index) {
+		case 0:
+			var debug = pos > 0;
+			while(i < max) {
+				var c = b[i++];
+				if(c < 128) {
+					if(c == 0) {
+						break;
+					}
+					s += String.fromCodePoint(c);
+				} else if(c < 224) {
+					var code = (c & 63) << 6 | b[i++] & 127;
+					s += String.fromCodePoint(code);
+				} else if(c < 240) {
+					var c2 = b[i++];
+					var code1 = (c & 31) << 12 | (c2 & 127) << 6 | b[i++] & 127;
+					s += String.fromCodePoint(code1);
+				} else {
+					var c21 = b[i++];
+					var c3 = b[i++];
+					var u = (c & 15) << 18 | (c21 & 127) << 12 | (c3 & 127) << 6 | b[i++] & 127;
+					s += String.fromCodePoint(u);
+				}
+			}
+			break;
+		case 1:
+			while(i < max) {
+				var c1 = b[i++] | b[i++] << 8;
+				s += String.fromCodePoint(c1);
+			}
+			break;
+		}
+		return s;
+	}
+	,toString: function() {
+		return this.getString(0,this.length);
+	}
+	,__class__: haxe_io_Bytes
+};
+var haxe_io_Encoding = $hxEnums["haxe.io.Encoding"] = { __ename__ : true, __constructs__ : ["UTF8","RawNative"]
+	,UTF8: {_hx_index:0,__enum__:"haxe.io.Encoding",toString:$estr}
+	,RawNative: {_hx_index:1,__enum__:"haxe.io.Encoding",toString:$estr}
+};
+var haxe_ds_BalancedTree = function() {
+};
+haxe_ds_BalancedTree.__name__ = true;
+haxe_ds_BalancedTree.__interfaces__ = [haxe_IMap];
+haxe_ds_BalancedTree.prototype = {
+	set: function(key,value) {
+		this.root = this.setLoop(key,value,this.root);
+	}
+	,get: function(key) {
+		var node = this.root;
+		while(node != null) {
+			var c = this.compare(key,node.key);
+			if(c == 0) {
+				return node.value;
+			}
+			if(c < 0) {
+				node = node.left;
+			} else {
+				node = node.right;
+			}
+		}
+		return null;
+	}
+	,exists: function(key) {
+		var node = this.root;
+		while(node != null) {
+			var c = this.compare(key,node.key);
+			if(c == 0) {
+				return true;
+			} else if(c < 0) {
+				node = node.left;
+			} else {
+				node = node.right;
+			}
+		}
+		return false;
+	}
+	,setLoop: function(k,v,node) {
+		if(node == null) {
+			return new haxe_ds_TreeNode(null,k,v,null);
+		}
+		var c = this.compare(k,node.key);
+		if(c == 0) {
+			return new haxe_ds_TreeNode(node.left,k,v,node.right,node == null ? 0 : node._height);
+		} else if(c < 0) {
+			var nl = this.setLoop(k,v,node.left);
+			return this.balance(nl,node.key,node.value,node.right);
+		} else {
+			var nr = this.setLoop(k,v,node.right);
+			return this.balance(node.left,node.key,node.value,nr);
+		}
+	}
+	,balance: function(l,k,v,r) {
+		var hl = l == null ? 0 : l._height;
+		var hr = r == null ? 0 : r._height;
+		if(hl > hr + 2) {
+			var _this = l.left;
+			var _this1 = l.right;
+			if((_this == null ? 0 : _this._height) >= (_this1 == null ? 0 : _this1._height)) {
+				return new haxe_ds_TreeNode(l.left,l.key,l.value,new haxe_ds_TreeNode(l.right,k,v,r));
+			} else {
+				return new haxe_ds_TreeNode(new haxe_ds_TreeNode(l.left,l.key,l.value,l.right.left),l.right.key,l.right.value,new haxe_ds_TreeNode(l.right.right,k,v,r));
+			}
+		} else if(hr > hl + 2) {
+			var _this2 = r.right;
+			var _this3 = r.left;
+			if((_this2 == null ? 0 : _this2._height) > (_this3 == null ? 0 : _this3._height)) {
+				return new haxe_ds_TreeNode(new haxe_ds_TreeNode(l,k,v,r.left),r.key,r.value,r.right);
+			} else {
+				return new haxe_ds_TreeNode(new haxe_ds_TreeNode(l,k,v,r.left.left),r.left.key,r.left.value,new haxe_ds_TreeNode(r.left.right,r.key,r.value,r.right));
+			}
+		} else {
+			return new haxe_ds_TreeNode(l,k,v,r,(hl > hr ? hl : hr) + 1);
+		}
+	}
+	,compare: function(k1,k2) {
+		return Reflect.compare(k1,k2);
+	}
+	,__class__: haxe_ds_BalancedTree
+};
+var haxe_ds_TreeNode = function(l,k,v,r,h) {
+	if(h == null) {
+		h = -1;
+	}
+	this.left = l;
+	this.key = k;
+	this.value = v;
+	this.right = r;
+	if(h == -1) {
+		var tmp;
+		var _this = this.left;
+		var _this1 = this.right;
+		if((_this == null ? 0 : _this._height) > (_this1 == null ? 0 : _this1._height)) {
+			var _this2 = this.left;
+			tmp = _this2 == null ? 0 : _this2._height;
+		} else {
+			var _this3 = this.right;
+			tmp = _this3 == null ? 0 : _this3._height;
+		}
+		this._height = tmp + 1;
+	} else {
+		this._height = h;
+	}
+};
+haxe_ds_TreeNode.__name__ = true;
+haxe_ds_TreeNode.prototype = {
+	__class__: haxe_ds_TreeNode
+};
+var haxe_ds_EnumValueMap = function() {
+	haxe_ds_BalancedTree.call(this);
+};
+haxe_ds_EnumValueMap.__name__ = true;
+haxe_ds_EnumValueMap.__interfaces__ = [haxe_IMap];
+haxe_ds_EnumValueMap.__super__ = haxe_ds_BalancedTree;
+haxe_ds_EnumValueMap.prototype = $extend(haxe_ds_BalancedTree.prototype,{
+	compare: function(k1,k2) {
+		var d = k1._hx_index - k2._hx_index;
+		if(d != 0) {
+			return d;
+		}
+		var p1 = Type.enumParameters(k1);
+		var p2 = Type.enumParameters(k2);
+		if(p1.length == 0 && p2.length == 0) {
+			return 0;
+		}
+		return this.compareArgs(p1,p2);
+	}
+	,compareArgs: function(a1,a2) {
+		var ld = a1.length - a2.length;
+		if(ld != 0) {
+			return ld;
+		}
+		var _g = 0;
+		var _g1 = a1.length;
+		while(_g < _g1) {
+			var i = _g++;
+			var d = this.compareArg(a1[i],a2[i]);
+			if(d != 0) {
+				return d;
+			}
+		}
+		return 0;
+	}
+	,compareArg: function(v1,v2) {
+		if(Reflect.isEnumValue(v1) && Reflect.isEnumValue(v2)) {
+			return this.compare(v1,v2);
+		} else if(((v1) instanceof Array) && ((v2) instanceof Array)) {
+			return this.compareArgs(v1,v2);
+		} else {
+			return Reflect.compare(v1,v2);
+		}
+	}
+	,__class__: haxe_ds_EnumValueMap
+});
+var haxe_ds_ObjectMap = function() {
+	this.h = { __keys__ : { }};
+};
+haxe_ds_ObjectMap.__name__ = true;
+haxe_ds_ObjectMap.__interfaces__ = [haxe_IMap];
+haxe_ds_ObjectMap.prototype = {
+	__class__: haxe_ds_ObjectMap
+};
+var haxe_ds_Option = $hxEnums["haxe.ds.Option"] = { __ename__ : true, __constructs__ : ["Some","None"]
+	,Some: ($_=function(v) { return {_hx_index:0,v:v,__enum__:"haxe.ds.Option",toString:$estr}; },$_.__params__ = ["v"],$_)
+	,None: {_hx_index:1,__enum__:"haxe.ds.Option",toString:$estr}
+};
+var haxe_http_HttpBase = function(url) {
+	this.url = url;
+	this.headers = [];
+	this.params = [];
+	this.emptyOnData = $bind(this,this.onData);
+};
+haxe_http_HttpBase.__name__ = true;
+haxe_http_HttpBase.prototype = {
+	setHeader: function(name,value) {
+		var _g = 0;
+		var _g1 = this.headers.length;
+		while(_g < _g1) {
+			var i = _g++;
+			if(this.headers[i].name == name) {
+				this.headers[i] = { name : name, value : value};
+				return;
+			}
+		}
+		this.headers.push({ name : name, value : value});
+	}
+	,setPostData: function(data) {
+		this.postData = data;
+		this.postBytes = null;
+	}
+	,onData: function(data) {
+	}
+	,onBytes: function(data) {
+	}
+	,onError: function(msg) {
+	}
+	,onStatus: function(status) {
+	}
+	,hasOnData: function() {
+		return !Reflect.compareMethods($bind(this,this.onData),this.emptyOnData);
+	}
+	,success: function(data) {
+		this.responseBytes = data;
+		this.responseAsString = null;
+		if(this.hasOnData()) {
+			this.onData(this.get_responseData());
+		}
+		this.onBytes(this.responseBytes);
+	}
+	,get_responseData: function() {
+		if(this.responseAsString == null && this.responseBytes != null) {
+			this.responseAsString = this.responseBytes.getString(0,this.responseBytes.length,haxe_io_Encoding.UTF8);
+		}
+		return this.responseAsString;
+	}
+	,__class__: haxe_http_HttpBase
+};
+var haxe_http_HttpJs = function(url) {
+	this.async = true;
+	this.withCredentials = false;
+	haxe_http_HttpBase.call(this,url);
+};
+haxe_http_HttpJs.__name__ = true;
+haxe_http_HttpJs.__super__ = haxe_http_HttpBase;
+haxe_http_HttpJs.prototype = $extend(haxe_http_HttpBase.prototype,{
+	request: function(post) {
+		var _gthis = this;
+		this.responseAsString = null;
+		this.responseBytes = null;
+		var r = this.req = js_Browser.createXMLHttpRequest();
+		var onreadystatechange = function(_) {
+			if(r.readyState != 4) {
+				return;
+			}
+			var s;
+			try {
+				s = r.status;
+			} catch( e ) {
+				var e1 = ((e) instanceof js__$Boot_HaxeError) ? e.val : e;
+				s = null;
+			}
+			if(s == 0 && typeof(window) != "undefined") {
+				var protocol = window.location.protocol.toLowerCase();
+				var rlocalProtocol = new EReg("^(?:about|app|app-storage|.+-extension|file|res|widget):$","");
+				var isLocal = rlocalProtocol.match(protocol);
+				if(isLocal) {
+					s = r.response != null ? 200 : 404;
+				}
+			}
+			if(s == undefined) {
+				s = null;
+			}
+			if(s != null) {
+				_gthis.onStatus(s);
+			}
+			if(s != null && s >= 200 && s < 400) {
+				_gthis.req = null;
+				var onreadystatechange1 = haxe_io_Bytes.ofData(r.response);
+				_gthis.success(onreadystatechange1);
+			} else if(s == null) {
+				_gthis.req = null;
+				_gthis.onError("Failed to connect or resolve host");
+			} else if(s == null) {
+				_gthis.req = null;
+				_gthis.responseBytes = haxe_io_Bytes.ofData(r.response);
+				_gthis.onError("Http Error #" + r.status);
+			} else {
+				switch(s) {
+				case 12007:
+					_gthis.req = null;
+					_gthis.onError("Unknown host");
+					break;
+				case 12029:
+					_gthis.req = null;
+					_gthis.onError("Failed to connect to host");
+					break;
+				default:
+					_gthis.req = null;
+					_gthis.responseBytes = haxe_io_Bytes.ofData(r.response);
+					_gthis.onError("Http Error #" + r.status);
+				}
+			}
+		};
+		if(this.async) {
+			r.onreadystatechange = onreadystatechange;
+		}
+		var uri;
+		var _g = this.postBytes;
+		var _g1 = this.postData;
+		if(_g1 == null) {
+			if(_g == null) {
+				uri = null;
+			} else {
+				var bytes = _g;
+				uri = new Blob([bytes.b.bufferValue]);
+			}
+		} else if(_g == null) {
+			var str = _g1;
+			uri = str;
+		} else {
+			uri = null;
+		}
+		if(uri != null) {
+			post = true;
+		} else {
+			var _g2 = 0;
+			var _g3 = this.params;
+			while(_g2 < _g3.length) {
+				var p = _g3[_g2];
+				++_g2;
+				if(uri == null) {
+					uri = "";
+				} else {
+					uri = Std.string(uri) + "&";
+				}
+				var s1 = p.name;
+				var value = Std.string(uri) + encodeURIComponent(s1) + "=";
+				var s2 = p.value;
+				uri = value + encodeURIComponent(s2);
+			}
+		}
+		try {
+			if(post) {
+				r.open("POST",this.url,this.async);
+			} else if(uri != null) {
+				var question = this.url.split("?").length <= 1;
+				r.open("GET",this.url + (question ? "?" : "&") + Std.string(uri),this.async);
+				uri = null;
+			} else {
+				r.open("GET",this.url,this.async);
+			}
+			r.responseType = "arraybuffer";
+		} catch( e2 ) {
+			var e3 = ((e2) instanceof js__$Boot_HaxeError) ? e2.val : e2;
+			this.req = null;
+			this.onError(e3.toString());
+			return;
+		}
+		r.withCredentials = this.withCredentials;
+		if(!Lambda.exists(this.headers,function(h) {
+			return h.name == "Content-Type";
+		}) && post && this.postData == null) {
+			r.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
+		}
+		var _g21 = 0;
+		var _g31 = this.headers;
+		while(_g21 < _g31.length) {
+			var h1 = _g31[_g21];
+			++_g21;
+			r.setRequestHeader(h1.name,h1.value);
+		}
+		r.send(uri);
+		if(!this.async) {
+			onreadystatechange(null);
+		}
+	}
+	,__class__: haxe_http_HttpJs
+});
+var haxe_io_Error = $hxEnums["haxe.io.Error"] = { __ename__ : true, __constructs__ : ["Blocked","Overflow","OutsideBounds","Custom"]
+	,Blocked: {_hx_index:0,__enum__:"haxe.io.Error",toString:$estr}
+	,Overflow: {_hx_index:1,__enum__:"haxe.io.Error",toString:$estr}
+	,OutsideBounds: {_hx_index:2,__enum__:"haxe.io.Error",toString:$estr}
+	,Custom: ($_=function(e) { return {_hx_index:3,e:e,__enum__:"haxe.io.Error",toString:$estr}; },$_.__params__ = ["e"],$_)
+};
+var httpstatus__$HttpStatusMessage_HttpStatusMessage_$Impl_$ = {};
+httpstatus__$HttpStatusMessage_HttpStatusMessage_$Impl_$.__name__ = true;
+httpstatus__$HttpStatusMessage_HttpStatusMessage_$Impl_$.fromCode = function(statusCode) {
+	switch(statusCode) {
+	case 100:
+		return "Continue";
+	case 101:
+		return "Switching Protocols";
+	case 102:
+		return "Processing";
+	case 200:
+		return "OK";
+	case 201:
+		return "Created";
+	case 202:
+		return "Accepted";
+	case 203:
+		return "Non-Authoritative Information";
+	case 204:
+		return "No Content";
+	case 205:
+		return "Reset Content";
+	case 206:
+		return "Partial Content";
+	case 207:
+		return "Multi-Status";
+	case 208:
+		return "Already Reported";
+	case 226:
+		return "IM Used";
+	case 300:
+		return "Multiple Choices";
+	case 301:
+		return "Moved Permanently";
+	case 302:
+		return "Found";
+	case 303:
+		return "See Other";
+	case 304:
+		return "Not Modified";
+	case 305:
+		return "Use Proxy";
+	case 306:
+		return "Switch Proxy";
+	case 307:
+		return "Temporary Redirect";
+	case 308:
+		return "Permanent Redirect";
+	case 400:
+		return "Bad Request";
+	case 401:
+		return "Unauthorized";
+	case 402:
+		return "Payment Required";
+	case 403:
+		return "Forbidden";
+	case 404:
+		return "Not Found";
+	case 405:
+		return "Method Not Allowed";
+	case 406:
+		return "Not Acceptable";
+	case 407:
+		return "Proxy Authentication Required";
+	case 408:
+		return "Request Timeout";
+	case 409:
+		return "Conflict";
+	case 410:
+		return "Gone";
+	case 411:
+		return "Length Required";
+	case 412:
+		return "Precondition Failed";
+	case 413:
+		return "Payload Too Large";
+	case 414:
+		return "URI Too Long";
+	case 415:
+		return "Unsupported Media Type";
+	case 416:
+		return "Range Not Satisfiable";
+	case 417:
+		return "Expectation Failed";
+	case 418:
+		return "I'm a teapot";
+	case 421:
+		return "Misdirected Request";
+	case 422:
+		return "Unprocessable Entity";
+	case 423:
+		return "Locked";
+	case 424:
+		return "Failed Dependency";
+	case 426:
+		return "Upgrade Required";
+	case 428:
+		return "Precondition Required";
+	case 429:
+		return "Too Many Requests";
+	case 431:
+		return "Request Header Fields Too Large";
+	case 451:
+		return "Unavailable For Legal Reasons";
+	case 500:
+		return "Internal Server Error";
+	case 501:
+		return "Not Implemented";
+	case 502:
+		return "Bad Gateway";
+	case 503:
+		return "Service Unavailable";
+	case 504:
+		return "Gateway Timeout";
+	case 505:
+		return "HTTP Version Not Supported";
+	case 506:
+		return "Variant Also Negotiates";
+	case 507:
+		return "Insufficient Storage";
+	case 508:
+		return "Loop Detected";
+	case 510:
+		return "Not Extended";
+	case 511:
+		return "Network Authentication Required";
+	default:
+		return "Unknown Status";
 	}
 };
 var js__$Boot_HaxeError = function(val) {
@@ -36,9 +1162,27 @@ var js__$Boot_HaxeError = function(val) {
 js__$Boot_HaxeError.__name__ = true;
 js__$Boot_HaxeError.__super__ = Error;
 js__$Boot_HaxeError.prototype = $extend(Error.prototype,{
+	__class__: js__$Boot_HaxeError
 });
 var js_Boot = function() { };
 js_Boot.__name__ = true;
+js_Boot.getClass = function(o) {
+	if(o == null) {
+		return null;
+	} else if(((o) instanceof Array)) {
+		return Array;
+	} else {
+		var cl = o.__class__;
+		if(cl != null) {
+			return cl;
+		}
+		var name = js_Boot.__nativeClassName(o);
+		if(name != null) {
+			return js_Boot.__resolveNativeClass(name);
+		}
+		return null;
+	}
+};
 js_Boot.__string_rec = function(o,s) {
 	if(o == null) {
 		return "null";
@@ -132,254 +1276,1900 @@ js_Boot.__string_rec = function(o,s) {
 		return String(o);
 	}
 };
-var model_Content = function() { };
-model_Content.__name__ = true;
-var view_App = function(props) {
-	React.Component.call(this,props);
-	this.jquery = $(window.document);
-	window.document.addEventListener("scroll",$bind(this,this.onScroll));
-	view_App.subpagesId.reverse();
-};
-view_App.__name__ = true;
-view_App.__super__ = React.Component;
-view_App.prototype = $extend(React.Component.prototype,{
-	render: function() {
-		return { $$typeof : $$tre, type : "div", props : { children : [{ $$typeof : $$tre, type : view_NavBar, props : { }, key : null, ref : null},{ $$typeof : $$tre, type : view_Home, props : { }, key : null, ref : null},{ $$typeof : $$tre, type : view_MyscanthusPresentation, props : { }, key : null, ref : null},{ $$typeof : $$tre, type : view_Mulch, props : { }, key : null, ref : null},{ $$typeof : $$tre, type : view_Litter, props : { }, key : null, ref : null},{ $$typeof : $$tre, type : view_Food, props : { }, key : null, ref : null},{ $$typeof : $$tre, type : view_Gallery, props : { }, key : null, ref : null},{ $$typeof : $$tre, type : view_Contact, props : { }, key : null, ref : null}]}, key : null, ref : null};
+js_Boot.__interfLoop = function(cc,cl) {
+	if(cc == null) {
+		return false;
 	}
-	,onScroll: function() {
+	if(cc == cl) {
+		return true;
+	}
+	if(Object.prototype.hasOwnProperty.call(cc,"__interfaces__")) {
+		var intf = cc.__interfaces__;
 		var _g = 0;
-		var _g1 = view_App.subpagesId;
-		while(_g < _g1.length) {
-			var id = _g1[_g];
-			++_g;
-			var elementScrollPlace = $("#" + id).offset().top;
-			if(this.jquery.scrollTop() >= elementScrollPlace) {
-				var currentActive = $(".active");
-				if(currentActive.attr("href") != "#" + id) {
-					currentActive.removeClass("active");
-					$(".nav-link[href=\"#" + id + "\"]").addClass("active");
-				}
-				break;
+		var _g1 = intf.length;
+		while(_g < _g1) {
+			var i = _g++;
+			var i1 = intf[i];
+			if(i1 == cl || js_Boot.__interfLoop(i1,cl)) {
+				return true;
 			}
 		}
 	}
-});
-var view_Contact = function(props) {
-	React.Component.call(this,props);
+	return js_Boot.__interfLoop(cc.__super__,cl);
 };
-view_Contact.__name__ = true;
-view_Contact.__super__ = React.Component;
-view_Contact.prototype = $extend(React.Component.prototype,{
-	render: function() {
-		return { $$typeof : $$tre, type : "div", props : { 'class' : "subpage greater-height", children : [{ $$typeof : $$tre, type : "span", props : { id : "contact", 'class' : "anchor"}, key : null, ref : null},{ $$typeof : $$tre, type : "h1", props : { children : " Contact "}, key : null, ref : null},{ $$typeof : $$tre, type : "div", props : { 'class' : "container", children : [{ $$typeof : $$tre, type : "div", props : { 'class' : "row", children : { $$typeof : $$tre, type : "div", props : { 'class' : "col", children : [{ $$typeof : $$tre, type : "h3", props : { 'class' : "centered", children : "En direct de l'exploitation agricole"}, key : null, ref : null},{ $$typeof : $$tre, type : "p", props : { 'class' : "centered", children : ["à Fleury sur Orne ",{ $$typeof : $$tre, type : "br", props : { }, key : null, ref : null},"dans l'agglomération caennaise",{ $$typeof : $$tre, type : "br", props : { }, key : null, ref : null},"possibilité de livraison"]}, key : null, ref : null},{ $$typeof : $$tre, type : "p", props : { 'class' : "centered", children : ["et Moulins-en-Bessin ",{ $$typeof : $$tre, type : "br", props : { 'class' : "small-screen-visible"}, key : null, ref : null}," (49.250342, -0.561784)"]}, key : null, ref : null},{ $$typeof : $$tre, type : "div", props : { 'class' : "div-centered", children : [{ $$typeof : $$tre, type : "h4", props : { children : " Martin Pomikal "}, key : null, ref : null},{ $$typeof : $$tre, type : "p", props : { children : ["07 89 85 00 04",{ $$typeof : $$tre, type : "br", props : { }, key : null, ref : null},"martin.pomikal@gmail.com",{ $$typeof : $$tre, type : "br", props : { }, key : null, ref : null},"38 avenue d'Harcourt"," ",{ $$typeof : $$tre, type : "br", props : { 'class' : "small-screen-visible"}, key : null, ref : null}," ","(adresse d'accès)",{ $$typeof : $$tre, type : "br", props : { }, key : null, ref : null},"5 chemin des Coteaux"," ",{ $$typeof : $$tre, type : "br", props : { 'class' : "small-screen-visible"}, key : null, ref : null}," ","(adresse postale)",{ $$typeof : $$tre, type : "br", props : { }, key : null, ref : null},"14123 Fleury sur Orne ",{ $$typeof : $$tre, type : "br", props : { }, key : null, ref : null},"Dans l'agglomération caennaise"]}, key : null, ref : null},{ $$typeof : $$tre, type : "h4", props : { children : " Lydie Pomikal "}, key : null, ref : null},{ $$typeof : $$tre, type : "p", props : { children : " 06 08 05 92 38 "}, key : null, ref : null},{ $$typeof : $$tre, type : "h4", props : { children : " Henri Pomikal "}, key : null, ref : null},{ $$typeof : $$tre, type : "p", props : { children : " 06 07 16 12 24 "}, key : null, ref : null}]}, key : null, ref : null}]}, key : null, ref : null}}, key : null, ref : null},{ $$typeof : $$tre, type : "div", props : { 'class' : "row", children : { $$typeof : $$tre, type : "img", props : { src : "images/map.png", 'class' : "img-fluid div-centered"}, key : null, ref : null}}, key : null, ref : null},{ $$typeof : $$tre, type : "div", props : { 'class' : "row", children : { $$typeof : $$tre, type : view_MailForm, props : { }, key : null, ref : null}}, key : null, ref : null}]}, key : null, ref : null}]}, key : null, ref : null};
+js_Boot.__instanceof = function(o,cl) {
+	if(cl == null) {
+		return false;
 	}
-});
-var view_Food = function(props) {
-	React.Component.call(this,props);
-};
-view_Food.__name__ = true;
-view_Food.__super__ = React.Component;
-view_Food.prototype = $extend(React.Component.prototype,{
-	render: function() {
-		return { $$typeof : $$tre, type : "div", props : { 'class' : "subpage", children : [{ $$typeof : $$tre, type : "span", props : { id : "food", 'class' : "anchor"}, key : null, ref : null},{ $$typeof : $$tre, type : "h1", props : { children : [" ",model_Content.food.header," "]}, key : null, ref : null},{ $$typeof : $$tre, type : "p", props : { 'class' : "centered", children : [" ",model_Content.food.quote," "]}, key : null, ref : null},{ $$typeof : $$tre, type : "p", props : { 'class' : "centered", children : ["Voir ",{ $$typeof : $$tre, type : "a", props : { href : "#packaging", children : "conditionnement"}, key : null, ref : null}]}, key : null, ref : null},{ $$typeof : $$tre, type : "div", props : { id : "food-background", 'class' : "background", children : [{ $$typeof : $$tre, type : "div", props : { 'class' : "content", children : { $$typeof : $$tre, type : "div", props : { children : [{ $$typeof : $$tre, type : "h2", props : { children : [" ",model_Content.food.use.header," "]}, key : null, ref : null},{ $$typeof : $$tre, type : "ul", props : { children : this.createChildren(model_Content.food.use.content)}, key : null, ref : null}]}, key : null, ref : null}}, key : null, ref : null},{ $$typeof : $$tre, type : "div", props : { 'class' : "content", children : { $$typeof : $$tre, type : "div", props : { children : [{ $$typeof : $$tre, type : "h2", props : { children : [" ",model_Content.food.pros.header," "]}, key : null, ref : null},{ $$typeof : $$tre, type : "ul", props : { children : this.createChildren(model_Content.food.pros.content)}, key : null, ref : null}]}, key : null, ref : null}}, key : null, ref : null}]}, key : null, ref : null}]}, key : null, ref : null};
-	}
-	,createChildren: function(items) {
-		var _g = [];
-		var _g1 = 0;
-		while(_g1 < items.length) {
-			var item = items[_g1];
-			++_g1;
-			_g.push({ $$typeof : $$tre, type : "li", props : { children : item}, key : null, ref : null});
-		}
-		return _g;
-	}
-});
-var view_Gallery = function(props) {
-	React.Component.call(this,props);
-	this.delayInSeconds = 3;
-	this._imagesName = ["cheval miscanthus 1 2.jpg","cheval miscanthus 2.JPG","conditionnement miscanthus 2.jpg","IMG-1029.jpeg","IMG-1030.jpeg","IMG-4545.JPG","IMG-4547.JPG","IMG_2958.JPG","IMG_2959.JPG","IMG_2960.JPG","litter.jpg","novabiom_miscanthus_usages_paillis[1].jpg","P1010326.JPG","P1010331.JPG","P1010361.JPG","P1010364.JPG","P1010384.JPG","P1010392.JPG","P1010403.JPG","P1010409.JPG","P1010416.JPG","P1010438.JPG","P1020652.JPG","photo 2[1].JPG","unnamed.jpg","unnamed1.jpg","unnamed2.jpg","unnamed3.jpg","unnamed4.jpg","unnamed5.jpg"];
-	this.timer = new haxe_Timer(this.delayInSeconds * 1000);
-};
-view_Gallery.__name__ = true;
-view_Gallery.__super__ = React.Component;
-view_Gallery.prototype = $extend(React.Component.prototype,{
-	componentDidMount: function() {
-		this.carousel = $("#carousel");
-		this.carouselImages = $("#carousel img");
-		this.carouselLastElement = this.carouselImages.length - 1;
-		this.current = 0;
-		this.carouselImages.css("display","none");
-		var currentImg = this.carouselImages.eq(this.current);
-		currentImg.css("display","initial");
-		this.timer.run = $bind(this,this.next);
-	}
-	,next: function() {
-		var currentImg = this.carouselImages.eq(this.current);
-		currentImg.css("display","none");
-		this.current = this.current == this.carouselLastElement ? 0 : this.current + 1;
-		var currentImg1 = this.carouselImages.eq(this.current);
-		currentImg1.css("display","initial");
-	}
-	,render: function() {
-		return { $$typeof : $$tre, type : "div", props : { 'class' : "subpage fullsize", children : [{ $$typeof : $$tre, type : "span", props : { id : "gallery", 'class' : "anchor"}, key : null, ref : null},{ $$typeof : $$tre, type : "h1", props : { children : " Galerie "}, key : null, ref : null},{ $$typeof : $$tre, type : "div", props : { id : "carousel", children : { $$typeof : $$tre, type : "ul", props : { children : this.createChildren()}, key : null, ref : null}}, key : null, ref : null}]}, key : null, ref : null};
-	}
-	,createChildren: function() {
-		var _g = [];
-		var _g1 = 0;
-		var _g2 = this._imagesName;
-		while(_g1 < _g2.length) {
-			var item = _g2[_g1];
-			++_g1;
-			_g.push({ $$typeof : $$tre, type : "li", props : { children : { $$typeof : $$tre, type : "img", props : { src : "./images/gallery/" + item}, key : null, ref : null}}, key : null, ref : null});
-		}
-		return _g;
-	}
-});
-var view_Home = function(props) {
-	React.Component.call(this,props);
-};
-view_Home.__name__ = true;
-view_Home.__super__ = React.Component;
-view_Home.prototype = $extend(React.Component.prototype,{
-	render: function() {
-		return { $$typeof : $$tre, type : "div", props : { id : "home", children : { $$typeof : $$tre, type : "div", props : { 'class' : "content", children : [{ $$typeof : $$tre, type : "h1", props : { children : model_Content.home.header}, key : null, ref : null},{ $$typeof : $$tre, type : "p", props : { children : model_Content.home.content}, key : null, ref : null},{ $$typeof : $$tre, type : "span", props : { 'class' : "vignette", children : { $$typeof : $$tre, type : "span", props : { children : "Local"}, key : null, ref : null}}, key : null, ref : null},{ $$typeof : $$tre, type : "div", props : { 'class' : "subcontent container-fluid", children : { $$typeof : $$tre, type : "div", props : { 'class' : "row", children : [{ $$typeof : $$tre, type : "div", props : { 'class' : "col", children : { $$typeof : $$tre, type : "div", props : { 'class' : "thumbnail", children : [{ $$typeof : $$tre, type : "img", props : { src : "./images/normandy_flag.png"}, key : null, ref : null},{ $$typeof : $$tre, type : "div", props : { 'class' : "caption", children : { $$typeof : $$tre, type : "p", props : { children : "Produit Normand"}, key : null, ref : null}}, key : null, ref : null}]}, key : null, ref : null}}, key : null, ref : null},{ $$typeof : $$tre, type : "div", props : { 'class' : "col", children : { $$typeof : $$tre, type : "div", props : { 'class' : "thumbnail", children : [{ $$typeof : $$tre, type : "img", props : { src : "./images/logoeuropeenpantoneab.jpg"}, key : null, ref : null},{ $$typeof : $$tre, type : "div", props : { 'class' : "caption", children : { $$typeof : $$tre, type : "p", props : { children : ["Agriculture Biologique",{ $$typeof : $$tre, type : "br", props : { }, key : null, ref : null},"FR-BIO-13"]}, key : null, ref : null}}, key : null, ref : null}]}, key : null, ref : null}}, key : null, ref : null}]}, key : null, ref : null}}, key : null, ref : null}]}, key : null, ref : null}}, key : null, ref : null};
-	}
-});
-var view_Litter = function(props) {
-	React.Component.call(this,props);
-};
-view_Litter.__name__ = true;
-view_Litter.__super__ = React.Component;
-view_Litter.prototype = $extend(React.Component.prototype,{
-	render: function() {
-		return { $$typeof : $$tre, type : "div", props : { 'class' : "subpage", children : [{ $$typeof : $$tre, type : "span", props : { id : "litter", 'class' : "anchor"}, key : null, ref : null},{ $$typeof : $$tre, type : "h1", props : { children : [" ",model_Content.litter.header," "]}, key : null, ref : null},{ $$typeof : $$tre, type : "p", props : { 'class' : "centered", children : [" ",model_Content.litter.quote," "]}, key : null, ref : null},{ $$typeof : $$tre, type : "p", props : { 'class' : "centered", children : ["Voir ",{ $$typeof : $$tre, type : "a", props : { href : "#packaging", children : "conditionnement"}, key : null, ref : null}]}, key : null, ref : null},{ $$typeof : $$tre, type : "div", props : { id : "litter-background", 'class' : "background", children : [{ $$typeof : $$tre, type : "div", props : { 'class' : "content right", children : { $$typeof : $$tre, type : "div", props : { children : [{ $$typeof : $$tre, type : "h2", props : { children : [" ",model_Content.litter.eco.header," "]}, key : null, ref : null},{ $$typeof : $$tre, type : "ul", props : { children : this.createTextChildren(model_Content.litter.eco.content)}, key : null, ref : null}]}, key : null, ref : null}}, key : null, ref : null},{ $$typeof : $$tre, type : "div", props : { 'class' : "content left", children : { $$typeof : $$tre, type : "div", props : { children : [{ $$typeof : $$tre, type : "h2", props : { children : [" ",model_Content.litter.pros.header," "]}, key : null, ref : null},{ $$typeof : $$tre, type : "ul", props : { children : this.createTextChildren(model_Content.litter.pros.content)}, key : null, ref : null}]}, key : null, ref : null}}, key : null, ref : null}]}, key : null, ref : null}]}, key : null, ref : null};
-	}
-	,createTextChildren: function(items) {
-		var _g = [];
-		var _g1 = 0;
-		while(_g1 < items.length) {
-			var item = items[_g1];
-			++_g1;
-			_g.push({ $$typeof : $$tre, type : "li", props : { children : item}, key : null, ref : null});
-		}
-		return _g;
-	}
-});
-var view_MailForm = function(props) {
-	React.Component.call(this,props);
-};
-view_MailForm.__name__ = true;
-view_MailForm.__super__ = React.Component;
-view_MailForm.prototype = $extend(React.Component.prototype,{
-	componentDidMount: function() {
-		$("#submit-button").on("click",null,$bind(this,this.onSubmit));
-	}
-	,render: function() {
-		return { $$typeof : $$tre, type : "div", props : { 'class' : "container mail-form", children : { $$typeof : $$tre, type : "div", props : { 'class' : "row justify-content-center", children : { $$typeof : $$tre, type : "form", props : { children : [{ $$typeof : $$tre, type : "div", props : { 'class' : "form-row", children : [{ $$typeof : $$tre, type : "div", props : { 'class' : "form-group col-6", children : { $$typeof : $$tre, type : "input", props : { type : "text", required : true, placeholder : "Nom*", name : "name", 'class' : "form-control"}, key : null, ref : null}}, key : null, ref : null},{ $$typeof : $$tre, type : "div", props : { 'class' : "form-group col-6", children : { $$typeof : $$tre, type : "input", props : { type : "email", required : true, placeholder : "Email*", name : "mail", 'class' : "form-control"}, key : null, ref : null}}, key : null, ref : null}]}, key : null, ref : null},{ $$typeof : $$tre, type : "div", props : { 'class' : "form-group", children : { $$typeof : $$tre, type : "input", props : { type : "text", placeholder : "Sujet", name : "subject", 'class' : "form-control"}, key : null, ref : null}}, key : null, ref : null},{ $$typeof : $$tre, type : "div", props : { 'class' : "form-group", children : { $$typeof : $$tre, type : "textarea", props : { rows : "2", placeholder : "Message", name : "message", 'class' : "form-control"}, key : null, ref : null}}, key : null, ref : null},{ $$typeof : $$tre, type : "button", props : { type : "button", id : "submit-button", 'class' : "btn btn-primary submit-button", children : "Envoyer"}, key : null, ref : null}]}, key : null, ref : null}}, key : null, ref : null}}, key : null, ref : null};
-	}
-	,onSubmit: function() {
-	}
-});
-var view_Mulch = function(props) {
-	React.Component.call(this,props);
-};
-view_Mulch.__name__ = true;
-view_Mulch.__super__ = React.Component;
-view_Mulch.prototype = $extend(React.Component.prototype,{
-	render: function() {
-		return { $$typeof : $$tre, type : "div", props : { 'class' : "subpage", children : [{ $$typeof : $$tre, type : "span", props : { id : "mulch", 'class' : "anchor"}, key : null, ref : null},{ $$typeof : $$tre, type : "h1", props : { children : [" ",model_Content.mulch.header," "]}, key : null, ref : null},{ $$typeof : $$tre, type : "p", props : { 'class' : "centered", children : [" ",model_Content.mulch.quote," "]}, key : null, ref : null},{ $$typeof : $$tre, type : "div", props : { id : "mulch-background", 'class' : "background", children : [{ $$typeof : $$tre, type : "div", props : { 'class' : "content right", children : { $$typeof : $$tre, type : "div", props : { children : [{ $$typeof : $$tre, type : "h2", props : { children : [" ",model_Content.mulch.eco.header," "]}, key : null, ref : null},{ $$typeof : $$tre, type : "ul", props : { children : this.createTextChildren(model_Content.mulch.eco.content)}, key : null, ref : null}]}, key : null, ref : null}}, key : null, ref : null},{ $$typeof : $$tre, type : "div", props : { 'class' : "content left", children : { $$typeof : $$tre, type : "div", props : { children : [{ $$typeof : $$tre, type : "h2", props : { children : [" ",model_Content.mulch.aesthetic.header," "]}, key : null, ref : null},{ $$typeof : $$tre, type : "ul", props : { children : this.createTextChildren(model_Content.mulch.aesthetic.content)}, key : null, ref : null}]}, key : null, ref : null}}, key : null, ref : null},{ $$typeof : $$tre, type : "div", props : { 'class' : "content", children : { $$typeof : $$tre, type : "div", props : { children : [{ $$typeof : $$tre, type : "span", props : { id : "packaging", 'class' : "anchor"}, key : null, ref : null},{ $$typeof : $$tre, type : "h2", props : { children : [" ",model_Content.mulch.packaging.header," "]}, key : null, ref : null},{ $$typeof : $$tre, type : "ul", props : { children : this.createTextChildren(model_Content.mulch.packaging.content)}, key : null, ref : null}]}, key : null, ref : null}}, key : null, ref : null}]}, key : null, ref : null}]}, key : null, ref : null};
-	}
-	,createTextChildren: function(items) {
-		var _g = [];
-		var _g1 = 0;
-		while(_g1 < items.length) {
-			var item = items[_g1];
-			++_g1;
-			_g.push({ $$typeof : $$tre, type : "li", props : { children : item}, key : null, ref : null});
-		}
-		return _g;
-	}
-});
-var view_MyscanthusPresentation = function(props) {
-	React.Component.call(this,props);
-};
-view_MyscanthusPresentation.__name__ = true;
-view_MyscanthusPresentation.__super__ = React.Component;
-view_MyscanthusPresentation.prototype = $extend(React.Component.prototype,{
-	render: function() {
-		return { $$typeof : $$tre, type : "div", props : { 'class' : "subpage", children : [{ $$typeof : $$tre, type : "span", props : { id : "myscanthus", 'class' : "anchor"}, key : null, ref : null},{ $$typeof : $$tre, type : "h1", props : { children : [" ",model_Content.miscanthus.header," "]}, key : null, ref : null},{ $$typeof : $$tre, type : "div", props : { id : "mys-background", 'class' : "background", children : [{ $$typeof : $$tre, type : "div", props : { 'class' : "content right", children : { $$typeof : $$tre, type : "div", props : { children : [{ $$typeof : $$tre, type : "h2", props : { children : [" ",model_Content.miscanthus.farming.header," "]}, key : null, ref : null},{ $$typeof : $$tre, type : "p", props : { children : model_Content.miscanthus.farming.content}, key : null, ref : null}]}, key : null, ref : null}}, key : null, ref : null},{ $$typeof : $$tre, type : "div", props : { 'class' : "content left", children : { $$typeof : $$tre, type : "div", props : { children : [{ $$typeof : $$tre, type : "h2", props : { children : [" ",model_Content.miscanthus.prosEnvironnement.header," "]}, key : null, ref : null},{ $$typeof : $$tre, type : "p", props : { children : [model_Content.miscanthus.prosEnvironnement.content.description,{ $$typeof : $$tre, type : "ul", props : { children : this.createChildren()}, key : null, ref : null}]}, key : null, ref : null}]}, key : null, ref : null}}, key : null, ref : null}]}, key : null, ref : null}]}, key : null, ref : null};
-	}
-	,createChildren: function() {
-		var _g = [];
-		var _g1 = 0;
-		var _g2 = model_Content.miscanthus.prosEnvironnement.content.items;
-		while(_g1 < _g2.length) {
-			var item = _g2[_g1];
-			++_g1;
-			_g.push({ $$typeof : $$tre, type : "li", props : { children : item}, key : null, ref : null});
-		}
-		return _g;
-	}
-});
-var view_ScreenSize = $hxEnums["view.ScreenSize"] = { __ename__ : true, __constructs__ : ["Small","Big"]
-	,Small: {_hx_index:0,__enum__:"view.ScreenSize",toString:$estr}
-	,Big: {_hx_index:1,__enum__:"view.ScreenSize",toString:$estr}
-};
-var view_NavBar = function(props) {
-	this.visible = false;
-	React.Component.call(this,props);
-};
-view_NavBar.__name__ = true;
-view_NavBar.__super__ = React.Component;
-view_NavBar.prototype = $extend(React.Component.prototype,{
-	render: function() {
-		return { $$typeof : $$tre, type : "div", props : { 'class' : "navbar sticky-top", children : [this.getNavbar(view_ScreenSize.Big),this.getNavbar(view_ScreenSize.Small),{ $$typeof : $$tre, type : "a", props : { href : "#", 'class' : "logo"}, key : null, ref : null},{ $$typeof : $$tre, type : "i", props : { onClick : $bind(this,this.toggleMenu), 'class' : "material-icons menu-icon small-screen-visble", children : "menu"}, key : null, ref : null}]}, key : null, ref : null};
-	}
-	,toggleMenu: function() {
-		this.visible = !this.visible;
-		if(this.visible) {
-			$(".nav-items.small-screen").addClass("small-screen-visible");
-			$(".navbar").addClass("navbar-extended");
+	switch(cl) {
+	case Array:
+		return ((o) instanceof Array);
+	case Bool:
+		return typeof(o) == "boolean";
+	case Dynamic:
+		return o != null;
+	case Float:
+		return typeof(o) == "number";
+	case Int:
+		if(typeof(o) == "number") {
+			return ((o | 0) === o);
 		} else {
-			$(".nav-items.small-screen").removeClass("small-screen-visible");
-			$(".navbar").removeClass("navbar-extended");
+			return false;
 		}
-	}
-	,getNavbar: function(screenSize) {
-		switch(screenSize._hx_index) {
-		case 0:
-			return { $$typeof : $$tre, type : "div", props : { 'class' : "nav-items small-screen", children : { $$typeof : $$tre, type : "ul", props : { 'class' : "nav flex-column", children : [{ $$typeof : $$tre, type : "li", props : { 'class' : "nav-item", children : { $$typeof : $$tre, type : "a", props : { href : "#home", 'class' : "nav-link active", children : "Accueil"}, key : null, ref : null}}, key : null, ref : null},{ $$typeof : $$tre, type : "li", props : { 'class' : "nav-item", children : { $$typeof : $$tre, type : "a", props : { href : "#myscanthus", 'class' : "nav-link", children : "Miscanthus"}, key : null, ref : null}}, key : null, ref : null},{ $$typeof : $$tre, type : "li", props : { 'class' : "nav-item", children : { $$typeof : $$tre, type : "a", props : { href : "#mulch", 'class' : "nav-link", children : "Paillage Environnemental"}, key : null, ref : null}}, key : null, ref : null},{ $$typeof : $$tre, type : "li", props : { 'class' : "nav-item", children : { $$typeof : $$tre, type : "a", props : { href : "#litter", 'class' : "nav-link", children : "Litière Animale"}, key : null, ref : null}}, key : null, ref : null},{ $$typeof : $$tre, type : "li", props : { 'class' : "nav-item", children : { $$typeof : $$tre, type : "a", props : { href : "#food", 'class' : "nav-link", children : "Complément Alimentaire Animaux"}, key : null, ref : null}}, key : null, ref : null},{ $$typeof : $$tre, type : "li", props : { 'class' : "nav-item", children : { $$typeof : $$tre, type : "a", props : { href : "#gallery", 'class' : "nav-link", children : "Galerie"}, key : null, ref : null}}, key : null, ref : null},{ $$typeof : $$tre, type : "li", props : { 'class' : "nav-item", children : { $$typeof : $$tre, type : "a", props : { href : "#contact", 'class' : "nav-link", children : "Contact"}, key : null, ref : null}}, key : null, ref : null}]}, key : null, ref : null}}, key : null, ref : null};
-		case 1:
-			return { $$typeof : $$tre, type : "div", props : { 'class' : "nav-items big-screen", children : [{ $$typeof : $$tre, type : "ul", props : { id : "left-navbar", 'class' : "nav", children : [{ $$typeof : $$tre, type : "li", props : { 'class' : "nav-item", children : { $$typeof : $$tre, type : "a", props : { href : "#home", 'class' : "nav-link active", children : "Accueil"}, key : null, ref : null}}, key : null, ref : null},{ $$typeof : $$tre, type : "li", props : { 'class' : "nav-item", children : { $$typeof : $$tre, type : "a", props : { href : "#myscanthus", 'class' : "nav-link", children : "Miscanthus"}, key : null, ref : null}}, key : null, ref : null},{ $$typeof : $$tre, type : "li", props : { 'class' : "nav-item", children : { $$typeof : $$tre, type : "a", props : { href : "#mulch", 'class' : "nav-link", children : "Paillage Environnemental"}, key : null, ref : null}}, key : null, ref : null},{ $$typeof : $$tre, type : "li", props : { 'class' : "nav-item", children : { $$typeof : $$tre, type : "a", props : { href : "#litter", 'class' : "nav-link", children : "Litière Animale"}, key : null, ref : null}}, key : null, ref : null}]}, key : null, ref : null},{ $$typeof : $$tre, type : "ul", props : { id : "right-navbar", 'class' : "nav", children : [{ $$typeof : $$tre, type : "li", props : { 'class' : "nav-item", children : { $$typeof : $$tre, type : "a", props : { href : "#food", 'class' : "nav-link", children : "Complément Alimentaire Animaux"}, key : null, ref : null}}, key : null, ref : null},{ $$typeof : $$tre, type : "li", props : { 'class' : "nav-item", children : { $$typeof : $$tre, type : "a", props : { href : "#gallery", 'class' : "nav-link", children : "Galerie"}, key : null, ref : null}}, key : null, ref : null},{ $$typeof : $$tre, type : "li", props : { 'class' : "nav-item", children : { $$typeof : $$tre, type : "a", props : { href : "#contact", 'class' : "nav-link", children : "Contact"}, key : null, ref : null}}, key : null, ref : null}]}, key : null, ref : null}]}, key : null, ref : null};
+		break;
+	case String:
+		return typeof(o) == "string";
+	default:
+		if(o != null) {
+			if(typeof(cl) == "function") {
+				if(js_Boot.__downcastCheck(o,cl)) {
+					return true;
+				}
+			} else if(typeof(cl) == "object" && js_Boot.__isNativeObj(cl)) {
+				if(((o) instanceof cl)) {
+					return true;
+				}
+			}
+		} else {
+			return false;
 		}
+		if(cl == Class ? o.__name__ != null : false) {
+			return true;
+		}
+		if(cl == Enum ? o.__ename__ != null : false) {
+			return true;
+		}
+		return o.__enum__ != null ? $hxEnums[o.__enum__] == cl : false;
 	}
+};
+js_Boot.__downcastCheck = function(o,cl) {
+	if(!((o) instanceof cl)) {
+		if(cl.__isInterface__) {
+			return js_Boot.__interfLoop(js_Boot.getClass(o),cl);
+		} else {
+			return false;
+		}
+	} else {
+		return true;
+	}
+};
+js_Boot.__cast = function(o,t) {
+	if(o == null || js_Boot.__instanceof(o,t)) {
+		return o;
+	} else {
+		throw new js__$Boot_HaxeError("Cannot cast " + Std.string(o) + " to " + Std.string(t));
+	}
+};
+js_Boot.__nativeClassName = function(o) {
+	var name = js_Boot.__toStr.call(o).slice(8,-1);
+	if(name == "Object" || name == "Function" || name == "Math" || name == "JSON") {
+		return null;
+	}
+	return name;
+};
+js_Boot.__isNativeObj = function(o) {
+	return js_Boot.__nativeClassName(o) != null;
+};
+js_Boot.__resolveNativeClass = function(name) {
+	return $global[name];
+};
+var js_Browser = function() { };
+js_Browser.__name__ = true;
+js_Browser.createXMLHttpRequest = function() {
+	if(typeof XMLHttpRequest != "undefined") {
+		return new XMLHttpRequest();
+	}
+	if(typeof ActiveXObject != "undefined") {
+		return new ActiveXObject("Microsoft.XMLHTTP");
+	}
+	throw new js__$Boot_HaxeError("Unable to create XMLHttpRequest object.");
+};
+var js_lib__$ArrayBuffer_ArrayBufferCompat = function() { };
+js_lib__$ArrayBuffer_ArrayBufferCompat.__name__ = true;
+js_lib__$ArrayBuffer_ArrayBufferCompat.sliceImpl = function(begin,end) {
+	var u = new Uint8Array(this,begin,end == null ? null : end - begin);
+	var resultArray = new Uint8Array(u.byteLength);
+	resultArray.set(u);
+	return resultArray.buffer;
+};
+var tink_chunk_ChunkBase = function() { };
+tink_chunk_ChunkBase.__name__ = true;
+tink_chunk_ChunkBase.prototype = {
+	flatten: function(into) {
+	}
+	,__class__: tink_chunk_ChunkBase
+};
+var tink_chunk_ChunkObject = function() { };
+tink_chunk_ChunkObject.__name__ = true;
+tink_chunk_ChunkObject.__isInterface__ = true;
+tink_chunk_ChunkObject.prototype = {
+	__class__: tink_chunk_ChunkObject
+};
+var tink__$Chunk_EmptyChunk = function() {
+};
+tink__$Chunk_EmptyChunk.__name__ = true;
+tink__$Chunk_EmptyChunk.__interfaces__ = [tink_chunk_ChunkObject];
+tink__$Chunk_EmptyChunk.__super__ = tink_chunk_ChunkBase;
+tink__$Chunk_EmptyChunk.prototype = $extend(tink_chunk_ChunkBase.prototype,{
+	getLength: function() {
+		return 0;
+	}
+	,blitTo: function(target,offset) {
+	}
+	,toString: function() {
+		return "";
+	}
+	,toBytes: function() {
+		return tink__$Chunk_EmptyChunk.EMPTY;
+	}
+	,__class__: tink__$Chunk_EmptyChunk
 });
+var tink__$Chunk_Chunk_$Impl_$ = {};
+tink__$Chunk_Chunk_$Impl_$.__name__ = true;
+tink__$Chunk_Chunk_$Impl_$.concat = function(this1,that) {
+	return tink_chunk_CompoundChunk.cons(this1,that);
+};
+tink__$Chunk_Chunk_$Impl_$.catChunk = function(a,b) {
+	return tink__$Chunk_Chunk_$Impl_$.concat(a,b);
+};
+var tink__$Url_Url_$Impl_$ = {};
+tink__$Url_Url_$Impl_$.__name__ = true;
+tink__$Url_Url_$Impl_$.resolve = function(this1,that) {
+	if(that.scheme != null) {
+		return that;
+	} else if(that.hosts[0] != null) {
+		if(that.scheme != null) {
+			return that;
+		} else {
+			var copy = Reflect.copy(that);
+			copy.scheme = this1.scheme;
+			return copy;
+		}
+	} else {
+		var parts = { path : tink_url__$Path_Path_$Impl_$.join(this1.path,that.path), payload : "", scheme : this1.scheme, query : that.query, auth : this1.auth, hosts : this1.hosts, hash : that.hash};
+		tink__$Url_Url_$Impl_$.makePayload(parts);
+		var this2 = parts;
+		return this2;
+	}
+};
+tink__$Url_Url_$Impl_$.makePayload = function(parts) {
+	var payload = "";
+	var _g6 = parts.scheme;
+	var _g5 = parts.query;
+	var _g4 = parts.payload;
+	var _g3 = parts.path;
+	var _g2 = parts.hosts;
+	var _g1 = parts.hash;
+	var _g = parts.auth;
+	if(_g == null) {
+		if(_g2.length != 0) {
+			var v = _g2;
+			payload += "//" + v.join(",");
+		}
+	} else if(_g2.length == 0) {
+		var auth = _g;
+		payload += "//" + (auth == null ? "" : "" + auth + "@");
+	} else {
+		var auth1 = _g;
+		var v1 = _g2;
+		payload += "//" + (auth1 == null ? "" : "" + auth1 + "@") + v1.join(",");
+	}
+	payload += parts.path;
+	var _g7 = parts.query;
+	if(_g7 != null) {
+		var v2 = _g7;
+		payload += "?" + v2;
+	}
+	var _g8 = parts.hash;
+	if(_g8 != null) {
+		var v3 = _g8;
+		payload += "#" + v3;
+	}
+	parts.payload = payload.toString();
+};
+tink__$Url_Url_$Impl_$.toString = function(this1) {
+	if(this1.scheme == null) {
+		return this1.payload;
+	} else {
+		return "" + this1.scheme + ":" + this1.payload;
+	}
+};
+tink__$Url_Url_$Impl_$.fromString = function(s) {
+	return tink__$Url_Url_$Impl_$.parse(s);
+};
+tink__$Url_Url_$Impl_$.noop = function(_) {
+};
+tink__$Url_Url_$Impl_$.parse = function(s,onError) {
+	if(s == null) {
+		return tink__$Url_Url_$Impl_$.parse("");
+	}
+	if(onError == null) {
+		onError = tink__$Url_Url_$Impl_$.noop;
+	}
+	s = StringTools.trim(s);
+	if(StringTools.startsWith(s,"data:")) {
+		var this1 = { scheme : "data", payload : HxOverrides.substr(s,5,null), hosts : []};
+		return this1;
+	}
+	var FORMAT = new EReg("^(([a-zA-Z][a-zA-Z0-9\\-+.]*):)?((//(([^@/]+)@)?([^/?#]*))?([^?#]*)(\\?([^#]*))?(#(.*))?)$","");
+	var HOST = new EReg("^(\\[(.*)\\]|([^:]*))(:(.*))?$","");
+	FORMAT.match(s);
+	var hosts;
+	var _g = FORMAT.matched(7);
+	if(_g == null) {
+		hosts = [];
+	} else {
+		var v = _g;
+		var _g1 = [];
+		var _g11 = 0;
+		var _g2 = v.split(",");
+		while(_g11 < _g2.length) {
+			var host = _g2[_g11];
+			++_g11;
+			HOST.match(host);
+			var host1;
+			var _g12 = HOST.matched(2);
+			var _g21 = HOST.matched(3);
+			if(_g12 == null) {
+				var ipv4 = _g21;
+				host1 = ipv4;
+			} else if(_g21 == null) {
+				var ipv6 = _g12;
+				host1 = "[" + ipv6 + "]";
+			} else {
+				onError("invalid host " + host);
+				host1 = null;
+			}
+			var port;
+			var _g3 = HOST.matched(5);
+			if(_g3 == null) {
+				port = null;
+			} else {
+				var v1 = _g3;
+				var _g31 = Std.parseInt(v1);
+				if(_g31 == null) {
+					onError("invalid port " + v1);
+					port = null;
+				} else {
+					var p = _g31;
+					port = p;
+				}
+			}
+			_g1.push(tink_url__$Host_Host_$Impl_$._new(host1,port));
+		}
+		hosts = _g1;
+	}
+	var path = FORMAT.matched(8);
+	if(hosts.length > 0 && path.charAt(0) != "/") {
+		path = "/" + path;
+	}
+	var this2 = { scheme : FORMAT.matched(2), payload : FORMAT.matched(3), hosts : hosts, auth : FORMAT.matched(6), path : tink_url__$Path_Path_$Impl_$.ofString(path), query : FORMAT.matched(10), hash : FORMAT.matched(12)};
+	return this2;
+};
+var tink_chunk_ByteChunk = function(data,from,to) {
+	this.data = data;
+	this.from = from;
+	this.to = to;
+};
+tink_chunk_ByteChunk.__name__ = true;
+tink_chunk_ByteChunk.__interfaces__ = [tink_chunk_ChunkObject];
+tink_chunk_ByteChunk.of = function(b) {
+	if(b.length == 0) {
+		return tink__$Chunk_Chunk_$Impl_$.EMPTY;
+	}
+	var ret = new tink_chunk_ByteChunk(b.b.bufferValue,0,b.length);
+	ret.wrapped = b;
+	return ret;
+};
+tink_chunk_ByteChunk.__super__ = tink_chunk_ChunkBase;
+tink_chunk_ByteChunk.prototype = $extend(tink_chunk_ChunkBase.prototype,{
+	flatten: function(into) {
+		into.push(this);
+	}
+	,getLength: function() {
+		return this.to - this.from;
+	}
+	,blitTo: function(target,offset) {
+		if(this.wrapped == null) {
+			this.wrapped = haxe_io_Bytes.ofData(this.data);
+		}
+		target.blit(offset,this.wrapped,this.from,this.to - this.from);
+	}
+	,toBytes: function() {
+		if(this.wrapped == null) {
+			this.wrapped = haxe_io_Bytes.ofData(this.data);
+		}
+		return this.wrapped.sub(this.from,this.to - this.from);
+	}
+	,toString: function() {
+		if(this.wrapped == null) {
+			this.wrapped = haxe_io_Bytes.ofData(this.data);
+		}
+		return this.wrapped.getString(this.from,this.to - this.from);
+	}
+	,__class__: tink_chunk_ByteChunk
+});
+var tink_chunk_CompoundChunk = function() {
+};
+tink_chunk_CompoundChunk.__name__ = true;
+tink_chunk_CompoundChunk.__interfaces__ = [tink_chunk_ChunkObject];
+tink_chunk_CompoundChunk.asCompound = function(c) {
+	return ((c) instanceof tink_chunk_CompoundChunk) ? c : null;
+};
+tink_chunk_CompoundChunk.cons = function(a,b) {
+	var _g = b.getLength();
+	var _g1 = a.getLength();
+	if(_g1 == 0) {
+		if(_g == 0) {
+			return tink__$Chunk_Chunk_$Impl_$.EMPTY;
+		} else {
+			return b;
+		}
+	} else if(_g == 0) {
+		return a;
+	} else {
+		var la = _g1;
+		var lb = _g;
+		var _g2 = tink_chunk_CompoundChunk.asCompound(b);
+		var _g11 = tink_chunk_CompoundChunk.asCompound(a);
+		if(_g11 == null) {
+			if(_g2 == null) {
+				return tink_chunk_CompoundChunk.create([a,b],2);
+			} else {
+				var v = _g2;
+				if(v.depth < 100) {
+					return tink_chunk_CompoundChunk.create([a,b],v.depth + 1);
+				} else {
+					var flat = [];
+					v.flatten(flat);
+					b.flatten(flat);
+					return tink_chunk_CompoundChunk.create(flat,2);
+				}
+			}
+		} else if(_g2 == null) {
+			var v1 = _g11;
+			if(v1.depth < 100) {
+				return tink_chunk_CompoundChunk.create([a,b],v1.depth + 1);
+			} else {
+				var flat1 = [];
+				v1.flatten(flat1);
+				b.flatten(flat1);
+				return tink_chunk_CompoundChunk.create(flat1,2);
+			}
+		} else {
+			var a1 = _g11;
+			var b1 = _g2;
+			var depth = a1.depth > b1.depth ? a1.depth : b1.depth;
+			return tink_chunk_CompoundChunk.create(a1.chunks.concat(b1.chunks),depth);
+		}
+	}
+};
+tink_chunk_CompoundChunk.create = function(chunks,depth) {
+	var ret = new tink_chunk_CompoundChunk();
+	var offsets = [0];
+	var length = 0;
+	var _g = 0;
+	while(_g < chunks.length) {
+		var c = chunks[_g];
+		++_g;
+		offsets.push(length += c.getLength());
+	}
+	ret.chunks = chunks;
+	ret.offsets = offsets;
+	ret.length = length;
+	ret.depth = depth;
+	return ret;
+};
+tink_chunk_CompoundChunk.__super__ = tink_chunk_ChunkBase;
+tink_chunk_CompoundChunk.prototype = $extend(tink_chunk_ChunkBase.prototype,{
+	getLength: function() {
+		return this.length;
+	}
+	,flatten: function(into) {
+		var _g = 0;
+		var _g1 = this.chunks;
+		while(_g < _g1.length) {
+			var c = _g1[_g];
+			++_g;
+			c.flatten(into);
+		}
+	}
+	,blitTo: function(target,offset) {
+		var _g = 0;
+		var _g1 = this.chunks.length;
+		while(_g < _g1) {
+			var i = _g++;
+			this.chunks[i].blitTo(target,offset + this.offsets[i]);
+		}
+	}
+	,toString: function() {
+		return this.toBytes().toString();
+	}
+	,toBytes: function() {
+		var ret = new haxe_io_Bytes(new ArrayBuffer(this.length));
+		this.blitTo(ret,0);
+		return ret;
+	}
+	,__class__: tink_chunk_CompoundChunk
+});
+var tink_core_Annex = function(target) {
+	this.target = target;
+	this.registry = new haxe_ds_ObjectMap();
+};
+tink_core_Annex.__name__ = true;
+tink_core_Annex.prototype = {
+	__class__: tink_core_Annex
+};
+var tink_core__$Callback_Callback_$Impl_$ = {};
+tink_core__$Callback_Callback_$Impl_$.__name__ = true;
+tink_core__$Callback_Callback_$Impl_$.invoke = function(this1,data) {
+	if(tink_core__$Callback_Callback_$Impl_$.depth < 500) {
+		tink_core__$Callback_Callback_$Impl_$.depth++;
+		this1(data);
+		tink_core__$Callback_Callback_$Impl_$.depth--;
+	} else {
+		var _e = this1;
+		var f = function(data1) {
+			tink_core__$Callback_Callback_$Impl_$.invoke(_e,data1);
+		};
+		var data2 = data;
+		tink_core__$Callback_Callback_$Impl_$.defer(function() {
+			f(data2);
+		});
+	}
+};
+tink_core__$Callback_Callback_$Impl_$.fromNiladic = function(f) {
+	return f;
+};
+tink_core__$Callback_Callback_$Impl_$.defer = function(f) {
+	haxe_Timer.delay(f,0);
+};
+var tink_core_LinkObject = function() { };
+tink_core_LinkObject.__name__ = true;
+tink_core_LinkObject.__isInterface__ = true;
+tink_core_LinkObject.prototype = {
+	__class__: tink_core_LinkObject
+};
+var tink_core_SimpleLink = function(f) {
+	this.f = f;
+};
+tink_core_SimpleLink.__name__ = true;
+tink_core_SimpleLink.__interfaces__ = [tink_core_LinkObject];
+tink_core_SimpleLink.prototype = {
+	cancel: function() {
+		if(this.f != null) {
+			this.f();
+			this.f = null;
+		}
+	}
+	,__class__: tink_core_SimpleLink
+};
+var tink_core__$Callback_LinkPair = function(a,b) {
+	this.dissolved = false;
+	this.a = a;
+	this.b = b;
+};
+tink_core__$Callback_LinkPair.__name__ = true;
+tink_core__$Callback_LinkPair.__interfaces__ = [tink_core_LinkObject];
+tink_core__$Callback_LinkPair.prototype = {
+	cancel: function() {
+		if(!this.dissolved) {
+			this.dissolved = true;
+			var this1 = this.a;
+			if(this1 != null) {
+				this1.cancel();
+			}
+			var this2 = this.b;
+			if(this2 != null) {
+				this2.cancel();
+			}
+			this.a = null;
+			this.b = null;
+		}
+	}
+	,__class__: tink_core__$Callback_LinkPair
+};
+var tink_core__$Callback_ListCell = function(cb,list) {
+	if(cb == null) {
+		throw new js__$Boot_HaxeError("callback expected but null received");
+	}
+	this.cb = cb;
+	this.list = list;
+};
+tink_core__$Callback_ListCell.__name__ = true;
+tink_core__$Callback_ListCell.__interfaces__ = [tink_core_LinkObject];
+tink_core__$Callback_ListCell.prototype = {
+	cancel: function() {
+		if(this.list != null) {
+			var list = this.list;
+			this.cb = null;
+			this.list = null;
+			if(--list.used < list.used >> 1) {
+				list.compact();
+			}
+		}
+	}
+	,__class__: tink_core__$Callback_ListCell
+};
+var tink_core_CallbackList = function() {
+	this.busy = false;
+	this.queue = [];
+	this.used = 0;
+	this.cells = [];
+};
+tink_core_CallbackList.__name__ = true;
+tink_core_CallbackList.prototype = {
+	ondrain: function() {
+	}
+	,invoke: function(data,destructive) {
+		if(this.busy) {
+			var f = $bind(this,this.invoke);
+			var data1 = data;
+			var destructive1 = destructive;
+			var tmp = function() {
+				f(data1,destructive1);
+				return;
+			};
+			this.queue.push(tmp);
+		} else {
+			this.busy = true;
+			var length = this.cells.length;
+			var _g = 0;
+			var _g1 = length;
+			while(_g < _g1) {
+				var i = _g++;
+				var _this = this.cells[i];
+				if(_this.list != null) {
+					tink_core__$Callback_Callback_$Impl_$.invoke(_this.cb,data);
+				}
+			}
+			this.busy = false;
+			if(destructive) {
+				var added = this.cells.length - length;
+				var _g2 = 0;
+				var _g3 = length;
+				while(_g2 < _g3) {
+					var i1 = _g2++;
+					var _this1 = this.cells[i1];
+					_this1.cb = null;
+					_this1.list = null;
+				}
+				var _g4 = 0;
+				var _g5 = added;
+				while(_g4 < _g5) {
+					var i2 = _g4++;
+					this.cells[i2] = this.cells[length + i2];
+				}
+				this.resize(added);
+			} else if(this.used < this.cells.length) {
+				this.compact();
+			}
+			if(this.queue.length > 0) {
+				(this.queue.shift())();
+			}
+		}
+	}
+	,compact: function() {
+		if(this.busy) {
+			return;
+		} else if(this.used == 0) {
+			this.resize(0);
+			this.ondrain();
+		} else {
+			var compacted = 0;
+			var _g = 0;
+			var _g1 = this.cells.length;
+			while(_g < _g1) {
+				var i = _g++;
+				var _g2 = this.cells[i];
+				var _g21 = _g2.list;
+				if(_g2.cb != null) {
+					var v = _g2;
+					if(compacted != i) {
+						this.cells[compacted] = v;
+					}
+					if(++compacted == this.used) {
+						break;
+					}
+				}
+			}
+			this.resize(this.used);
+		}
+	}
+	,resize: function(length) {
+		this.cells.length = length;
+	}
+	,__class__: tink_core_CallbackList
+};
+var tink_core_TypedError = function(code,message,pos) {
+	if(code == null) {
+		code = 500;
+	}
+	this.code = code;
+	this.message = message;
+	this.pos = pos;
+	this.exceptionStack = [];
+	this.callStack = [];
+};
+tink_core_TypedError.__name__ = true;
+tink_core_TypedError.withData = function(code,message,data,pos) {
+	return tink_core_TypedError.typed(code,message,data,pos);
+};
+tink_core_TypedError.typed = function(code,message,data,pos) {
+	var ret = new tink_core_TypedError(code,message,pos);
+	ret.data = data;
+	return ret;
+};
+tink_core_TypedError.prototype = {
+	__class__: tink_core_TypedError
+};
+var tink_core_FutureObject = function() { };
+tink_core_FutureObject.__name__ = true;
+tink_core_FutureObject.__isInterface__ = true;
+tink_core_FutureObject.prototype = {
+	__class__: tink_core_FutureObject
+};
+var tink_core_Noise = $hxEnums["tink.core.Noise"] = { __ename__ : true, __constructs__ : ["Noise"]
+	,Noise: {_hx_index:0,__enum__:"tink.core.Noise",toString:$estr}
+};
+var tink_core__$Lazy_LazyObject = function() { };
+tink_core__$Lazy_LazyObject.__name__ = true;
+tink_core__$Lazy_LazyObject.__isInterface__ = true;
+tink_core__$Lazy_LazyObject.prototype = {
+	__class__: tink_core__$Lazy_LazyObject
+};
+var tink_core__$Lazy_LazyConst = function(value) {
+	this.value = value;
+};
+tink_core__$Lazy_LazyConst.__name__ = true;
+tink_core__$Lazy_LazyConst.__interfaces__ = [tink_core__$Lazy_LazyObject];
+tink_core__$Lazy_LazyConst.prototype = {
+	get: function() {
+		return this.value;
+	}
+	,map: function(f) {
+		var _gthis = this;
+		return new tink_core__$Lazy_LazyFunc(function() {
+			return f(_gthis.value);
+		});
+	}
+	,__class__: tink_core__$Lazy_LazyConst
+};
+var tink_core__$Future_SyncFuture = function(value) {
+	this.value = value;
+};
+tink_core__$Future_SyncFuture.__name__ = true;
+tink_core__$Future_SyncFuture.__interfaces__ = [tink_core_FutureObject];
+tink_core__$Future_SyncFuture.prototype = {
+	map: function(f) {
+		return new tink_core__$Future_SyncFuture(this.value.map(f));
+	}
+	,flatMap: function(f) {
+		var _gthis = this;
+		return new tink_core__$Future_SuspendableFuture(function($yield) {
+			var tmp = _gthis.value.get();
+			return f(tmp).handle($yield);
+		});
+	}
+	,handle: function(cb) {
+		tink_core__$Callback_Callback_$Impl_$.invoke(cb,this.value.get());
+		return null;
+	}
+	,gather: function() {
+		return this;
+	}
+	,__class__: tink_core__$Future_SyncFuture
+};
+var tink_core__$Future_Future_$Impl_$ = {};
+tink_core__$Future_Future_$Impl_$.__name__ = true;
+tink_core__$Future_Future_$Impl_$.next = function(this1,n) {
+	return this1.flatMap(function(v) {
+		return n(v);
+	});
+};
+tink_core__$Future_Future_$Impl_$.flatten = function(f) {
+	return new tink_core__$Future_SuspendableFuture(function($yield) {
+		var inner = null;
+		var outer = f.handle(function(second) {
+			inner = second.handle($yield);
+		});
+		var this1 = new tink_core_SimpleLink(function() {
+			if(inner != null) {
+				inner.cancel();
+			}
+		});
+		return new tink_core__$Callback_LinkPair(outer,this1);
+	});
+};
+tink_core__$Future_Future_$Impl_$.async = function(f,lazy) {
+	if(lazy == null) {
+		lazy = false;
+	}
+	if(lazy) {
+		return new tink_core__$Future_SuspendableFuture(function($yield) {
+			f($yield);
+			return null;
+		});
+	} else {
+		var op = new tink_core_FutureTrigger();
+		var wrapped = f;
+		tink_core__$Callback_Callback_$Impl_$.invoke(wrapped,$bind(op,op.trigger));
+		return op;
+	}
+};
+var tink_core_FutureTrigger = function() {
+	this.list = new tink_core_CallbackList();
+};
+tink_core_FutureTrigger.__name__ = true;
+tink_core_FutureTrigger.__interfaces__ = [tink_core_FutureObject];
+tink_core_FutureTrigger.prototype = {
+	handle: function(callback) {
+		var _g = this.list;
+		if(_g == null) {
+			tink_core__$Callback_Callback_$Impl_$.invoke(callback,this.result);
+			return null;
+		} else {
+			var v = _g;
+			var node = new tink_core__$Callback_ListCell(callback,v);
+			v.cells.push(node);
+			v.used++;
+			return node;
+		}
+	}
+	,map: function(f) {
+		var _g = this.list;
+		if(_g == null) {
+			return new tink_core__$Future_SyncFuture(new tink_core__$Lazy_LazyConst(f(this.result)));
+		} else {
+			var v = _g;
+			var ret = new tink_core_FutureTrigger();
+			var _this = this.list;
+			var node = new tink_core__$Callback_ListCell(function(v1) {
+				var node1 = f(v1);
+				ret.trigger(node1);
+			},_this);
+			_this.cells.push(node);
+			_this.used++;
+			return ret;
+		}
+	}
+	,flatMap: function(f) {
+		var _g = this.list;
+		if(_g == null) {
+			return f(this.result);
+		} else {
+			var v = _g;
+			var ret = new tink_core_FutureTrigger();
+			var _this = this.list;
+			var node = new tink_core__$Callback_ListCell(function(v1) {
+				f(v1).handle($bind(ret,ret.trigger));
+			},_this);
+			_this.cells.push(node);
+			_this.used++;
+			return ret;
+		}
+	}
+	,gather: function() {
+		return this;
+	}
+	,trigger: function(result) {
+		if(this.list == null) {
+			return false;
+		} else {
+			var list = this.list;
+			this.list = null;
+			this.result = result;
+			list.invoke(result,true);
+			return true;
+		}
+	}
+	,__class__: tink_core_FutureTrigger
+};
+var tink_core__$Future_SuspendableFuture = function(wakeup) {
+	this.suspended = true;
+	var _gthis = this;
+	this.wakeup = wakeup;
+	this.callbacks = new tink_core_CallbackList();
+	this.callbacks.ondrain = function() {
+		if(_gthis.callbacks != null) {
+			_gthis.suspended = true;
+			var this1 = _gthis.link;
+			if(this1 != null) {
+				this1.cancel();
+			}
+			_gthis.link = null;
+		}
+	};
+};
+tink_core__$Future_SuspendableFuture.__name__ = true;
+tink_core__$Future_SuspendableFuture.__interfaces__ = [tink_core_FutureObject];
+tink_core__$Future_SuspendableFuture.prototype = {
+	trigger: function(value) {
+		var _g = this.callbacks;
+		if(_g != null) {
+			var list = _g;
+			this.callbacks = null;
+			this.suspended = false;
+			this.result = value;
+			this.link = null;
+			this.wakeup = null;
+			list.invoke(value,true);
+		}
+	}
+	,handle: function(callback) {
+		var _g = this.callbacks;
+		if(_g == null) {
+			tink_core__$Callback_Callback_$Impl_$.invoke(callback,this.result);
+			return null;
+		} else {
+			var v = _g;
+			var _this = this.callbacks;
+			var node = new tink_core__$Callback_ListCell(callback,_this);
+			_this.cells.push(node);
+			_this.used++;
+			var ret = node;
+			if(this.suspended) {
+				this.suspended = false;
+				this.link = this.wakeup($bind(this,this.trigger));
+			}
+			return ret;
+		}
+	}
+	,map: function(f) {
+		var _gthis = this;
+		return new tink_core__$Future_SuspendableFuture(function($yield) {
+			return _gthis.handle(function(res) {
+				var tmp = f(res);
+				$yield(tmp);
+			});
+		});
+	}
+	,flatMap: function(f) {
+		return tink_core__$Future_Future_$Impl_$.flatten(this.map(f));
+	}
+	,gather: function() {
+		return this;
+	}
+	,__class__: tink_core__$Future_SuspendableFuture
+};
+var tink_core__$Lazy_LazyFunc = function(f) {
+	this.f = f;
+};
+tink_core__$Lazy_LazyFunc.__name__ = true;
+tink_core__$Lazy_LazyFunc.__interfaces__ = [tink_core__$Lazy_LazyObject];
+tink_core__$Lazy_LazyFunc.prototype = {
+	get: function() {
+		if(this.f != null) {
+			this.result = this.f();
+			this.f = null;
+		}
+		return this.result;
+	}
+	,map: function(f) {
+		var _gthis = this;
+		return new tink_core__$Lazy_LazyFunc(function() {
+			var tmp = _gthis.get();
+			return f(tmp);
+		});
+	}
+	,__class__: tink_core__$Lazy_LazyFunc
+};
+var tink_core_NamedWith = function(name,value) {
+	this.name = name;
+	this.value = value;
+};
+tink_core_NamedWith.__name__ = true;
+tink_core_NamedWith.prototype = {
+	__class__: tink_core_NamedWith
+};
+var tink_core_Outcome = $hxEnums["tink.core.Outcome"] = { __ename__ : true, __constructs__ : ["Success","Failure"]
+	,Success: ($_=function(data) { return {_hx_index:0,data:data,__enum__:"tink.core.Outcome",toString:$estr}; },$_.__params__ = ["data"],$_)
+	,Failure: ($_=function(failure) { return {_hx_index:1,failure:failure,__enum__:"tink.core.Outcome",toString:$estr}; },$_.__params__ = ["failure"],$_)
+};
+var tink_core__$Promise_Promise_$Impl_$ = {};
+tink_core__$Promise_Promise_$Impl_$.__name__ = true;
+tink_core__$Promise_Promise_$Impl_$.next = function(this1,f,gather) {
+	if(gather == null) {
+		gather = true;
+	}
+	var gather1 = gather;
+	if(gather1 == null) {
+		gather1 = true;
+	}
+	var ret = this1.flatMap(function(o) {
+		switch(o._hx_index) {
+		case 0:
+			var d = o.data;
+			return f(d);
+		case 1:
+			var f1 = o.failure;
+			return new tink_core__$Future_SyncFuture(new tink_core__$Lazy_LazyConst(tink_core_Outcome.Failure(f1)));
+		}
+	});
+	if(gather1) {
+		return ret.gather();
+	} else {
+		return ret;
+	}
+};
+var tink_http_ClientObject = function() { };
+tink_http_ClientObject.__name__ = true;
+tink_http_ClientObject.__isInterface__ = true;
+tink_http_ClientObject.prototype = {
+	__class__: tink_http_ClientObject
+};
+var tink_http__$Client_CustomClient = function(preprocessors,postprocessors,real) {
+	this.preprocessors = preprocessors;
+	this.postprocessors = postprocessors;
+	this.real = real;
+};
+tink_http__$Client_CustomClient.__name__ = true;
+tink_http__$Client_CustomClient.__interfaces__ = [tink_http_ClientObject];
+tink_http__$Client_CustomClient.concat = function(a,b) {
+	if(a == null) {
+		var v = b;
+		return v;
+	} else if(b == null) {
+		var v1 = a;
+		return v1;
+	} else {
+		return a.concat(b);
+	}
+};
+tink_http__$Client_CustomClient.create = function(c,preprocessors,postprocessors) {
+	var _g = ((c) instanceof tink_http__$Client_CustomClient) ? c : null;
+	if(_g == null) {
+		return new tink_http__$Client_CustomClient(preprocessors,postprocessors,c);
+	} else {
+		var v = _g;
+		return new tink_http__$Client_CustomClient(tink_http__$Client_CustomClient.concat(preprocessors,v.preprocessors),tink_http__$Client_CustomClient.concat(v.postprocessors,postprocessors),v.real);
+	}
+};
+tink_http__$Client_CustomClient.prototype = {
+	pipe: function(value,transforms,index) {
+		if(index == null) {
+			index = 0;
+		}
+		if(transforms != null && index < transforms.length) {
+			var f = $bind(this,this.pipe);
+			var transforms1 = transforms;
+			var index1 = index + 1;
+			var tmp = function(value1) {
+				return f(value1,transforms1,index1);
+			};
+			return tink_core__$Promise_Promise_$Impl_$.next(transforms[index](value),tmp);
+		} else {
+			return new tink_core__$Future_SyncFuture(new tink_core__$Lazy_LazyConst(tink_core_Outcome.Success(value)));
+		}
+	}
+	,request: function(req) {
+		var _gthis = this;
+		return tink_core__$Promise_Promise_$Impl_$.next(this.pipe(req,this.preprocessors),function(req1) {
+			var tmp = _gthis.real.request(req1);
+			var f = $bind(_gthis,_gthis.pipe);
+			var transforms;
+			if(_gthis.postprocessors == null) {
+				transforms = null;
+			} else {
+				var _g = [];
+				var _g1 = 0;
+				var _g2 = _gthis.postprocessors;
+				while(_g1 < _g2.length) {
+					var p = _g2[_g1];
+					++_g1;
+					_g.push(p(req1));
+				}
+				transforms = _g;
+			}
+			return tink_core__$Promise_Promise_$Impl_$.next(tmp,function(value) {
+				return f(value,transforms);
+			});
+		});
+	}
+	,__class__: tink_http__$Client_CustomClient
+};
+var tink_http_Container = function() { };
+tink_http_Container.__name__ = true;
+tink_http_Container.__isInterface__ = true;
+var tink_http_Fetch = function() { };
+tink_http_Fetch.__name__ = true;
+tink_http_Fetch.fetch = function(url,options) {
+	return tink_core__$Future_Future_$Impl_$.async(function(cb) {
+		var uri = url.path;
+		if(url.query != null) {
+			uri += "?" + url.query;
+		}
+		var method = "GET";
+		var headers = null;
+		var body = tink_io__$Source_Source_$Impl_$.EMPTY;
+		var type = tink_http_ClientType.Default;
+		var followRedirect = true;
+		if(options != null) {
+			if(options.method != null) {
+				method = options.method;
+			}
+			if(options.headers != null) {
+				headers = options.headers;
+			}
+			if(options.body != null) {
+				body = options.body;
+			}
+			if(options.client != null) {
+				type = options.client;
+			}
+			if(options.followRedirect == false) {
+				followRedirect = false;
+			}
+		}
+		var client = tink_http_Fetch.getClient(type,url.scheme == "https");
+		if(options != null && options.augment != null) {
+			var pipeline = options.augment;
+			client = tink_http__$Client_CustomClient.create(client,pipeline.before,pipeline.after);
+		}
+		client.request(new tink_http_OutgoingRequest(new tink_http_OutgoingRequestHeader(method,url,null,headers),body)).handle(function(res) {
+			switch(res._hx_index) {
+			case 0:
+				var res1 = res.data;
+				var _g = res1.header.statusCode;
+				switch(_g) {
+				case 301:case 302:case 303:case 307:case 308:
+					var code = _g;
+					if(followRedirect) {
+						var this1 = "location".toLowerCase();
+						tink_core__$Promise_Promise_$Impl_$.next(new tink_core__$Future_SyncFuture(new tink_core__$Lazy_LazyConst(res1.header.byName(this1))),function(location) {
+							var this2 = tink__$Url_Url_$Impl_$.resolve(url,tink__$Url_Url_$Impl_$.fromString(location));
+							var this3;
+							if(code == 303) {
+								var __o0 = options;
+								var __tink_tmp0 = { method : "GET"};
+								var _g1 = __o0.headers;
+								if(_g1 != null) {
+									var v = _g1;
+									__tink_tmp0.headers = v;
+								}
+								var _g11 = __o0.followRedirect;
+								if(_g11 != null) {
+									var v1 = _g11;
+									__tink_tmp0.followRedirect = v1;
+								}
+								var _g2 = __o0.client;
+								if(_g2 != null) {
+									var v2 = _g2;
+									__tink_tmp0.client = v2;
+								}
+								var _g3 = __o0.body;
+								if(_g3 != null) {
+									var v3 = _g3;
+									__tink_tmp0.body = v3;
+								}
+								var _g4 = __o0.augment;
+								if(_g4 != null) {
+									var v4 = _g4;
+									__tink_tmp0.augment = v4;
+								}
+								this3 = __tink_tmp0;
+							} else {
+								this3 = options;
+							}
+							return tink_http_Fetch.fetch(this2,this3);
+						}).handle(cb);
+					} else {
+						cb(tink_core_Outcome.Success(res1));
+					}
+					break;
+				default:
+					cb(tink_core_Outcome.Success(res1));
+				}
+				break;
+			case 1:
+				var e = res.failure;
+				cb(tink_core_Outcome.Failure(e));
+				break;
+			}
+		});
+	});
+};
+tink_http_Fetch.getClient = function(type,secure) {
+	var cache = secure ? tink_http_Fetch.sclient : tink_http_Fetch.client;
+	if(!cache.exists(type)) {
+		var c;
+		switch(type._hx_index) {
+		case 0:
+			c = secure ? new tink_http_clients_SecureJsClient() : new tink_http_clients_JsClient();
+			break;
+		case 1:
+			var c1 = type.container;
+			c = new tink_http_clients_LocalContainerClient(c1);
+			break;
+		case 2:
+			c = secure ? new tink_http_clients_StdClient() : new tink_http_clients_StdClient();
+			break;
+		case 3:
+			var c2 = type.v;
+			c = c2;
+			break;
+		}
+		cache.set(type,c);
+	}
+	return cache.get(type);
+};
+var tink_http_ClientType = $hxEnums["tink.http.ClientType"] = { __ename__ : true, __constructs__ : ["Default","Local","StdLib","Custom"]
+	,Default: {_hx_index:0,__enum__:"tink.http.ClientType",toString:$estr}
+	,Local: ($_=function(container) { return {_hx_index:1,container:container,__enum__:"tink.http.ClientType",toString:$estr}; },$_.__params__ = ["container"],$_)
+	,StdLib: {_hx_index:2,__enum__:"tink.http.ClientType",toString:$estr}
+	,Custom: ($_=function(v) { return {_hx_index:3,v:v,__enum__:"tink.http.ClientType",toString:$estr}; },$_.__params__ = ["v"],$_)
+};
+var tink_http__$Fetch_FetchResponse_$Impl_$ = {};
+tink_http__$Fetch_FetchResponse_$Impl_$.__name__ = true;
+tink_http__$Fetch_FetchResponse_$Impl_$.all = function(this1) {
+	return tink_core__$Promise_Promise_$Impl_$.next(this1,function(r) {
+		return tink_core__$Promise_Promise_$Impl_$.next(tink_io_RealSourceTools.all(r.body),function(chunk) {
+			if(r.header.statusCode >= 400) {
+				return new tink_core__$Future_SyncFuture(new tink_core__$Lazy_LazyConst(tink_core_Outcome.Failure(tink_core_TypedError.withData(r.header.statusCode,r.header.reason,chunk.toString(),{ fileName : "tink/http/Fetch.hx", lineNumber : 138, className : "tink.http._Fetch.FetchResponse_Impl_", methodName : "all"}))));
+			} else {
+				return new tink_core__$Future_SyncFuture(new tink_core__$Lazy_LazyConst(tink_core_Outcome.Success(new tink_http_Message(r.header,chunk))));
+			}
+		});
+	});
+};
+var tink_http_HandlerObject = function() { };
+tink_http_HandlerObject.__name__ = true;
+tink_http_HandlerObject.__isInterface__ = true;
+tink_http_HandlerObject.prototype = {
+	__class__: tink_http_HandlerObject
+};
+var tink_http_Header = function(fields) {
+	var tmp;
+	if(fields == null) {
+		tmp = [];
+	} else {
+		var v = fields;
+		tmp = v;
+	}
+	this.fields = tmp;
+};
+tink_http_Header.__name__ = true;
+tink_http_Header.prototype = {
+	get: function(name) {
+		var _g = [];
+		var _g1 = 0;
+		var _g2 = this.fields;
+		while(_g1 < _g2.length) {
+			var f = _g2[_g1];
+			++_g1;
+			if(f.name == name) {
+				_g.push(f.value);
+			}
+		}
+		return _g;
+	}
+	,byName: function(name) {
+		var _g = this.get(name);
+		switch(_g.length) {
+		case 0:
+			return tink_core_Outcome.Failure(new tink_core_TypedError(422,"No " + name + " header found",{ fileName : "tink/http/Header.hx", lineNumber : 91, className : "tink.http.Header", methodName : "byName"}));
+		case 1:
+			var v = _g[0];
+			return tink_core_Outcome.Success(v);
+		default:
+			var v1 = _g;
+			return tink_core_Outcome.Failure(new tink_core_TypedError(422,"Multiple entries for " + name + " header",{ fileName : "tink/http/Header.hx", lineNumber : 95, className : "tink.http.Header", methodName : "byName"}));
+		}
+	}
+	,__class__: tink_http_Header
+};
+var tink_http_HeaderField = function(name,value) {
+	tink_core_NamedWith.call(this,name,value);
+};
+tink_http_HeaderField.__name__ = true;
+tink_http_HeaderField.ofString = function(s) {
+	var _g = s.indexOf(":");
+	if(_g == -1) {
+		var this1 = s.toLowerCase();
+		return new tink_http_HeaderField(this1,null);
+	} else {
+		var v = _g;
+		var name = HxOverrides.substr(s,0,v);
+		var this2 = name.toLowerCase();
+		return new tink_http_HeaderField(this2,StringTools.trim(HxOverrides.substr(s,v + 1,null)));
+	}
+};
+tink_http_HeaderField.__super__ = tink_core_NamedWith;
+tink_http_HeaderField.prototype = $extend(tink_core_NamedWith.prototype,{
+	__class__: tink_http_HeaderField
+});
+var tink_http_Message = function(header,body) {
+	this.header = header;
+	this.body = body;
+};
+tink_http_Message.__name__ = true;
+tink_http_Message.prototype = {
+	__class__: tink_http_Message
+};
+var tink_http_RequestHeader = function(method,url,protocol,fields) {
+	if(protocol == null) {
+		protocol = "HTTP/1.1";
+	}
+	this.method = method;
+	this.url = url;
+	this.protocol = protocol;
+	tink_http_Header.call(this,fields);
+};
+tink_http_RequestHeader.__name__ = true;
+tink_http_RequestHeader.__super__ = tink_http_Header;
+tink_http_RequestHeader.prototype = $extend(tink_http_Header.prototype,{
+	__class__: tink_http_RequestHeader
+});
+var tink_http_IncomingRequestHeader = function(method,url,protocol,fields) {
+	tink_http_RequestHeader.call(this,method,url,protocol,fields);
+};
+tink_http_IncomingRequestHeader.__name__ = true;
+tink_http_IncomingRequestHeader.__super__ = tink_http_RequestHeader;
+tink_http_IncomingRequestHeader.prototype = $extend(tink_http_RequestHeader.prototype,{
+	__class__: tink_http_IncomingRequestHeader
+});
+var tink_http_OutgoingRequestHeader = function(method,url,protocol,fields) {
+	tink_http_RequestHeader.call(this,method,url,protocol,fields);
+};
+tink_http_OutgoingRequestHeader.__name__ = true;
+tink_http_OutgoingRequestHeader.__super__ = tink_http_RequestHeader;
+tink_http_OutgoingRequestHeader.prototype = $extend(tink_http_RequestHeader.prototype,{
+	__class__: tink_http_OutgoingRequestHeader
+});
+var tink_http_OutgoingRequest = function(header,body) {
+	tink_http_Message.call(this,header,body);
+};
+tink_http_OutgoingRequest.__name__ = true;
+tink_http_OutgoingRequest.__super__ = tink_http_Message;
+tink_http_OutgoingRequest.prototype = $extend(tink_http_Message.prototype,{
+	__class__: tink_http_OutgoingRequest
+});
+var tink_http_IncomingRequest = function(clientIp,header,body) {
+	this.clientIp = clientIp;
+	tink_http_Message.call(this,header,body);
+};
+tink_http_IncomingRequest.__name__ = true;
+tink_http_IncomingRequest.__super__ = tink_http_Message;
+tink_http_IncomingRequest.prototype = $extend(tink_http_Message.prototype,{
+	__class__: tink_http_IncomingRequest
+});
+var tink_http_IncomingRequestBody = $hxEnums["tink.http.IncomingRequestBody"] = { __ename__ : true, __constructs__ : ["Plain","Parsed"]
+	,Plain: ($_=function(source) { return {_hx_index:0,source:source,__enum__:"tink.http.IncomingRequestBody",toString:$estr}; },$_.__params__ = ["source"],$_)
+	,Parsed: ($_=function(parts) { return {_hx_index:1,parts:parts,__enum__:"tink.http.IncomingRequestBody",toString:$estr}; },$_.__params__ = ["parts"],$_)
+};
+var tink_http_ResponseHeaderBase = function(statusCode,reason,fields,protocol) {
+	if(protocol == null) {
+		protocol = "HTTP/1.1";
+	}
+	this.statusCode = statusCode;
+	var tmp;
+	if(reason == null) {
+		var this1 = httpstatus__$HttpStatusMessage_HttpStatusMessage_$Impl_$.fromCode(statusCode);
+		tmp = this1;
+	} else {
+		tmp = reason;
+	}
+	this.reason = tmp;
+	this.protocol = protocol;
+	tink_http_Header.call(this,fields);
+};
+tink_http_ResponseHeaderBase.__name__ = true;
+tink_http_ResponseHeaderBase.__super__ = tink_http_Header;
+tink_http_ResponseHeaderBase.prototype = $extend(tink_http_Header.prototype,{
+	__class__: tink_http_ResponseHeaderBase
+});
+var tink_http__$Response_OutgoingResponseData = function(header,body) {
+	tink_http_Message.call(this,header,body);
+};
+tink_http__$Response_OutgoingResponseData.__name__ = true;
+tink_http__$Response_OutgoingResponseData.__super__ = tink_http_Message;
+tink_http__$Response_OutgoingResponseData.prototype = $extend(tink_http_Message.prototype,{
+	__class__: tink_http__$Response_OutgoingResponseData
+});
+var tink_http_IncomingResponse = function(header,body) {
+	tink_http_Message.call(this,header,body);
+};
+tink_http_IncomingResponse.__name__ = true;
+tink_http_IncomingResponse.__super__ = tink_http_Message;
+tink_http_IncomingResponse.prototype = $extend(tink_http_Message.prototype,{
+	__class__: tink_http_IncomingResponse
+});
+var tink_http_BodyPart = $hxEnums["tink.http.BodyPart"] = { __ename__ : true, __constructs__ : ["Value","File"]
+	,Value: ($_=function(v) { return {_hx_index:0,v:v,__enum__:"tink.http.BodyPart",toString:$estr}; },$_.__params__ = ["v"],$_)
+	,File: ($_=function(handle) { return {_hx_index:1,handle:handle,__enum__:"tink.http.BodyPart",toString:$estr}; },$_.__params__ = ["handle"],$_)
+};
+var tink_http_clients_JsClient = function(credentials) {
+	this.credentials = false;
+	this.secure = false;
+	if(credentials) {
+		this.credentials = true;
+	}
+};
+tink_http_clients_JsClient.__name__ = true;
+tink_http_clients_JsClient.__interfaces__ = [tink_http_ClientObject];
+tink_http_clients_JsClient.prototype = {
+	request: function(req) {
+		return this.jsRequest(req);
+	}
+	,jsRequest: function(req) {
+		var _gthis = this;
+		return tink_core__$Future_Future_$Impl_$.async(function(cb) {
+			var http = new XMLHttpRequest();
+			var url = tink__$Url_Url_$Impl_$.toString(req.header.url);
+			if(req.header.url.scheme == null) {
+				url = (_gthis.secure ? "https:" : "http:") + url;
+			}
+			http.open(req.header.method,url);
+			http.withCredentials = _gthis.credentials;
+			http.responseType = "arraybuffer";
+			var header = HxOverrides.iter(req.header.fields);
+			while(header.hasNext()) {
+				var header1 = header.next();
+				switch(header1.name) {
+				case "content-length":case "host":
+					break;
+				default:
+					http.setRequestHeader(header1.name,header1.value);
+				}
+			}
+			http.onreadystatechange = function() {
+				if(http.readyState == 4) {
+					if(http.status != 0) {
+						var headers;
+						var _g = http.getAllResponseHeaders();
+						if(_g == null) {
+							headers = [];
+						} else {
+							var v = _g;
+							var _g1 = [];
+							var _g11 = 0;
+							var _g2 = v.split("\r\n");
+							while(_g11 < _g2.length) {
+								var line = _g2[_g11];
+								++_g11;
+								if(line != "") {
+									_g1.push(tink_http_HeaderField.ofString(line));
+								}
+							}
+							headers = _g1;
+						}
+						var this1 = new tink_http_ResponseHeaderBase(http.status,http.statusText,headers,"HTTP/1.1");
+						var header2 = this1;
+						var this2 = new tink_http_ResponseHeaderBase(http.status,http.statusText,headers,"HTTP/1.1");
+						var _g12 = http.response;
+						var tmp;
+						if(_g12 == null) {
+							tmp = tink_io__$Source_Source_$Impl_$.EMPTY;
+						} else {
+							var v1 = _g12;
+							tmp = new tink_streams_Single(new tink_core__$Lazy_LazyConst(tink_chunk_ByteChunk.of(haxe_io_Bytes.ofData(v1))));
+						}
+						var tmp1 = tink_core_Outcome.Success(new tink_http_IncomingResponse(this2,tmp));
+						cb(tmp1);
+					} else {
+						var f = cb;
+						var a1 = tink_core_Outcome.Failure(tink_core_TypedError.withData(502,"XMLHttpRequest Error",{ request : req, error : "Status code is zero"},{ fileName : "tink/http/clients/JsClient.hx", lineNumber : 61, className : "tink.http.clients.JsClient", methodName : "jsRequest"}));
+						haxe_Timer.delay(function() {
+							f(a1);
+						},1);
+					}
+				}
+			};
+			http.onerror = function(e) {
+				var tmp2 = tink_core_Outcome.Failure(tink_core_TypedError.withData(502,"XMLHttpRequest Error",{ request : req, error : e},{ fileName : "tink/http/clients/JsClient.hx", lineNumber : 67, className : "tink.http.clients.JsClient", methodName : "jsRequest"}));
+				cb(tmp2);
+			};
+			if(req.header.method == "GET") {
+				http.send();
+			} else {
+				tink_io_IdealSourceTools.all(req.body).handle(function(chunk) {
+					var tmp3 = chunk.toBytes().b.bufferValue;
+					http.send(new Int8Array(tmp3));
+				});
+			}
+		});
+	}
+	,__class__: tink_http_clients_JsClient
+};
+var tink_http_clients_LocalContainerClient = function(container) {
+	this.container = container;
+};
+tink_http_clients_LocalContainerClient.__name__ = true;
+tink_http_clients_LocalContainerClient.__interfaces__ = [tink_http_ClientObject];
+tink_http_clients_LocalContainerClient.prototype = {
+	request: function(req) {
+		var this1 = req.header.url;
+		return tink_core__$Future_Future_$Impl_$.next(this.container.serve(new tink_http_IncomingRequest("127.0.0.1",new tink_http_IncomingRequestHeader(req.header.method,tink__$Url_Url_$Impl_$.fromString(this1.query == null ? this1.path : this1.path + "?" + this1.query),"HTTP/1.1",req.header.fields),tink_http_IncomingRequestBody.Plain(req.body))),function(res) {
+			return new tink_core__$Future_SyncFuture(new tink_core__$Lazy_LazyConst(tink_core_Outcome.Success(new tink_http_IncomingResponse(res.header,res.body))));
+		});
+	}
+	,__class__: tink_http_clients_LocalContainerClient
+};
+var tink_http_clients_SecureJsClient = function(credentials) {
+	tink_http_clients_JsClient.call(this,credentials);
+	this.secure = true;
+};
+tink_http_clients_SecureJsClient.__name__ = true;
+tink_http_clients_SecureJsClient.__super__ = tink_http_clients_JsClient;
+tink_http_clients_SecureJsClient.prototype = $extend(tink_http_clients_JsClient.prototype,{
+	request: function(req) {
+		return this.jsRequest(req);
+	}
+	,__class__: tink_http_clients_SecureJsClient
+});
+var tink_http_clients_StdClient = function(worker) {
+	this.worker = tink_io__$Worker_Worker_$Impl_$.ensure(worker);
+};
+tink_http_clients_StdClient.__name__ = true;
+tink_http_clients_StdClient.__interfaces__ = [tink_http_ClientObject];
+tink_http_clients_StdClient.prototype = {
+	request: function(req) {
+		var _gthis = this;
+		return tink_core__$Future_Future_$Impl_$.async(function(cb) {
+			var r = new haxe_http_HttpJs(tink__$Url_Url_$Impl_$.toString(req.header.url));
+			var send = function(post) {
+				var code = 200;
+				r.onStatus = function(c) {
+					code = c;
+				};
+				var headers = function() {
+					return [];
+				};
+				r.onError = function(msg) {
+					if(code == 200) {
+						code = 500;
+					}
+					tink_io__$Worker_Worker_$Impl_$.work(_gthis.worker,new tink_core__$Lazy_LazyConst(true)).handle(tink_core__$Callback_Callback_$Impl_$.fromNiladic(function() {
+						var send1 = tink_core_Outcome.Failure(new tink_core_TypedError(code,msg,{ fileName : "tink/http/clients/StdClient.hx", lineNumber : 44, className : "tink.http.clients.StdClient", methodName : "request"}));
+						cb(send1);
+					}));
+				};
+				r.onData = function(data) {
+					tink_io__$Worker_Worker_$Impl_$.work(_gthis.worker,new tink_core__$Lazy_LazyConst(true)).handle(tink_core__$Callback_Callback_$Impl_$.fromNiladic(function() {
+						var fields = headers();
+						var this1 = new tink_http_ResponseHeaderBase(code,"OK",fields,"HTTP/1.1");
+						var send2 = tink_core_Outcome.Success(new tink_http_IncomingResponse(this1,new tink_streams_Single(new tink_core__$Lazy_LazyConst(tink_chunk_ByteChunk.of(haxe_io_Bytes.ofString(data))))));
+						cb(send2);
+					}));
+				};
+				tink_io__$Worker_Worker_$Impl_$.work(_gthis.worker,new tink_core__$Lazy_LazyFunc(function() {
+					r.request(post);
+				}));
+			};
+			var h = HxOverrides.iter(req.header.fields);
+			while(h.hasNext()) {
+				var h1 = h.next();
+				r.setHeader(h1.name,h1.value);
+			}
+			switch(req.header.method) {
+			case "GET":case "HEAD":case "OPTIONS":
+				send(false);
+				break;
+			default:
+				tink_io_IdealSourceTools.all(req.body).handle(function(bytes) {
+					var tmp = bytes.toString();
+					r.setPostData(tmp);
+					send(true);
+				});
+			}
+		});
+	}
+	,__class__: tink_http_clients_StdClient
+};
+var tink_http_containers_LocalContainer = function() {
+};
+tink_http_containers_LocalContainer.__name__ = true;
+tink_http_containers_LocalContainer.__interfaces__ = [tink_http_Container];
+tink_http_containers_LocalContainer.prototype = {
+	serve: function(req) {
+		if(!this.running) {
+			var this1 = new tink_http_ResponseHeaderBase(503,"Server stopped",[],"HTTP/1.1");
+			var this2 = new tink_http__$Response_OutgoingResponseData(this1,tink_io__$Source_Source_$Impl_$.EMPTY);
+			return new tink_core__$Future_SyncFuture(new tink_core__$Lazy_LazyConst(this2));
+		}
+		return this.handler.process(req);
+	}
+	,__class__: tink_http_containers_LocalContainer
+};
+var tink_streams_StreamObject = function() { };
+tink_streams_StreamObject.__name__ = true;
+tink_streams_StreamObject.__isInterface__ = true;
+tink_streams_StreamObject.prototype = {
+	__class__: tink_streams_StreamObject
+};
+var tink_streams_StreamBase = function() {
+};
+tink_streams_StreamBase.__name__ = true;
+tink_streams_StreamBase.__interfaces__ = [tink_streams_StreamObject];
+tink_streams_StreamBase.prototype = {
+	reduce: function(initial,reducer) {
+		var _gthis = this;
+		return tink_core__$Future_Future_$Impl_$.async(function(cb) {
+			_gthis.forEach(tink_streams__$Stream_Handler_$Impl_$.ofUnknown(function(item) {
+				var ret = reducer(initial,item).map(function(o) {
+					switch(o._hx_index) {
+					case 0:
+						var v = o.result;
+						initial = v;
+						return tink_streams_Handled.Resume;
+					case 1:
+						var e = o.e;
+						return tink_streams_Handled.Clog(e);
+					}
+				});
+				return ret.gather();
+			})).handle(function(c) {
+				switch(c._hx_index) {
+				case 0:
+					var _g3 = c.rest;
+					throw new js__$Boot_HaxeError("assert");
+				case 1:
+					var rest = c.at;
+					var e1 = c.error;
+					cb(tink_streams_Reduction.Crashed(e1,rest));
+					break;
+				case 2:
+					var e2 = c.error;
+					cb(tink_streams_Reduction.Failed(e2));
+					break;
+				case 3:
+					cb(tink_streams_Reduction.Reduced(initial));
+					break;
+				}
+			});
+		},true);
+	}
+	,forEach: function(handler) {
+		throw new js__$Boot_HaxeError("not implemented");
+	}
+	,__class__: tink_streams_StreamBase
+};
+var tink_streams_Empty = function() {
+	tink_streams_StreamBase.call(this);
+};
+tink_streams_Empty.__name__ = true;
+tink_streams_Empty.__super__ = tink_streams_StreamBase;
+tink_streams_Empty.prototype = $extend(tink_streams_StreamBase.prototype,{
+	forEach: function(handler) {
+		return new tink_core__$Future_SyncFuture(new tink_core__$Lazy_LazyConst(tink_streams_Conclusion.Depleted));
+	}
+	,__class__: tink_streams_Empty
+});
+var tink_io__$Source_Source_$Impl_$ = {};
+tink_io__$Source_Source_$Impl_$.__name__ = true;
+tink_io__$Source_Source_$Impl_$.concatAll = function(s) {
+	return s.reduce(tink__$Chunk_Chunk_$Impl_$.EMPTY,tink_streams__$Stream_Reducer_$Impl_$.ofSafe(function(res,cur) {
+		return new tink_core__$Future_SyncFuture(new tink_core__$Lazy_LazyConst(tink_streams_ReductionStep.Progress(tink__$Chunk_Chunk_$Impl_$.catChunk(res,cur))));
+	}));
+};
+var tink_io_RealSourceTools = function() { };
+tink_io_RealSourceTools.__name__ = true;
+tink_io_RealSourceTools.all = function(s) {
+	var ret = tink_io__$Source_Source_$Impl_$.concatAll(s).map(function(o) {
+		switch(o._hx_index) {
+		case 1:
+			var e = o.error;
+			return tink_core_Outcome.Failure(e);
+		case 2:
+			var c = o.result;
+			return tink_core_Outcome.Success(c);
+		}
+	});
+	return ret.gather();
+};
+var tink_io_IdealSourceTools = function() { };
+tink_io_IdealSourceTools.__name__ = true;
+tink_io_IdealSourceTools.all = function(s) {
+	var ret = tink_io__$Source_Source_$Impl_$.concatAll(s).map(function(o) {
+		var c = o.result;
+		return c;
+	});
+	return ret.gather();
+};
+var tink_io_WorkerObject = function() { };
+tink_io_WorkerObject.__name__ = true;
+tink_io_WorkerObject.__isInterface__ = true;
+tink_io_WorkerObject.prototype = {
+	__class__: tink_io_WorkerObject
+};
+var tink_io__$Worker_EagerWorker = function() {
+};
+tink_io__$Worker_EagerWorker.__name__ = true;
+tink_io__$Worker_EagerWorker.__interfaces__ = [tink_io_WorkerObject];
+tink_io__$Worker_EagerWorker.prototype = {
+	work: function(task) {
+		return new tink_core__$Future_SyncFuture(new tink_core__$Lazy_LazyConst(task.get()));
+	}
+	,__class__: tink_io__$Worker_EagerWorker
+};
+var tink_io__$Worker_Worker_$Impl_$ = {};
+tink_io__$Worker_Worker_$Impl_$.__name__ = true;
+tink_io__$Worker_Worker_$Impl_$.ensure = function(this1) {
+	if(this1 == null) {
+		return tink_io__$Worker_Worker_$Impl_$.get();
+	} else {
+		return this1;
+	}
+};
+tink_io__$Worker_Worker_$Impl_$.get = function() {
+	return tink_io__$Worker_Worker_$Impl_$.pool[Std.random(tink_io__$Worker_Worker_$Impl_$.pool.length)];
+};
+tink_io__$Worker_Worker_$Impl_$.work = function(this1,task) {
+	return this1.work(task);
+};
+var tink_json_BasicWriter = function() {
+	this.plugins = new tink_core_Annex(this);
+};
+tink_json_BasicWriter.__name__ = true;
+tink_json_BasicWriter.prototype = {
+	init: function() {
+		var this1 = "";
+		this.buf = this1;
+	}
+	,__class__: tink_json_BasicWriter
+};
+var tink_json_Writer0 = function() {
+	tink_json_BasicWriter.call(this);
+};
+tink_json_Writer0.__name__ = true;
+tink_json_Writer0.__super__ = tink_json_BasicWriter;
+tink_json_Writer0.prototype = $extend(tink_json_BasicWriter.prototype,{
+	parse0: function(value) {
+		var __first = true;
+		this.buf += String.fromCodePoint(123);
+		var value1 = value.mail;
+		if(__first) {
+			__first = false;
+		} else {
+			this.buf += String.fromCodePoint(44);
+		}
+		this.buf += "\"mail\":";
+		var s = JSON.stringify(value1);
+		this.buf += s;
+		var value2 = value.message;
+		if(__first) {
+			__first = false;
+		} else {
+			this.buf += String.fromCodePoint(44);
+		}
+		this.buf += "\"message\":";
+		var s1 = JSON.stringify(value2);
+		this.buf += s1;
+		var value3 = value.name;
+		if(__first) {
+			__first = false;
+		} else {
+			this.buf += String.fromCodePoint(44);
+		}
+		this.buf += "\"name\":";
+		var s2 = JSON.stringify(value3);
+		this.buf += s2;
+		var value4 = value.subject;
+		if(__first) {
+			__first = false;
+		} else {
+			this.buf += String.fromCodePoint(44);
+		}
+		this.buf += "\"subject\":";
+		var s3 = JSON.stringify(value4);
+		this.buf += s3;
+		this.buf += String.fromCodePoint(125);
+	}
+	,write: function(value) {
+		this.init();
+		this.parse0(value);
+		return this.buf.toString();
+	}
+	,__class__: tink_json_Writer0
+});
+var tink_streams_Handled = $hxEnums["tink.streams.Handled"] = { __ename__ : true, __constructs__ : ["BackOff","Finish","Resume","Clog"]
+	,BackOff: {_hx_index:0,__enum__:"tink.streams.Handled",toString:$estr}
+	,Finish: {_hx_index:1,__enum__:"tink.streams.Handled",toString:$estr}
+	,Resume: {_hx_index:2,__enum__:"tink.streams.Handled",toString:$estr}
+	,Clog: ($_=function(e) { return {_hx_index:3,e:e,__enum__:"tink.streams.Handled",toString:$estr}; },$_.__params__ = ["e"],$_)
+};
+var tink_streams_Conclusion = $hxEnums["tink.streams.Conclusion"] = { __ename__ : true, __constructs__ : ["Halted","Clogged","Failed","Depleted"]
+	,Halted: ($_=function(rest) { return {_hx_index:0,rest:rest,__enum__:"tink.streams.Conclusion",toString:$estr}; },$_.__params__ = ["rest"],$_)
+	,Clogged: ($_=function(error,at) { return {_hx_index:1,error:error,at:at,__enum__:"tink.streams.Conclusion",toString:$estr}; },$_.__params__ = ["error","at"],$_)
+	,Failed: ($_=function(error) { return {_hx_index:2,error:error,__enum__:"tink.streams.Conclusion",toString:$estr}; },$_.__params__ = ["error"],$_)
+	,Depleted: {_hx_index:3,__enum__:"tink.streams.Conclusion",toString:$estr}
+};
+var tink_streams_ReductionStep = $hxEnums["tink.streams.ReductionStep"] = { __ename__ : true, __constructs__ : ["Progress","Crash"]
+	,Progress: ($_=function(result) { return {_hx_index:0,result:result,__enum__:"tink.streams.ReductionStep",toString:$estr}; },$_.__params__ = ["result"],$_)
+	,Crash: ($_=function(e) { return {_hx_index:1,e:e,__enum__:"tink.streams.ReductionStep",toString:$estr}; },$_.__params__ = ["e"],$_)
+};
+var tink_streams_Reduction = $hxEnums["tink.streams.Reduction"] = { __ename__ : true, __constructs__ : ["Crashed","Failed","Reduced"]
+	,Crashed: ($_=function(error,at) { return {_hx_index:0,error:error,at:at,__enum__:"tink.streams.Reduction",toString:$estr}; },$_.__params__ = ["error","at"],$_)
+	,Failed: ($_=function(error) { return {_hx_index:1,error:error,__enum__:"tink.streams.Reduction",toString:$estr}; },$_.__params__ = ["error"],$_)
+	,Reduced: ($_=function(result) { return {_hx_index:2,result:result,__enum__:"tink.streams.Reduction",toString:$estr}; },$_.__params__ = ["result"],$_)
+};
+var tink_streams_Single = function(value) {
+	tink_streams_StreamBase.call(this);
+	this.value = value;
+};
+tink_streams_Single.__name__ = true;
+tink_streams_Single.__super__ = tink_streams_StreamBase;
+tink_streams_Single.prototype = $extend(tink_streams_StreamBase.prototype,{
+	forEach: function(handle) {
+		var _gthis = this;
+		var ret = handle(this.value.get()).map(function(step) {
+			switch(step._hx_index) {
+			case 0:
+				return tink_streams_Conclusion.Halted(_gthis);
+			case 1:
+				return tink_streams_Conclusion.Halted(tink_streams_Empty.inst);
+			case 2:
+				return tink_streams_Conclusion.Depleted;
+			case 3:
+				var e = step.e;
+				return tink_streams_Conclusion.Clogged(e,_gthis);
+			}
+		});
+		return ret.gather();
+	}
+	,__class__: tink_streams_Single
+});
+var tink_streams__$Stream_Handler_$Impl_$ = {};
+tink_streams__$Stream_Handler_$Impl_$.__name__ = true;
+tink_streams__$Stream_Handler_$Impl_$.ofUnknown = function(f) {
+	var this1 = f;
+	return this1;
+};
+var tink_streams__$Stream_Reducer_$Impl_$ = {};
+tink_streams__$Stream_Reducer_$Impl_$.__name__ = true;
+tink_streams__$Stream_Reducer_$Impl_$.ofSafe = function(f) {
+	var this1 = f;
+	return this1;
+};
+var tink_url__$Host_Host_$Impl_$ = {};
+tink_url__$Host_Host_$Impl_$.__name__ = true;
+tink_url__$Host_Host_$Impl_$._new = function(name,port) {
+	var this1;
+	if(port == null) {
+		this1 = name;
+	} else if(port > 65535 || port <= 0) {
+		throw new js__$Boot_HaxeError("Invalid port");
+	} else {
+		this1 = "" + name + ":" + port;
+	}
+	return this1;
+};
+var tink_url__$Path_Path_$Impl_$ = {};
+tink_url__$Path_Path_$Impl_$.__name__ = true;
+tink_url__$Path_Path_$Impl_$.join = function(this1,that) {
+	if(that == "") {
+		return this1;
+	} else if(that.charAt(0) == "/") {
+		return that;
+	} else if(this1.charAt(this1.length - 1) == "/") {
+		return tink_url__$Path_Path_$Impl_$.ofString(this1 + that);
+	} else {
+		var _g = this1.lastIndexOf("/");
+		if(_g == -1) {
+			return that;
+		} else {
+			var v = _g;
+			return tink_url__$Path_Path_$Impl_$.ofString(HxOverrides.substr(this1,0,v + 1) + that);
+		}
+	}
+};
+tink_url__$Path_Path_$Impl_$.ofString = function(s) {
+	var this1 = tink_url__$Path_Path_$Impl_$.normalize(s);
+	return this1;
+};
+tink_url__$Path_Path_$Impl_$.normalize = function(s) {
+	s = StringTools.trim(StringTools.replace(s,"\\","/"));
+	if(s == ".") {
+		return "./";
+	}
+	var isDir = StringTools.endsWith(s,"/..") || StringTools.endsWith(s,"/") || StringTools.endsWith(s,"/.");
+	var parts = [];
+	var isAbsolute = StringTools.startsWith(s,"/");
+	var up = 0;
+	var _g = 0;
+	var _g1 = s.split("/");
+	while(_g < _g1.length) {
+		var part = _g1[_g];
+		++_g;
+		var _g2 = StringTools.trim(part);
+		switch(_g2) {
+		case "":
+			break;
+		case ".":
+			break;
+		case "..":
+			if(parts.pop() == null) {
+				++up;
+			}
+			break;
+		default:
+			var v = _g2;
+			parts.push(v);
+		}
+	}
+	if(isAbsolute) {
+		parts.unshift("");
+	} else {
+		var _g21 = 0;
+		var _g3 = up;
+		while(_g21 < _g3) {
+			var i = _g21++;
+			parts.unshift("..");
+		}
+	}
+	if(isDir) {
+		parts.push("");
+	}
+	return parts.join("/");
+};
+function $getIterator(o) { if( o instanceof Array ) return HxOverrides.iter(o); else return o.iterator(); }
 function $bind(o,m) { if( m == null ) return null; if( m.__id__ == null ) m.__id__ = $global.$haxeUID++; var f; if( o.hx__closures__ == null ) o.hx__closures__ = {}; else f = o.hx__closures__[m.__id__]; if( f == null ) { f = m.bind(o); o.hx__closures__[m.__id__] = f; } return f; }
 $global.$haxeUID |= 0;
+if( String.fromCodePoint == null ) String.fromCodePoint = function(c) { return c < 0x10000 ? String.fromCharCode(c) : String.fromCharCode((c>>10)+0xD7C0)+String.fromCharCode((c&0x3FF)+0xDC00); }
+String.prototype.__class__ = String;
 String.__name__ = true;
 Array.__name__ = true;
+var Int = { };
+var Dynamic = { };
+var Float = Number;
+var Bool = Boolean;
+var Class = { };
+var Enum = { };
+var $$tre = (typeof Symbol === "function" && Symbol.for && Symbol.for("react.element")) || 0xeac7;
+haxe_ds_ObjectMap.count = 0;
 Object.defineProperty(js__$Boot_HaxeError.prototype,"message",{ get : function() {
 	return String(this.val);
 }});
 js_Boot.__toStr = ({ }).toString;
-var $$tre = (typeof Symbol === "function" && Symbol.for && Symbol.for("react.element")) || 0xeac7;
-model_Content.home = { header : "Miscanthus Normandie", content : "Martin et Henri, agriculteurs dans le calvados près de Caen : nous avons pour objectif de favoriser les cultures plus respectueuses de l'environnement. C'est pourquoi, nous cultivons le miscanthus depuis plusieurs années sur des terres classées en zone sensible. Cette culture est un produit issu de l'Agriculture Biologique(AB). Nous vous la proposons en direct de la ferme pour vos paillages, litières et aussi en complément alimentaire pour vos animaux."};
-model_Content.miscanthus = { header : "Miscanthus", farming : { header : "Quelle est cette culture?", content : "Le miscanthus géant, aussi appelé herbe à éléphant, est une graminée vivace à rhizome. Le miscanthus se plante au mois de mars-avril pour une durée de vie d'environ 15 ans. La première récolte se fait au bout de 2 ans. Les rendements en miscanthus se situent entre 10 et 20T/ha. Celui-ci peut atteindre 4m de haut."}, prosEnvironnement : { header : "Quels avantages pour l'environnement?", content : { description : "Le miscanthus pousse en zones humides, dans les marais proches de Caen,  milieu sensible qu'il faut protéger. Il respecte ainsi l'environnement :", items : ["C'est une culture écologique, qui se développe sans produit chimique (pas de produit phytosanitaire, pas de pesticide, etc.)","Il développe aussi la biodiversité.","Et surtout, il stocke 36 tonnes de CO2 à l'hectare.","De plus, l'hiver, les animaux tels que les chevreuils et sangliers s'y réfugient."]}}};
-model_Content.mulch = { header : "Paillage Environnemental", quote : "\"Avec le miscanthus, je gagne du temps au quotidien en arrossage et en désherbage.\"", eco : { header : "Un paillage écologique", content : ["Utilisé comme paillis, le miscanthus couvre les sols des jardins, potagers, haies, plantes annuelles ou vivaces etc…","100% naturel de production locale : aucun engrais, ni pesticide pendant la culture.","Stocke le carbone.","Limite l’enherbement et supprime l’utilisation des produits phytosanitaires sur les parterres, massifs végétaux...","Diminue l’évapotranspiration.","Conserve l’humidité et permet de réduire l’arrosage.","Développe la biodiversité tout en améliorant et nourrissant la structure du sol: véritable engrais organique (décomposition 2 ans.)","Respecte les critères relatifs à la loi n° 1708 du 15 janvier 2014 (article L. 253-7 du code rural et de la pêche maritime) concernant les collectivités locales et les communes.","Utilisé pour la permaculture, les jardins Bio, les potagers Bio, etc…"]}, aesthetic : { header : "Un paillage esthétique présentant de nombreux avantages", content : ["Ce paillage clair met en valeur vos massifs, vos plantations, votre potager et vos espaces fleuris.","Il protège contre le gel et les grandes chaleurs. ","Stable au vent et aux eaux de ruisselement.","Les limaces et les oiseaux ne l’apprécient pas.","PH neutre."]}, packaging : { header : "Conditionnement", content : ["Vrac : minimum 5 tonnes ou 40m3.","Sac : 20 kg.","Balle : 300 kg.","Diffèrents tarifs en fonction des quantités.","// Livraison possible //"]}};
-model_Content.litter = { header : "Litière animale", quote : "\"Grâce à la litière de miscanthus, mes chevaux n'ont plus de problème d'allergie à la poussière.\"", eco : { header : "Une litière économique, écologique et 100% naturelle", content : ["Idéale pour les volailles, poussins, chevaux, bovins, animaux de compagnie, etc.","La tige de miscanthus est une véritable éponge qui lui procure un très grand pouvoir absorbant.","100% naturelle, la litière de miscanthus est confortable, bénéfique pour le bien-être des animaux.","Elle est plus durable dans le temps, sa surface reste sêche plus longtemps car elle est aérée (ne se colmate pas)."]}, pros : { header : "Ses qualités", content : ["Litière dépoussiérée avec odeur de bois.","Convient parfaitement aux animaux rencontrant des difficultés respiratoires.","Pouvoir absorbant très important : 3 à 4 fois son poids.","Bel aspect clair même après plusieurs semaines.","Aucune appétence même pour les animaux \"gourmands\".","Économie de matière : 75% de volume de fumier en moins.","100% biodégradable et compostable (amendement organique)"]}};
-model_Content.food = { header : "Complément Alimentaire Animaux", quote : "\" Avec le miscanthus, la rumination de mes vaches laitières est favorisée.\"", use : { header : "Utilisation/Rumination", content : ["Incorporer environ 500g par jour de miscanthus dans la ration de votre bovin.","Etant une fibre dure et courte, le miscanthus dispose d'un fort pouvoir grattant ce qui permet d'augmenter la rumination."]}, pros : { header : "Ses points forts", content : ["Le myscanthus est un produit issu de l'Agriculture Biologique et par conséquent, il est utilisé au sein des élevages Bio.","100% naturel, aucune utilisation d'intrants et de produits phytosanitaires sur la culture.","Amélioration des taux butéreux et/ou de la production laitière.","Amélioration de la fécondité.","Économique.","Réduction des boiteries et donc des frais vétérinaires."]}};
-view_App.subpagesId = ["home","myscanthus","mulch","litter","gallery","contact"];
-view_App.displayName = "App";
-view_Contact.displayName = "Contact";
-view_Food.displayName = "Food";
-view_Gallery.displayName = "Gallery";
-view_Home.displayName = "Home";
-view_Litter.displayName = "Litter";
-view_MailForm.displayName = "MailForm";
-view_Mulch.displayName = "Mulch";
-view_MyscanthusPresentation.displayName = "MyscanthusPresentation";
-view_NavBar.displayName = "NavBar";
-Main.main();
+if(ArrayBuffer.prototype.slice == null) {
+	ArrayBuffer.prototype.slice = js_lib__$ArrayBuffer_ArrayBufferCompat.sliceImpl;
+}
+client_model_Content.home = { header : "Miscanthus Normandie", content : "Martin et Henri, agriculteurs dans le calvados près de Caen : \"nous avons pour objectif de favoriser les cultures plus respectueuses de l'environnement. C'est pourquoi, nous cultivons le miscanthus depuis plusieurs années sur des terres classées en zone sensible. Cette culture est un produit issu de l'Agriculture Biologique (AB). Nous vous la proposons en direct de la ferme pour vos paillages, litières et aussi en complément alimentaire pour vos animaux\"."};
+client_model_Content.miscanthus = { header : "Miscanthus", farming : { header : "Quelle est cette culture?", content : "Le miscanthus géant, aussi appelé herbe à éléphant, est une graminée vivace à rhizome. Le miscanthus se plante au mois de mars-avril pour une durée de vie d'environ 15 ans. La première récolte se fait au bout de 2 ans. Les rendements en miscanthus se situent entre 10 et 20T/ha. Celui-ci peut atteindre 4m de haut."}, prosEnvironnement : { header : "Quels avantages pour l'environnement?", content : { description : "Le miscanthus pousse en zones humides, dans les marais proches de Caen,  milieu sensible qu'il faut protéger. Il respecte ainsi l'environnement :", items : ["C'est une culture écologique, qui se développe sans produit chimique (pas de produit phytosanitaire, pas de pesticide, etc.)","Il développe aussi la biodiversité.","Et surtout, il stocke 36 tonnes de CO2 à l'hectare.","De plus, l'hiver, les animaux tels que les chevreuils et sangliers s'y réfugient.","Il permet de lutter contre l’érosion des sols. C’est donc une culture très intéressante pour l’environnement dans les zones de captage proche des villes."]}}};
+client_model_Content.mulch = { header : "Paillage Environnemental", quote : "\"Avec le miscanthus, je gagne du temps au quotidien en arrossage et en désherbage.\"", eco : { header : "Un paillage écologique", content : ["Utilisé comme paillis, le miscanthus couvre les sols des jardins, potagers, haies, plantes annuelles ou vivaces, etc.","100% naturel de production locale : aucun engrais, ni pesticide pendant la culture.","Stocke le carbone.","Limite l’enherbement et supprime l’utilisation des produits phytosanitaires sur les parterres, massifs végétaux, etc. C’est donc un produit de susbsititution durable et écologique aux round up dans vos jardins.","Diminue l’évapotranspiration.","Conserve l’humidité et permet de réduire l’arrosage.","Développe la biodiversité tout en améliorant et nourrissant la structure du sol: véritable engrais organique (décomposition 2 ans.)","Respecte les critères relatifs à la loi n° 1708 du 15 janvier 2014 (article L. 253-7 du code rural et de la pêche maritime) concernant les collectivités locales et les communes.","Utilisé pour la permaculture, les jardins Bio, les potagers Bio, etc."]}, aesthetic : { header : "Un paillage esthétique présentant de nombreux avantages", content : ["Ce paillage clair met en valeur vos massifs, vos plantations, votre potager et vos espaces fleuris.","Il protège contre le gel et les grandes chaleurs. ","Stable au vent et aux eaux de ruisselement avec 2L.","Les limaces et les oiseaux ne l’apprécient pas.","PH neutre ce qui convient à tout types de plantes et légumes. Notamment les rosiers qui n’acceptent pas des sols acides, les écorces ou produits de bois apportent de l’acidité."]}, packaging : { header : "Conditionnement", content : ["Vrac : minimum 5 tonnes ou 40m3.","Sac : 20 kg.","Balle : 300 kg.","Diffèrents tarifs en fonction des quantités.","// Livraison possible //"]}};
+client_model_Content.litter = { header : "Litière animale", quote : "\"Grâce à la litière de miscanthus, mes chevaux n'ont plus de problème d'allergie à la poussière.\"", eco : { header : "Une litière économique, écologique et 100% naturelle", content : ["Idéale pour les volailles, poussins, chevaux, bovins, animaux de compagnie, etc.","La tige de miscanthus est une véritable éponge qui lui procure un très grand pouvoir absorbant.","100% naturelle, la litière de miscanthus est confortable, bénéfique pour le bien-être des animaux.","Elle est plus durable dans le temps, sa surface reste sêche plus longtemps car elle est aérée (ne se colmate pas)."]}, pros : { header : "Ses qualités", content : ["Litière dépoussiérée avec odeur de bois.","Convient parfaitement aux animaux rencontrant des difficultés respiratoires.","Pouvoir absorbant très important : 3 à 4 fois son poids.","Bel aspect clair même après plusieurs semaines.","Aucune appétence même pour les animaux \"gourmands\".","Économie de matière : 75% de volume de fumier en moins.","100% biodégradable et compostable (amendement organique)"]}};
+client_model_Content.food = { header : "Complément Alimentaire Animaux", quote : "\" Avec le miscanthus, la rumination de mes vaches laitières est favorisée.\"", use : { header : "Utilisation/Rumination", content : ["Incorporer environ 500g par jour de miscanthus dans la ration de votre bovin.","Etant une fibre dure et courte, le miscanthus dispose d'un fort pouvoir grattant ce qui permet d'augmenter la rumination."]}, pros : { header : "Ses points forts", content : ["Le miscanthus est un produit issu de l'Agriculture Biologique et par conséquent, il est utilisé au sein des élevages Bio.","100% naturel, aucune utilisation d'intrants et de produits phytosanitaires sur la culture.","Amélioration des taux butéreux et/ou de la production laitière.","Amélioration de la fécondité.","Économique.","Réduction des boiteries et donc des frais vétérinaires."]}};
+client_view_App.subpagesId = ["home","myscanthus","mulch","litter","gallery","contact"];
+client_view_App.displayName = "App";
+client_view_Contact.displayName = "Contact";
+client_view_Food.displayName = "Food";
+client_view_Gallery.displayName = "Gallery";
+client_view_Home.displayName = "Home";
+client_view_Litter.displayName = "Litter";
+client_view_MailForm.displayName = "MailForm";
+client_view_Mulch.displayName = "Mulch";
+client_view_MyscanthusPresentation.displayName = "MyscanthusPresentation";
+client_view_NavBar.displayName = "NavBar";
+tink__$Chunk_EmptyChunk.EMPTY = new haxe_io_Bytes(new ArrayBuffer(0));
+tink__$Chunk_Chunk_$Impl_$.EMPTY = new tink__$Chunk_EmptyChunk();
+tink_core__$Callback_Callback_$Impl_$.depth = 0;
+tink_http_Fetch.client = new haxe_ds_EnumValueMap();
+tink_http_Fetch.sclient = new haxe_ds_EnumValueMap();
+tink_streams_Empty.inst = new tink_streams_Empty();
+tink_io__$Source_Source_$Impl_$.EMPTY = tink_streams_Empty.inst;
+tink_io__$Worker_Worker_$Impl_$.EAGER = new tink_io__$Worker_EagerWorker();
+tink_io__$Worker_Worker_$Impl_$.pool = [tink_io__$Worker_Worker_$Impl_$.EAGER];
+client_Main.main();
 })(typeof window != "undefined" ? window : typeof global != "undefined" ? global : typeof self != "undefined" ? self : this);
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})

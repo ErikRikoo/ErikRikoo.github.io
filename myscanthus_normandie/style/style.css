@@ -341,19 +341,13 @@ h2 {
     }
 }
 
-@media only screen and (max-width: 1390px) {
+@media only screen and (max-width: 1405px) {
     .nav-item {
         font-size: 12px;
     }
 }
 
-@media only screen and (max-width: 1390px) {
-    .nav-item {
-        font-size: 10px;
-    }
-}
-
-@media only screen and (max-width: 1135px) {
+@media only screen and (max-width: 1220px) {
     .nav-items.small-screen {
         visibility: hidden;
         margin: auto;
