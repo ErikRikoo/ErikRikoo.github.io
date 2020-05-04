@@ -1,0 +1,29 @@
+:root {
+    --back-color: rgb(172, 172, 172);
+    --bookmark-color: rgb(78, 78, 78);
+    --text-color: rgb(233, 233, 233);
+}
+
+body {
+    background-color: var(--back-color);
+}
+
+.row {
+    margin-top: 1%;
+}
+
+.bookmark {
+    background-color: var(--bookmark-color);
+    color: var(--text-color);
+    border: none;
+    border-radius: 5px;
+}
+
+.navbar-item {
+    background-color: var(--bookmark-color);
+    color: var(--text-color);
+    border: none;
+    border-radius: 5px;
+    width: 100%;
+    height: 100%;
+}
