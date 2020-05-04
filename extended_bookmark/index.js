@@ -79,7 +79,7 @@ client_view_App.prototype = $extend(React.Component.prototype,{
 		});
 	}
 	,render: function() {
-		return { $$typeof : $$tre, type : "div", props : { 'class' : "container", children : [{ $$typeof : $$tre, type : "div", props : { id : "navbar", 'class' : "row", children : [{ $$typeof : $$tre, type : "div", props : { 'class' : "col-8", children : { $$typeof : $$tre, type : "input", props : { type : "text", placeholder : "Rechercher", id : "search-bar-container", 'class' : "col-12 navbar-item"}, key : null, ref : null}}, key : null, ref : null},{ $$typeof : $$tre, type : "div", props : { id : "categories-dropdown", 'class' : "col-4 dropdown", children : [{ $$typeof : $$tre, type : "a", props : { role : "button", id : "dropdownMenuLink", href : "#", 'data-toggle' : "dropdown", 'class' : "navbar-item btn btn-secondary dropdown-toggle w-100", 'aria-haspopup' : "true", 'aria-expanded' : "false", children : { $$typeof : $$tre, type : "input", props : { type : "text", placeholder : "Catégories", 'class' : "col-12 navbar-item"}, key : null, ref : null}}, key : null, ref : null},{ $$typeof : $$tre, type : "div", props : { 'class' : "dropdown-menu", 'aria-labelledby' : "dropdownMenuLink", children : [{ $$typeof : $$tre, type : "div", props : { 'class' : "form-check", children : [{ $$typeof : $$tre, type : "input", props : { value : "", type : "checkbox", id : "defaultCheck1", 'class' : "form-check-input"}, key : null, ref : null},{ $$typeof : $$tre, type : "label", props : { 'for' : "defaultCheck1", 'class' : "form-check-label", children : "Programming"}, key : null, ref : null}]}, key : null, ref : null},{ $$typeof : $$tre, type : "div", props : { 'class' : "form-check", children : [{ $$typeof : $$tre, type : "input", props : { value : "", type : "checkbox", id : "defaultCheck2", 'class' : "form-check-input"}, key : null, ref : null},{ $$typeof : $$tre, type : "label", props : { 'for' : "defaultCheck2", 'class' : "form-check-label", children : "Shader"}, key : null, ref : null}]}, key : null, ref : null},{ $$typeof : $$tre, type : "div", props : { 'class' : "form-check", children : [{ $$typeof : $$tre, type : "input", props : { value : "", type : "checkbox", id : "defaultCheck3", 'class' : "form-check-input"}, key : null, ref : null},{ $$typeof : $$tre, type : "label", props : { 'for' : "defaultCheck3", 'class' : "form-check-label", children : "Autres"}, key : null, ref : null}]}, key : null, ref : null}]}, key : null, ref : null}]}, key : null, ref : null}]}, key : null, ref : null},this.getBookmarks()]}, key : null, ref : null};
+		return { $$typeof : $$tre, type : "div", props : { 'class' : "container", children : [{ $$typeof : $$tre, type : "div", props : { id : "navbar", 'class' : "row", children : [{ $$typeof : $$tre, type : "div", props : { 'class' : "col-8", children : { $$typeof : $$tre, type : "input", props : { type : "text", placeholder : "Rechercher", id : "search-bar-container", 'class' : "col-12 navbar-item"}, key : null, ref : null}}, key : null, ref : null},{ $$typeof : $$tre, type : "div", props : { id : "categories-dropdown", 'class' : "col-4 dropdown", children : [{ $$typeof : $$tre, type : "a", props : { role : "button", id : "dropdownMenuLink", href : "#", 'data-toggle' : "dropdown", 'class' : "navbar-item btn btn-secondary dropdown-toggle w-100", 'aria-haspopup' : "true", 'aria-expanded' : "false", children : { $$typeof : $$tre, type : "input", props : { type : "text", placeholder : "Catégories", 'class' : "col-12 navbar-item"}, key : null, ref : null}}, key : null, ref : null},{ $$typeof : $$tre, type : "div", props : { 'class' : "dropdown-menu", 'aria-labelledby' : "dropdownMenuLink", children : this.getCategories()}, key : null, ref : null}]}, key : null, ref : null}]}, key : null, ref : null},this.getBookmarks()]}, key : null, ref : null};
 	}
 	,getBookmarks: function() {
 		if(client_DataHandler.data.bookmarks == null) {
@@ -105,7 +105,7 @@ client_view_App.prototype = $extend(React.Component.prototype,{
 			result[i] = { $$typeof : $$tre, type : client_view_BookmarkView, props : { data : _this[i]}, key : null, ref : null};
 		}
 		var bookmarks = result;
-		console.log("src/client/view/App.hx:64:",bookmarks.length);
+		console.log("src/client/view/App.hx:48:",bookmarks.length);
 		var _this1 = util_ArrayUtil.split(bookmarks,3);
 		var result1 = new Array(_this1.length);
 		var _g2 = 0;
@@ -116,6 +116,21 @@ client_view_App.prototype = $extend(React.Component.prototype,{
 		}
 		var rows = result1;
 		return { $$typeof : $$tre, type : "div", props : { children : rows}, key : null, ref : null};
+	}
+	,getCategories: function() {
+		if(client_DataHandler.data.categories == null) {
+			client_DataHandler.data.categories = ["Programming","Shader","Autres"];
+		}
+		var _this = client_DataHandler.data.categories;
+		var result = new Array(_this.length);
+		var _g = 0;
+		var _g1 = _this.length;
+		while(_g < _g1) {
+			var i = _g++;
+			var i1 = _this[i];
+			result[i] = { $$typeof : $$tre, type : "div", props : { 'class' : "form-check", children : [{ $$typeof : $$tre, type : "input", props : { value : "", type : "checkbox", id : "check-" + i1, 'class' : "form-check-input"}, key : null, ref : null},{ $$typeof : $$tre, type : "label", props : { 'for' : "defaultCheck3", 'class' : "form-check-label", children : i1}, key : null, ref : null}]}, key : null, ref : null};
+		}
+		return result;
 	}
 });
 var client_view_BookmarkView = function(props) {

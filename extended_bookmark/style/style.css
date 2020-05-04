@@ -37,6 +37,14 @@ body {
     margin-left: 5px !important;
 }
 
+#categories-dropdown a:hover {
+    background-color: var(--bookmark-color);
+}
+
+#categories-dropdown a:focus {
+    background-color: var(--bookmark-color);
+}
+
 #search-bar-container {
     padding-top: 4px;
     padding-bottom: 4px;
