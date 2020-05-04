@@ -16,6 +16,21 @@ HxOverrides.iter = function(a) {
 	}};
 };
 Math.__name__ = true;
+var Random = function() { };
+Random.__name__ = true;
+Random.string = function(length,charactersToUse) {
+	if(charactersToUse == null) {
+		charactersToUse = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+	}
+	var str = "";
+	var _g = 0;
+	var _g1 = length;
+	while(_g < _g1) {
+		var i = _g++;
+		str += charactersToUse.charAt(Math.floor((charactersToUse.length - 1 + 1) * Math.random()));
+	}
+	return str;
+};
 var Std = function() { };
 Std.__name__ = true;
 Std.string = function(s) {
@@ -23,19 +38,27 @@ Std.string = function(s) {
 };
 var client_DataHandler = function() { };
 client_DataHandler.__name__ = true;
-client_DataHandler.getBookmarks = function() {
-	var _g = [];
-	_g.push({ title : "First", links : ["http1","http2"], sumup : "Lorem ipsum", categories : [0,2], keywords : ["tag1","tag2"]});
-	_g.push({ title : "First", links : ["http1","http2"], sumup : "Lorem ipsum", categories : [0,2], keywords : ["tag1","tag2"]});
-	_g.push({ title : "First", links : ["http1","http2"], sumup : "Lorem ipsum", categories : [0,2], keywords : ["tag1","tag2"]});
-	_g.push({ title : "First", links : ["http1","http2"], sumup : "Lorem ipsum", categories : [0,2], keywords : ["tag1","tag2"]});
-	_g.push({ title : "First", links : ["http1","http2"], sumup : "Lorem ipsum", categories : [0,2], keywords : ["tag1","tag2"]});
-	_g.push({ title : "First", links : ["http1","http2"], sumup : "Lorem ipsum", categories : [0,2], keywords : ["tag1","tag2"]});
-	_g.push({ title : "First", links : ["http1","http2"], sumup : "Lorem ipsum", categories : [0,2], keywords : ["tag1","tag2"]});
-	_g.push({ title : "First", links : ["http1","http2"], sumup : "Lorem ipsum", categories : [0,2], keywords : ["tag1","tag2"]});
-	_g.push({ title : "First", links : ["http1","http2"], sumup : "Lorem ipsum", categories : [0,2], keywords : ["tag1","tag2"]});
-	_g.push({ title : "First", links : ["http1","http2"], sumup : "Lorem ipsum", categories : [0,2], keywords : ["tag1","tag2"]});
-	return _g;
+client_DataHandler.getRandomBookmark = function() {
+	if(client_DataHandler.data.categories == null) {
+		client_DataHandler.data.categories = ["Programming","Shader","Autres"];
+	}
+	var categoriesSize = client_DataHandler.data.categories.length - 1;
+	var sumup = "";
+	var _g = 0;
+	var _g1 = 10 + Math.floor(21 * Math.random());
+	while(_g < _g1) {
+		var i = _g++;
+		sumup += Random.string(2 + Math.floor(9 * Math.random()),"aeiouvrtyadfg") + " ";
+	}
+	var tmp = Random.string(2 + Math.floor(9 * Math.random()),"aeiouvrtyadfg");
+	var _g2 = [];
+	var _g3 = 0;
+	var _g4 = 1 + Math.floor((categoriesSize - 1 + 1) * Math.random());
+	while(_g3 < _g4) {
+		var i1 = _g3++;
+		_g2.push(Math.floor((categoriesSize + 1) * Math.random()));
+	}
+	return { title : tmp, links : ["http1","http2"], sumup : sumup, categories : _g2, keywords : ["tag1","tag2"]};
 };
 var client_Main = function() { };
 client_Main.__name__ = true;
@@ -49,23 +72,38 @@ client_view_App.__name__ = true;
 client_view_App.__super__ = React.Component;
 client_view_App.prototype = $extend(React.Component.prototype,{
 	render: function() {
-		return { $$typeof : $$tre, type : "div", props : { 'class' : "container", children : [{ $$typeof : $$tre, type : "div", props : { id : "navbar", 'class' : "row", children : [{ $$typeof : $$tre, type : "div", props : { 'class' : "col-8", children : { $$typeof : $$tre, type : "input", props : { type : "text", placeholder : "Rechercher", 'class' : "col-12 navbar-item"}, key : null, ref : null}}, key : null, ref : null},{ $$typeof : $$tre, type : "div", props : { 'class' : "col-4", children : { $$typeof : $$tre, type : "input", props : { type : "text", placeholder : "Catégories", 'class' : "col-12 navbar-item"}, key : null, ref : null}}, key : null, ref : null}]}, key : null, ref : null},this.getBookmarks()]}, key : null, ref : null};
+		return { $$typeof : $$tre, type : "div", props : { 'class' : "container", children : [{ $$typeof : $$tre, type : "div", props : { id : "navbar", 'class' : "row", children : [{ $$typeof : $$tre, type : "div", props : { 'class' : "col-8", children : { $$typeof : $$tre, type : "input", props : { type : "text", placeholder : "Rechercher", 'class' : "col-12 navbar-item"}, key : null, ref : null}}, key : null, ref : null},{ $$typeof : $$tre, type : "div", props : { 'class' : "col-4 dropdown", children : [{ $$typeof : $$tre, type : "a", props : { role : "button", id : "dropdownMenuLink", href : "#", 'data-toggle' : "dropdown", 'class' : "navbar-item btn btn-secondary dropdown-toggle w-100", 'aria-haspopup' : "true", 'aria-expanded' : "false", children : { $$typeof : $$tre, type : "input", props : { type : "text", placeholder : "Catégories", 'class' : "col-12 navbar-item"}, key : null, ref : null}}, key : null, ref : null},{ $$typeof : $$tre, type : "div", props : { 'class' : "dropdown-menu", 'aria-labelledby' : "dropdownMenuLink", children : [{ $$typeof : $$tre, type : "a", props : { href : "#", 'class' : "dropdown-item", children : "Programming"}, key : null, ref : null},{ $$typeof : $$tre, type : "a", props : { href : "#", 'class' : "dropdown-item", children : "Shader"}, key : null, ref : null},{ $$typeof : $$tre, type : "a", props : { href : "#", 'class' : "dropdown-item", children : "Autres"}, key : null, ref : null}]}, key : null, ref : null}]}, key : null, ref : null}]}, key : null, ref : null},this.getBookmarks()]}, key : null, ref : null};
 	}
 	,getBookmarks: function() {
-		var _this = client_DataHandler.getBookmarks();
+		if(client_DataHandler.data.bookmarks == null) {
+			var _g = [];
+			_g.push(client_DataHandler.getRandomBookmark());
+			_g.push(client_DataHandler.getRandomBookmark());
+			_g.push(client_DataHandler.getRandomBookmark());
+			_g.push(client_DataHandler.getRandomBookmark());
+			_g.push(client_DataHandler.getRandomBookmark());
+			_g.push(client_DataHandler.getRandomBookmark());
+			_g.push(client_DataHandler.getRandomBookmark());
+			_g.push(client_DataHandler.getRandomBookmark());
+			_g.push(client_DataHandler.getRandomBookmark());
+			_g.push(client_DataHandler.getRandomBookmark());
+			client_DataHandler.data.bookmarks = _g;
+		}
+		var _this = client_DataHandler.data.bookmarks;
 		var result = new Array(_this.length);
-		var _g = 0;
-		var _g1 = _this.length;
-		while(_g < _g1) {
-			var i = _g++;
+		var _g1 = 0;
+		var _g11 = _this.length;
+		while(_g1 < _g11) {
+			var i = _g1++;
 			result[i] = { $$typeof : $$tre, type : client_view_BookmarkView, props : { data : _this[i]}, key : null, ref : null};
 		}
 		var bookmarks = result;
+		console.log("src/client/view/App.hx:43:",bookmarks.length);
 		var _this1 = util_ArrayUtil.split(bookmarks,3);
 		var result1 = new Array(_this1.length);
 		var _g2 = 0;
-		var _g11 = _this1.length;
-		while(_g2 < _g11) {
+		var _g12 = _this1.length;
+		while(_g2 < _g12) {
 			var i1 = _g2++;
 			result1[i1] = { $$typeof : $$tre, type : "div", props : { 'class' : "row", children : _this1[i1]}, key : null, ref : null};
 		}
@@ -76,14 +114,24 @@ client_view_App.prototype = $extend(React.Component.prototype,{
 var client_view_BookmarkView = function(props) {
 	React.Component.call(this,props);
 	this.data = props.data;
-	console.log("src/client/view/BookmarkView.hx:16:",this.data);
 };
 client_view_BookmarkView.__name__ = true;
 client_view_BookmarkView.__super__ = React.Component;
 client_view_BookmarkView.prototype = $extend(React.Component.prototype,{
 	render: function() {
 		var links = util_ArrayUtil.toSeparatedString(this.data.links,", ");
-		var categories = util_ArrayUtil.toSeparatedString(this.data.categories,", ");
+		var _this = this.data.categories;
+		var result = new Array(_this.length);
+		var _g = 0;
+		var _g1 = _this.length;
+		while(_g < _g1) {
+			var i = _g++;
+			if(client_DataHandler.data.categories == null) {
+				client_DataHandler.data.categories = ["Programming","Shader","Autres"];
+			}
+			result[i] = client_DataHandler.data.categories[_this[i]];
+		}
+		var categories = util_ArrayUtil.toSeparatedString(result,", ");
 		var keywords = util_ArrayUtil.toSeparatedString(this.data.keywords,", ");
 		return { $$typeof : $$tre, type : "div", props : { 'class' : "col-4", children : { $$typeof : $$tre, type : "div", props : { 'class' : "col-12 bookmark", children : [{ $$typeof : $$tre, type : "h1", props : { children : this.data.title}, key : null, ref : null},{ $$typeof : $$tre, type : "b", props : { children : "Résumé:"}, key : null, ref : null},{ $$typeof : $$tre, type : "p", props : { children : this.data.sumup}, key : null, ref : null},{ $$typeof : $$tre, type : "b", props : { children : "Liens:"}, key : null, ref : null},{ $$typeof : $$tre, type : "p", props : { children : links}, key : null, ref : null},{ $$typeof : $$tre, type : "b", props : { children : "Catégories:"}, key : null, ref : null},{ $$typeof : $$tre, type : "p", props : { children : categories}, key : null, ref : null},{ $$typeof : $$tre, type : "b", props : { children : "Mots-clés:"}, key : null, ref : null},{ $$typeof : $$tre, type : "p", props : { children : keywords}, key : null, ref : null}]}, key : null, ref : null}}, key : null, ref : null};
 	}
@@ -170,10 +218,10 @@ var util_ArrayUtil = function() { };
 util_ArrayUtil.__name__ = true;
 util_ArrayUtil.split = function(array,count) {
 	var ret = [];
-	var start = 0;
-	while(start < array.length) {
-		ret.push(array.splice(start,count));
-		start += count;
+	var start = array.length;
+	while(start >= 0) {
+		ret.push(array.splice(0,count));
+		start -= count;
 	}
 	return ret;
 };
@@ -195,6 +243,7 @@ Object.defineProperty(js__$Boot_HaxeError.prototype,"message",{ get : function()
 	return String(this.val);
 }});
 js_Boot.__toStr = ({ }).toString;
+client_DataHandler.data = { bookmarks : null, categories : null};
 client_view_App.displayName = "App";
 client_view_BookmarkView.displayName = "BookmarkView";
 client_Main.main();
