@@ -139,7 +139,6 @@ client_view_App.prototype = $extend(React.Component.prototype,{
 				}
 				return;
 			});
-			console.log("src/client/view/App.hx:35:",_gthis.selectedCategories);
 			_gthis.forceUpdate();
 			return;
 		});
@@ -199,6 +198,7 @@ client_view_App.prototype = $extend(React.Component.prototype,{
 		return { $$typeof : $$tre, type : "div", props : { children : rows}, key : null, ref : null};
 	}
 	,getCategories: function() {
+		var _gthis = this;
 		if(client_DataHandler.data.categories == null) {
 			client_DataHandler.data.categories = ["Programming","Shader","Autres"];
 		}
@@ -208,12 +208,12 @@ client_view_App.prototype = $extend(React.Component.prototype,{
 		while(x.hasNext()) {
 			var x1 = x.next();
 			var index = i++;
-			_g.push({ $$typeof : $$tre, type : "div", props : { 'class' : "form-check", children : [{ $$typeof : $$tre, type : "input", props : { value : index, type : "checkbox", id : "check-" + index, 'class' : "form-check-input"}, key : null, ref : null},{ $$typeof : $$tre, type : "label", props : { 'for' : "check-" + index, 'class' : "form-check-label", children : x1}, key : null, ref : null}]}, key : null, ref : null});
+			_g.push({ $$typeof : $$tre, type : "div", props : { 'class' : "form-check", children : [{ $$typeof : $$tre, type : "input", props : { value : index, type : "checkbox", id : "check-" + index, 'class' : "form-check-input", checked : Lambda.has(_gthis.selectedCategories,index)}, key : null, ref : null},{ $$typeof : $$tre, type : "label", props : { 'for' : "check-" + index, 'class' : "form-check-label", children : x1}, key : null, ref : null}]}, key : null, ref : null});
 		}
 		return _g;
 	}
 	,onCategoriesSelectChanged: function() {
-		console.log("src/client/view/App.hx:87:","Wesh");
+		console.log("src/client/view/App.hx:86:","Wesh");
 	}
 	,__class__: client_view_App
 });
