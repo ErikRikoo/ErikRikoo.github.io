@@ -15,6 +15,28 @@ HxOverrides.iter = function(a) {
 		return this.arr[this.cur++];
 	}};
 };
+var Lambda = function() { };
+Lambda.__name__ = true;
+Lambda.has = function(it,elt) {
+	var x = $getIterator(it);
+	while(x.hasNext()) {
+		var x1 = x.next();
+		if(x1 == elt) {
+			return true;
+		}
+	}
+	return false;
+};
+Lambda.exists = function(it,f) {
+	var x = $getIterator(it);
+	while(x.hasNext()) {
+		var x1 = x.next();
+		if(f(x1)) {
+			return true;
+		}
+	}
+	return false;
+};
 Math.__name__ = true;
 var Random = function() { };
 Random.__name__ = true;
@@ -35,6 +57,25 @@ var Std = function() { };
 Std.__name__ = true;
 Std.string = function(s) {
 	return js_Boot.__string_rec(s,"");
+};
+Std.parseInt = function(x) {
+	if(x != null) {
+		var _g = 0;
+		var _g1 = x.length;
+		while(_g < _g1) {
+			var i = _g++;
+			var c = x.charCodeAt(i);
+			if(c <= 8 || c >= 14 && c != 32 && c != 45) {
+				var v = parseInt(x, (x[(i + 1)]=="x" || x[(i + 1)]=="X") ? 16 : 10);
+				if(isNaN(v)) {
+					return null;
+				} else {
+					return v;
+				}
+			}
+		}
+	}
+	return null;
 };
 var client_DataHandler = function() { };
 client_DataHandler.__name__ = true;
@@ -67,14 +108,39 @@ client_Main.main = function() {
 };
 var client_view_App = function(props) {
 	React.Component.call(this,props);
+	var _g = [];
+	var _g1 = 0;
+	if(client_DataHandler.data.categories == null) {
+		client_DataHandler.data.categories = ["Programming","Shader","Autres"];
+	}
+	var _g2 = client_DataHandler.data.categories.length;
+	while(_g1 < _g2) {
+		var i = _g1++;
+		_g.push(i);
+	}
+	this.selectedCategories = _g;
 };
 client_view_App.__name__ = true;
 client_view_App.__super__ = React.Component;
 client_view_App.prototype = $extend(React.Component.prototype,{
 	componentDidMount: function() {
-		$(".dropdown-menu").click(function(e) {
-			console.log("src/client/view/App.hx:18:","Killlllllids,lf");
+		var _gthis = this;
+		$("#categories-dropdown .dropdown-menu").click(function(e) {
 			e.stopPropagation();
+			return;
+		});
+		this.checkboxQueries = $("#categories-dropdown .dropdown-menu .form-check-input").change(function(e1) {
+			console.log("src/client/view/App.hx:27:","Change");
+			_gthis.selectedCategories = [];
+			_gthis.checkboxQueries.each(function(i,element) {
+				var input = js_Boot.__cast(element , HTMLInputElement);
+				if(input.checked) {
+					_gthis.selectedCategories.push(Std.parseInt(input.value));
+				}
+				return;
+			});
+			console.log("src/client/view/App.hx:35:",_gthis.selectedCategories);
+			_gthis.forceUpdate();
 			return;
 		});
 	}
@@ -82,6 +148,7 @@ client_view_App.prototype = $extend(React.Component.prototype,{
 		return { $$typeof : $$tre, type : "div", props : { 'class' : "container", children : [{ $$typeof : $$tre, type : "div", props : { id : "navbar", 'class' : "row", children : [{ $$typeof : $$tre, type : "div", props : { 'class' : "col-8", children : { $$typeof : $$tre, type : "input", props : { type : "text", placeholder : "Rechercher", id : "search-bar-container", 'class' : "col-12 navbar-item"}, key : null, ref : null}}, key : null, ref : null},{ $$typeof : $$tre, type : "div", props : { id : "categories-dropdown", 'class' : "col-4 dropdown", children : [{ $$typeof : $$tre, type : "a", props : { role : "button", id : "dropdownMenuLink", href : "#", 'data-toggle' : "dropdown", 'class' : "navbar-item btn btn-secondary dropdown-toggle w-100", 'aria-haspopup' : "true", 'aria-expanded' : "false", children : { $$typeof : $$tre, type : "input", props : { type : "text", placeholder : "Catégories", 'class' : "col-12 navbar-item"}, key : null, ref : null}}, key : null, ref : null},{ $$typeof : $$tre, type : "div", props : { 'class' : "dropdown-menu", 'aria-labelledby' : "dropdownMenuLink", children : this.getCategories()}, key : null, ref : null}]}, key : null, ref : null}]}, key : null, ref : null},this.getBookmarks()]}, key : null, ref : null};
 	}
 	,getBookmarks: function() {
+		var _gthis = this;
 		if(client_DataHandler.data.bookmarks == null) {
 			var _g = [];
 			_g.push(client_DataHandler.getRandomBookmark());
@@ -96,23 +163,37 @@ client_view_App.prototype = $extend(React.Component.prototype,{
 			_g.push(client_DataHandler.getRandomBookmark());
 			client_DataHandler.data.bookmarks = _g;
 		}
-		var _this = client_DataHandler.data.bookmarks;
+		var data = client_DataHandler.data.bookmarks;
+		var _g1 = [];
+		var _g11 = 0;
+		var _g2 = data;
+		while(_g11 < _g2.length) {
+			var v = _g2[_g11];
+			++_g11;
+			if(Lambda.exists(_gthis.selectedCategories,(function(bookmark) {
+				return function(i) {
+					return Lambda.has(bookmark[0].categories,i);
+				};
+			})([v]))) {
+				_g1.push(v);
+			}
+		}
+		var _this = _g1;
 		var result = new Array(_this.length);
-		var _g1 = 0;
-		var _g11 = _this.length;
-		while(_g1 < _g11) {
-			var i = _g1++;
-			result[i] = { $$typeof : $$tre, type : client_view_BookmarkView, props : { data : _this[i]}, key : null, ref : null};
+		var _g3 = 0;
+		var _g12 = _this.length;
+		while(_g3 < _g12) {
+			var i1 = _g3++;
+			result[i1] = { $$typeof : $$tre, type : client_view_BookmarkView, props : { data : _this[i1]}, key : null, ref : null};
 		}
 		var bookmarks = result;
-		console.log("src/client/view/App.hx:48:",bookmarks.length);
 		var _this1 = util_ArrayUtil.split(bookmarks,3);
 		var result1 = new Array(_this1.length);
-		var _g2 = 0;
-		var _g12 = _this1.length;
-		while(_g2 < _g12) {
-			var i1 = _g2++;
-			result1[i1] = { $$typeof : $$tre, type : "div", props : { 'class' : "row", children : _this1[i1]}, key : null, ref : null};
+		var _g4 = 0;
+		var _g13 = _this1.length;
+		while(_g4 < _g13) {
+			var i2 = _g4++;
+			result1[i2] = { $$typeof : $$tre, type : "div", props : { 'class' : "row", children : _this1[i2]}, key : null, ref : null};
 		}
 		var rows = result1;
 		return { $$typeof : $$tre, type : "div", props : { children : rows}, key : null, ref : null};
@@ -121,17 +202,20 @@ client_view_App.prototype = $extend(React.Component.prototype,{
 		if(client_DataHandler.data.categories == null) {
 			client_DataHandler.data.categories = ["Programming","Shader","Autres"];
 		}
-		var _this = client_DataHandler.data.categories;
-		var result = new Array(_this.length);
-		var _g = 0;
-		var _g1 = _this.length;
-		while(_g < _g1) {
-			var i = _g++;
-			var i1 = _this[i];
-			result[i] = { $$typeof : $$tre, type : "div", props : { 'class' : "form-check", children : [{ $$typeof : $$tre, type : "input", props : { value : "", type : "checkbox", id : "check-" + i1, 'class' : "form-check-input"}, key : null, ref : null},{ $$typeof : $$tre, type : "label", props : { 'for' : "defaultCheck3", 'class' : "form-check-label", children : i1}, key : null, ref : null}]}, key : null, ref : null};
+		var i = 0;
+		var _g = [];
+		var x = $getIterator(client_DataHandler.data.categories);
+		while(x.hasNext()) {
+			var x1 = x.next();
+			var index = i++;
+			_g.push({ $$typeof : $$tre, type : "div", props : { 'class' : "form-check", children : [{ $$typeof : $$tre, type : "input", props : { value : index, type : "checkbox", id : "check-" + index, 'class' : "form-check-input"}, key : null, ref : null},{ $$typeof : $$tre, type : "label", props : { 'for' : "check-" + index, 'class' : "form-check-label", children : x1}, key : null, ref : null}]}, key : null, ref : null});
 		}
-		return result;
+		return _g;
 	}
+	,onCategoriesSelectChanged: function() {
+		console.log("src/client/view/App.hx:87:","Wesh");
+	}
+	,__class__: client_view_App
 });
 var client_view_BookmarkView = function(props) {
 	React.Component.call(this,props);
@@ -157,6 +241,7 @@ client_view_BookmarkView.prototype = $extend(React.Component.prototype,{
 		var keywords = util_ArrayUtil.toSeparatedString(this.data.keywords,", ");
 		return { $$typeof : $$tre, type : "div", props : { 'class' : "col-4", children : { $$typeof : $$tre, type : "div", props : { 'class' : "col-12 bookmark", children : [{ $$typeof : $$tre, type : "h1", props : { children : this.data.title}, key : null, ref : null},{ $$typeof : $$tre, type : "b", props : { children : "Résumé:"}, key : null, ref : null},{ $$typeof : $$tre, type : "p", props : { children : this.data.sumup}, key : null, ref : null},{ $$typeof : $$tre, type : "b", props : { children : "Liens:"}, key : null, ref : null},{ $$typeof : $$tre, type : "p", props : { children : links}, key : null, ref : null},{ $$typeof : $$tre, type : "b", props : { children : "Catégories:"}, key : null, ref : null},{ $$typeof : $$tre, type : "p", props : { children : categories}, key : null, ref : null},{ $$typeof : $$tre, type : "b", props : { children : "Mots-clés:"}, key : null, ref : null},{ $$typeof : $$tre, type : "p", props : { children : keywords}, key : null, ref : null}]}, key : null, ref : null}}, key : null, ref : null};
 	}
+	,__class__: client_view_BookmarkView
 });
 var js__$Boot_HaxeError = function(val) {
 	Error.call(this);
@@ -168,9 +253,27 @@ var js__$Boot_HaxeError = function(val) {
 js__$Boot_HaxeError.__name__ = true;
 js__$Boot_HaxeError.__super__ = Error;
 js__$Boot_HaxeError.prototype = $extend(Error.prototype,{
+	__class__: js__$Boot_HaxeError
 });
 var js_Boot = function() { };
 js_Boot.__name__ = true;
+js_Boot.getClass = function(o) {
+	if(o == null) {
+		return null;
+	} else if(((o) instanceof Array)) {
+		return Array;
+	} else {
+		var cl = o.__class__;
+		if(cl != null) {
+			return cl;
+		}
+		var name = js_Boot.__nativeClassName(o);
+		if(name != null) {
+			return js_Boot.__resolveNativeClass(name);
+		}
+		return null;
+	}
+};
 js_Boot.__string_rec = function(o,s) {
 	if(o == null) {
 		return "null";
@@ -236,6 +339,103 @@ js_Boot.__string_rec = function(o,s) {
 		return String(o);
 	}
 };
+js_Boot.__interfLoop = function(cc,cl) {
+	if(cc == null) {
+		return false;
+	}
+	if(cc == cl) {
+		return true;
+	}
+	if(Object.prototype.hasOwnProperty.call(cc,"__interfaces__")) {
+		var intf = cc.__interfaces__;
+		var _g = 0;
+		var _g1 = intf.length;
+		while(_g < _g1) {
+			var i = _g++;
+			var i1 = intf[i];
+			if(i1 == cl || js_Boot.__interfLoop(i1,cl)) {
+				return true;
+			}
+		}
+	}
+	return js_Boot.__interfLoop(cc.__super__,cl);
+};
+js_Boot.__instanceof = function(o,cl) {
+	if(cl == null) {
+		return false;
+	}
+	switch(cl) {
+	case Array:
+		return ((o) instanceof Array);
+	case Bool:
+		return typeof(o) == "boolean";
+	case Dynamic:
+		return o != null;
+	case Float:
+		return typeof(o) == "number";
+	case Int:
+		if(typeof(o) == "number") {
+			return ((o | 0) === o);
+		} else {
+			return false;
+		}
+		break;
+	case String:
+		return typeof(o) == "string";
+	default:
+		if(o != null) {
+			if(typeof(cl) == "function") {
+				if(js_Boot.__downcastCheck(o,cl)) {
+					return true;
+				}
+			} else if(typeof(cl) == "object" && js_Boot.__isNativeObj(cl)) {
+				if(((o) instanceof cl)) {
+					return true;
+				}
+			}
+		} else {
+			return false;
+		}
+		if(cl == Class ? o.__name__ != null : false) {
+			return true;
+		}
+		if(cl == Enum ? o.__ename__ != null : false) {
+			return true;
+		}
+		return false;
+	}
+};
+js_Boot.__downcastCheck = function(o,cl) {
+	if(!((o) instanceof cl)) {
+		if(cl.__isInterface__) {
+			return js_Boot.__interfLoop(js_Boot.getClass(o),cl);
+		} else {
+			return false;
+		}
+	} else {
+		return true;
+	}
+};
+js_Boot.__cast = function(o,t) {
+	if(o == null || js_Boot.__instanceof(o,t)) {
+		return o;
+	} else {
+		throw new js__$Boot_HaxeError("Cannot cast " + Std.string(o) + " to " + Std.string(t));
+	}
+};
+js_Boot.__nativeClassName = function(o) {
+	var name = js_Boot.__toStr.call(o).slice(8,-1);
+	if(name == "Object" || name == "Function" || name == "Math" || name == "JSON") {
+		return null;
+	}
+	return name;
+};
+js_Boot.__isNativeObj = function(o) {
+	return js_Boot.__nativeClassName(o) != null;
+};
+js_Boot.__resolveNativeClass = function(name) {
+	return $global[name];
+};
 var util_ArrayUtil = function() { };
 util_ArrayUtil.__name__ = true;
 util_ArrayUtil.split = function(array,count) {
@@ -258,8 +458,16 @@ util_ArrayUtil.toSeparatedString = function(array,separator) {
 	ret += Std.string(array[array.length - 1]);
 	return ret;
 };
+function $getIterator(o) { if( o instanceof Array ) return HxOverrides.iter(o); else return o.iterator(); }
+String.prototype.__class__ = String;
 String.__name__ = true;
 Array.__name__ = true;
+var Int = { };
+var Dynamic = { };
+var Float = Number;
+var Bool = Boolean;
+var Class = { };
+var Enum = { };
 var $$tre = (typeof Symbol === "function" && Symbol.for && Symbol.for("react.element")) || 0xeac7;
 Object.defineProperty(js__$Boot_HaxeError.prototype,"message",{ get : function() {
 	return String(this.val);
@@ -269,4 +477,4 @@ client_DataHandler.data = { bookmarks : null, categories : null};
 client_view_App.displayName = "App";
 client_view_BookmarkView.displayName = "BookmarkView";
 client_Main.main();
-})({});
+})(typeof window != "undefined" ? window : typeof global != "undefined" ? global : typeof self != "undefined" ? self : this);
