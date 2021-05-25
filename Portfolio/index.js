@@ -37,8 +37,21 @@ var client_view_App = function(props) {
 client_view_App.__name__ = true;
 client_view_App.__super__ = React.Component;
 client_view_App.prototype = $extend(React.Component.prototype,{
-	render: function() {
-		return { $$typeof : $$tre, type : "div", props : { children : [{ $$typeof : $$tre, type : client_view_Nav, props : { }, key : null, ref : null},{ $$typeof : $$tre, type : client_view_CurriculumChoice, props : { }, key : null, ref : null},{ $$typeof : $$tre, type : client_view_Presentation, props : { }, key : null, ref : null}]}, key : null, ref : null};
+	componentDidMount: function() {
+		$(".fullscreen").each(function(index,element) {
+			if((index & 1) == 1) {
+				var element1 = element;
+				element1.className += " own-bg-primary";
+				return element1.className;
+			} else {
+				var element2 = element;
+				element2.className += " own-bg-primary-light";
+				return element2.className;
+			}
+		});
+	}
+	,render: function() {
+		return { $$typeof : $$tre, type : "div", props : { children : [{ $$typeof : $$tre, type : client_view_Nav, props : { }, key : null, ref : null},{ $$typeof : $$tre, type : client_view_CurriculumChoice, props : { }, key : null, ref : null},{ $$typeof : $$tre, type : client_view_Presentation, props : { }, key : null, ref : null},{ $$typeof : $$tre, type : client_view_experiences_Experiences, props : { }, key : null, ref : null}]}, key : null, ref : null};
 	}
 });
 var client_view_CurriculumChoice = function(props) {
@@ -73,13 +86,13 @@ client_view_CurriculumChoice.prototype = $extend(React.Component.prototype,{
 	,render: function() {
 		var f = $bind(this,this.onChoiceChanged);
 		var tmp = function() {
-			f(1);
+			f(-1);
 		};
 		var f1 = $bind(this,this.onChoiceChanged);
 		var tmp1 = function() {
-			f1(-1);
+			f1(1);
 		};
-		return { $$typeof : $$tre, type : "div", props : { 'class' : "fullscreen flex flex-col justify-center background", children : [{ $$typeof : $$tre, type : "div", props : { 'class' : "w-full flex items-center", children : [{ $$typeof : $$tre, type : "span", props : { onClick : tmp, 'class' : "material-icons ml-8 arrow interactible", children : "arrow_back_ios"}, key : null, ref : null},{ $$typeof : $$tre, type : "div", props : { 'class' : "curriculum-choice", children : [{ $$typeof : $$tre, type : "div", props : { 'class' : "own-order-0"}, key : null, ref : null},{ $$typeof : $$tre, type : "div", props : { 'class' : "own-order-1"}, key : null, ref : null},{ $$typeof : $$tre, type : "div", props : { 'class' : "own-order-2"}, key : null, ref : null},"       "]}, key : null, ref : null},{ $$typeof : $$tre, type : "span", props : { onClick : tmp1, 'class' : "material-icons mr-8 arrow interactible", children : "arrow_forward_ios"}, key : null, ref : null}]}, key : null, ref : null},{ $$typeof : $$tre, type : "h2", props : { 'class' : "text-center mt-4", children : "Normal"}, key : null, ref : null}]}, key : null, ref : null};
+		return { $$typeof : $$tre, type : "div", props : { 'class' : "fullscreen background", children : [{ $$typeof : $$tre, type : "div", props : { 'class' : "h-full w-full flex flex-col justify-center items-center", children : [{ $$typeof : $$tre, type : "div", props : { 'class' : "w-full flex justify-center items-center", children : [{ $$typeof : $$tre, type : "span", props : { onClick : tmp, 'class' : "material-icons ml-8 font-64", children : "arrow_back_ios"}, key : null, ref : null},{ $$typeof : $$tre, type : "div", props : { 'class' : "curriculum-choice", children : [{ $$typeof : $$tre, type : "div", props : { 'class' : "own-order-0"}, key : null, ref : null},{ $$typeof : $$tre, type : "div", props : { 'class' : "own-order-1"}, key : null, ref : null},{ $$typeof : $$tre, type : "div", props : { 'class' : "own-order-2"}, key : null, ref : null},"       "]}, key : null, ref : null},{ $$typeof : $$tre, type : "span", props : { onClick : tmp1, 'class' : "material-icons mr-8 font-64 interactible", children : "arrow_forward_ios"}, key : null, ref : null}]}, key : null, ref : null},{ $$typeof : $$tre, type : "h2", props : { 'class' : "text-center mt-4", children : "Normal"}, key : null, ref : null}]}, key : null, ref : null},{ $$typeof : $$tre, type : client_view_utilities_ScrollArrow, props : { }, key : null, ref : null}]}, key : null, ref : null};
 	}
 	,onChoiceChanged: function(delta) {
 		var _gthis = this;
@@ -110,7 +123,7 @@ client_view_CurriculumChoice.prototype = $extend(React.Component.prototype,{
 	,generateContent: function(index,element) {
 		while(element.firstChild != null) element.removeChild(element.firstChild);
 		var contentIndex = (this.centerToContentIndex + index - 1) % this.content.length;
-		console.log("src/client/view/CurriculumChoice.hx:96:","" + index + " " + contentIndex + " " + Std.string(element));
+		console.log("src/client/view/CurriculumChoice.hx:100:","" + index + " " + contentIndex + " " + Std.string(element));
 		if(contentIndex < 0) {
 			contentIndex = this.content.length - 1;
 		}
@@ -137,7 +150,7 @@ client_view_Nav.prototype = $extend(React.Component.prototype,{
 		var tmp1 = function() {
 			f1(1);
 		};
-		return { $$typeof : $$tre, type : "div", props : { 'class' : "header", children : { $$typeof : $$tre, type : "nav", props : { 'class' : "navbar navbar-primary", children : [{ $$typeof : $$tre, type : "a", props : { href : "#", 'class' : "navbar-brand", children : "Erik Kubiak"}, key : null, ref : null},{ $$typeof : $$tre, type : "div", props : { id : "language", 'class' : "flex flex-row-reverse mr-4", children : [{ $$typeof : $$tre, type : "button", props : { onClick : tmp, 'class' : "interactible", children : { $$typeof : $$tre, type : "img", props : { src : "./images/french-flag.png", 'class' : "h-full"}, key : null, ref : null}}, key : null, ref : null},{ $$typeof : $$tre, type : "button", props : { onClick : tmp1, 'class' : "interactible", children : { $$typeof : $$tre, type : "img", props : { src : "./images/uk-flag.png", 'class' : "h-full"}, key : null, ref : null}}, key : null, ref : null}]}, key : null, ref : null}]}, key : null, ref : null}}, key : null, ref : null};
+		return { $$typeof : $$tre, type : "div", props : { 'class' : "header z-50", children : { $$typeof : $$tre, type : "nav", props : { 'class' : "navbar navbar-primary", children : [{ $$typeof : $$tre, type : "a", props : { href : "#", 'class' : "navbar-brand", children : "Erik Kubiak"}, key : null, ref : null},{ $$typeof : $$tre, type : "div", props : { id : "language", 'class' : "flex flex-row-reverse mr-4", children : [{ $$typeof : $$tre, type : "button", props : { onClick : tmp, 'class' : "interactible", children : { $$typeof : $$tre, type : "img", props : { src : "./images/french-flag.png", 'class' : "h-full"}, key : null, ref : null}}, key : null, ref : null},{ $$typeof : $$tre, type : "button", props : { onClick : tmp1, 'class' : "interactible", children : { $$typeof : $$tre, type : "img", props : { src : "./images/uk-flag.png", 'class' : "h-full"}, key : null, ref : null}}, key : null, ref : null}]}, key : null, ref : null}]}, key : null, ref : null}}, key : null, ref : null};
 	}
 	,onLanguageClicked: function(languageIndex) {
 	}
@@ -149,7 +162,50 @@ client_view_Presentation.__name__ = true;
 client_view_Presentation.__super__ = React.Component;
 client_view_Presentation.prototype = $extend(React.Component.prototype,{
 	render: function() {
-		return { $$typeof : $$tre, type : "div", props : { 'class' : "fullscreen flex justify-center items-center", children : { $$typeof : $$tre, type : "div", props : { 'class' : "h-75 w-75 rounded-md p-4 justify-center items-center", children : [{ $$typeof : $$tre, type : "div", props : { 'class' : "w-full h-52 flex justify-center items-center mb-8", children : [{ $$typeof : $$tre, type : "div", props : { 'class' : "h-52 w-40 p-0.5 bg-gradient-to-r from-second to-tertiary rounded-3xl", children : { $$typeof : $$tre, type : "div", props : { 'class' : "h-full w-full rounded-3xl overflow-hidden", children : { $$typeof : $$tre, type : "img", props : { src : "./images/face.png", 'class' : "h-full"}, key : null, ref : null}}, key : null, ref : null}}, key : null, ref : null},{ $$typeof : $$tre, type : "div", props : { 'class' : "w-full h-full flex-column justify-center items-center", children : [{ $$typeof : $$tre, type : "h3", props : { 'class' : "w-full ml-4 mb-4", children : " Erik Kubiak - Ingénieur"}, key : null, ref : null},{ $$typeof : $$tre, type : "p", props : { 'class' : "w-full h-full text-justify pl-4 pr-4", children : client_model_util_Content.GetLoremIpsum()}, key : null, ref : null}]}, key : null, ref : null}]}, key : null, ref : null},{ $$typeof : $$tre, type : "div", props : { 'class' : "w-full h-52", children : { $$typeof : $$tre, type : "p", props : { 'class' : "w-full h-full text-justify pr-4", children : client_model_util_Content.GetLoremIpsum()}, key : null, ref : null}}, key : null, ref : null}]}, key : null, ref : null}}, key : null, ref : null};
+		return { $$typeof : $$tre, type : "div", props : { 'class' : "fullscreen flex justify-center items-center", children : { $$typeof : $$tre, type : "div", props : { 'class' : "h-75 w-75 rounded-md p-4 flex flex-col justify-center items-center", children : [{ $$typeof : $$tre, type : "div", props : { 'class' : "w-full h-52 flex justify-center items-center mb-8", children : [{ $$typeof : $$tre, type : "div", props : { 'class' : "h-52 w-40 p-0.5 bg-gradient-to-r from-second to-tertiary rounded-3xl", children : { $$typeof : $$tre, type : "div", props : { 'class' : "h-full w-full rounded-3xl overflow-hidden", children : { $$typeof : $$tre, type : "img", props : { src : "./images/face.png", 'class' : "h-full"}, key : null, ref : null}}, key : null, ref : null}}, key : null, ref : null},{ $$typeof : $$tre, type : "div", props : { 'class' : "w-full h-full flex flex-col justify-center items-center", children : [{ $$typeof : $$tre, type : "h3", props : { 'class' : "w-full pl-4 mb-4", children : " Erik Kubiak - Ingénieur"}, key : null, ref : null},{ $$typeof : $$tre, type : "p", props : { 'class' : "w-full h-full align-middle text-justify pl-4 pr-4", children : client_model_util_Content.GetLoremIpsum()}, key : null, ref : null}]}, key : null, ref : null}]}, key : null, ref : null},{ $$typeof : $$tre, type : "div", props : { 'class' : "w-full", children : { $$typeof : $$tre, type : "p", props : { 'class' : "w-full text-justify pr-4", children : client_model_util_Content.GetLoremIpsum()}, key : null, ref : null}}, key : null, ref : null}]}, key : null, ref : null}}, key : null, ref : null};
+	}
+});
+var client_view_experiences_ExperienceItem = function(props) {
+	React.Component.call(this,props);
+};
+client_view_experiences_ExperienceItem.__name__ = true;
+client_view_experiences_ExperienceItem.__super__ = React.Component;
+client_view_experiences_ExperienceItem.prototype = $extend(React.Component.prototype,{
+	render: function() {
+		return { $$typeof : $$tre, type : "div", props : { children : { $$typeof : $$tre, type : "div", props : { 'class' : "fullscreen", children : { $$typeof : $$tre, type : "div", props : { 'class' : "experience-item h-full w-full flex justify-center items-center", children : [{ $$typeof : $$tre, type : "div", props : { 'class' : "h-full w-50 flex justify-center items-center", children : { $$typeof : $$tre, type : "div", props : { 'class' : "column-highlight h-full w-2/3 flex flex-col justify-center items-center p-8", children : [{ $$typeof : $$tre, type : "div", props : { 'class' : "w-full flex mb-1", children : [{ $$typeof : $$tre, type : "h3", props : { 'class' : "flex-grow", children : "Poste"}, key : null, ref : null},{ $$typeof : $$tre, type : "h3", props : { 'class' : "flex-grow-0", children : " 2019 - 2021"}, key : null, ref : null}]}, key : null, ref : null},{ $$typeof : $$tre, type : "h4", props : { 'class' : "ml-8 w-full mb-", children : "Entreprise"}, key : null, ref : null},{ $$typeof : $$tre, type : "div", props : { 'class' : "w-full text-justify", children : { $$typeof : $$tre, type : "p", props : { children : client_model_util_Content.GetLoremIpsum()}, key : null, ref : null}}, key : null, ref : null}]}, key : null, ref : null}}, key : null, ref : null},{ $$typeof : $$tre, type : "div", props : { 'class' : "h-full w-50 flex experience-item-image", children : { $$typeof : $$tre, type : "img", props : { src : "./images/test.png", 'class' : "h-full w-auto"}, key : null, ref : null}}, key : null, ref : null}]}, key : null, ref : null}}, key : null, ref : null}}, key : null, ref : null};
+	}
+});
+var client_view_experiences_Experiences = function(props) {
+	React.Component.call(this,props);
+};
+client_view_experiences_Experiences.__name__ = true;
+client_view_experiences_Experiences.__super__ = React.Component;
+client_view_experiences_Experiences.prototype = $extend(React.Component.prototype,{
+	componentDidMount: function() {
+		$(".experience-item").each(function(index,element) {
+			if((index & 1) == 1) {
+				var element1 = element;
+				element1.className += " flex-row-reverse";
+				return element1.className;
+			} else {
+				var element2 = element;
+				element2.className += " flex-row";
+				return element2.className;
+			}
+		});
+	}
+	,render: function() {
+		return { $$typeof : $$tre, type : "div", props : { children : [{ $$typeof : $$tre, type : "div", props : { 'class' : "fullscreen", children : [{ $$typeof : $$tre, type : "div", props : { 'class' : "h-full w-full flex justify-center items-center", children : { $$typeof : $$tre, type : "h1", props : { 'class' : "text-tertiary", children : "Experiences"}, key : null, ref : null}}, key : null, ref : null},{ $$typeof : $$tre, type : client_view_utilities_ScrollArrow, props : { }, key : null, ref : null}]}, key : null, ref : null},{ $$typeof : $$tre, type : client_view_experiences_ExperienceItem, props : { }, key : null, ref : null},{ $$typeof : $$tre, type : client_view_experiences_ExperienceItem, props : { }, key : null, ref : null},{ $$typeof : $$tre, type : client_view_experiences_ExperienceItem, props : { }, key : null, ref : null},{ $$typeof : $$tre, type : client_view_experiences_ExperienceItem, props : { }, key : null, ref : null}]}, key : null, ref : null};
+	}
+});
+var client_view_utilities_ScrollArrow = function(props) {
+	React.Component.call(this,props);
+};
+client_view_utilities_ScrollArrow.__name__ = true;
+client_view_utilities_ScrollArrow.__super__ = React.Component;
+client_view_utilities_ScrollArrow.prototype = $extend(React.Component.prototype,{
+	render: function() {
+		return { $$typeof : $$tre, type : "div", props : { 'class' : "scroll-arrow", children : { $$typeof : $$tre, type : "span", props : { 'class' : "bouncing-arrow material-icons", children : "expand_more"}, key : null, ref : null}}, key : null, ref : null};
 	}
 });
 var js__$Boot_HaxeError = function(val) {
@@ -245,5 +301,8 @@ client_view_App.displayName = "App";
 client_view_CurriculumChoice.displayName = "CurriculumChoice";
 client_view_Nav.displayName = "Nav";
 client_view_Presentation.displayName = "Presentation";
+client_view_experiences_ExperienceItem.displayName = "ExperienceItem";
+client_view_experiences_Experiences.displayName = "Experiences";
+client_view_utilities_ScrollArrow.displayName = "ScrollArrow";
 client_Main.main();
 })(typeof window != "undefined" ? window : typeof global != "undefined" ? global : typeof self != "undefined" ? self : this);

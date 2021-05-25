@@ -32519,13 +32519,22 @@ video {
 }
 
 :root {
+  --simple-animation-duration: 1s;
+}
+
+.own-bg-primary {
+  --tw-bg-opacity: 1;
+  background-color: rgba(0, 45, 64, var(--tw-bg-opacity));
+}
+
+.own-bg-primary-light {
+  --tw-bg-opacity: 1;
+  background-color: rgba(0, 58, 83, var(--tw-bg-opacity));
 }
 
 .fullscreen {
-  --tw-bg-opacity: 1;
-  background-color: rgba(0, 45, 64, var(--tw-bg-opacity));
   height: 100vh;
-  --tw-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  --tw-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
   width: 100vw
 }
@@ -32548,8 +32557,10 @@ h1 {
   letter-spacing: 12px;
   font-family: Fira Sans, sans-serif;
   font-weight: 600;
-  font-size: 2.25rem;
-  line-height: 2.5rem;
+  font-size: 4.5rem;
+  line-height: 1;
+  --tw-text-opacity: 1;
+  color: rgba(255, 65, 77, var(--tw-text-opacity));
   text-transform: uppercase
 }
 
@@ -32568,6 +32579,17 @@ h3 {
   font-weight: 600;
   font-size: 1.5rem;
   line-height: 2rem;
+  text-transform: uppercase
+}
+
+h4 {
+  letter-spacing: 4px;
+  font-family: Fira Sans, sans-serif;
+  font-weight: 600;
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+  --tw-text-opacity: 1;
+  color: rgba(243, 244, 246, var(--tw-text-opacity));
   text-transform: uppercase
 }
 
@@ -32722,8 +32744,43 @@ h3 {
           animation: scale-out-in var(--movement-duration);
 }
 
-.arrow {
+.font-64 {
   font-size: 64px !important;
+}
+
+.scroll-arrow {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%) translateY(-110%);
+}
+
+.bouncing-arrow {
+  font-size: 80px !important;
+  transform-origin: center top;
+  -webkit-animation: bounce 1s infinite alternate;
+          animation: bounce 1s infinite alternate;
+}
+
+.experience-item.flex-row > div.experience-item-image{
+  flex-direction: row;
+}
+
+.experience-item.flex-row-reverse > div.experience-item-image{
+  flex-direction: row-reverse;
+}
+
+.column-highlight {
+  --column-higlight-opacity: 0.02;
+  --column-higlight-border-opacity: 0.1;
+  background-color: rgba(255, 255, 255, var(--column-higlight-opacity));
+  border-left-width: 1px;
+  border-right-width: 1px;
+  border-left-color: rgba(255, 255, 255, var(--column-higlight-border-opacity));
+  border-right-color: rgba(255, 255, 255, var(--column-higlight-border-opacity));
+}
+
+.own-bg-primary-light .column-highlight {
+  background-color: rgba(0, 0, 0, var(--column-higlight-opacity)) !important;
 }
 
 .background {

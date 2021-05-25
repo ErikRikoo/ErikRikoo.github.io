@@ -35,6 +35,24 @@ Original
     }
 }
 
+@keyframes bounce {
+  from {
+      transform: translateY(-50%) translateY(0);
+  }
+  to {
+      transform: translateY(-50%) translateY(50%);
+  }
+}
+
+@keyframes scale-bounce {
+  from {
+      transform: scaleY(50%);
+  }
+  to {
+      transform: scaleY(100%);
+  }
+}
+
 
 /* ----------------------------------------------------------------------------------------------------
     Taken from hover library
