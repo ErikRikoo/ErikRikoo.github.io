@@ -119,6 +119,9 @@ client_model_util_Content.__name__ = true;
 client_model_util_Content.GetLoremIpsum = function() {
 	return "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed aliquam nibh metus, in auctor dui sollicitudin quis. Quisque convallis gravida tortor sed malesuada. Curabitur fringilla pulvinar magna, in fringilla diam consectetur sed. Morbi varius lectus et viverra finibus. Ut efficitur tristique sapien id lobortis. Morbi vulputate orci vitae elit pulvinar bibendum. In luctus pharetra quam, at consectetur dui placerat ut. In tempus ultricies mattis. Donec sodales lectus imperdiet, luctus mauris non, dapibus turpis. ";
 };
+client_model_util_Content.GetSmallLoremIpsum = function() {
+	return "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed aliquam nibh metus, in auctor dui sollicitudin quis. Quisque convallis gravida tortor sed malesuada.";
+};
 var signals_BaseSignal = $hx_exports["BaseSignal"] = function(fireOnAdd) {
 	if(fireOnAdd == null) {
 		fireOnAdd = false;
@@ -558,6 +561,7 @@ client_view_App.prototype = $extend(coconut_vdom_View.prototype,{
 		__r.push(client_view_experiences_Experiences.fromHxx({ },{ }));
 		__r.push(client_view_formations_Formations.fromHxx({ },{ }));
 		__r.push(client_view_Media.fromHxx({ },{ }));
+		__r.push(client_view_Gallery.fromHxx({ },{ }));
 		return coconut_diffing_FactoryTools.vnode(coconut_vdom_Html.DIV,{ },hxxMeta.key,hxxMeta.ref,__r);
 	}
 	,__initAttributes: function(attributes) {
@@ -707,7 +711,64 @@ client_view_CurriculumChoice.prototype = $extend(coconut_vdom_View.prototype,{
 	,__initAttributes: function(attributes) {
 	}
 });
+var client_view_Gallery = function(__coco_data_,implicits) {
+	var _gthis = this;
+	this._coco_implicits = implicits;
+	this.__initAttributes(__coco_data_);
+	var snapshot = null;
+	coconut_vdom_View.call(this,function() {
+		return _gthis.render();
+	},null,null,null,null);
+};
+client_view_Gallery.__name__ = true;
+client_view_Gallery.fromHxx = function(hxxMeta,attributes) {
+	var _g = client_view_Gallery.__factory;
+	var tmp;
+	if(_g == null) {
+		tmp = client_view_Gallery.__factory = new coconut_diffing_internal_WidgetFactory(function(__coco_data_,implicits) {
+			return new client_view_Gallery(__coco_data_,implicits);
+		},function(v,attr) {
+			v.__initAttributes(attr);
+		});
+	} else {
+		var v = _g;
+		tmp = v;
+	}
+	return new coconut_diffing_internal_VWidget(tmp,attributes,hxxMeta.key,hxxMeta.ref);
+};
+client_view_Gallery.__super__ = coconut_vdom_View;
+client_view_Gallery.prototype = $extend(coconut_vdom_View.prototype,{
+	render: function() {
+		var hxxMeta = { };
+		var __r = [];
+		var hxxMeta1 = { };
+		var attr = { className : tink_domspec_ClassName.ofString("fullscreen")};
+		var __r1 = [];
+		var hxxMeta2 = { };
+		var attr1 = { className : tink_domspec_ClassName.ofString("h-full w-full flex justify-center items-center")};
+		var hxxMeta3 = { };
+		var attr2 = { className : tink_domspec_ClassName.ofString("text-tertiary")};
+		var children = [coconut_diffing_FactoryTools.vnode(coconut_vdom__$Html_Text.inst,"Gallery",null,null,null)];
+		var children1 = [coconut_diffing_FactoryTools.vnode(coconut_vdom_Html.H1,attr2,hxxMeta3.key,hxxMeta3.ref,children)];
+		__r1.push(coconut_diffing_FactoryTools.vnode(coconut_vdom_Html.DIV,attr1,hxxMeta2.key,hxxMeta2.ref,children1));
+		__r1.push(client_view_utilities_scroll_ScrollArrow.fromHxx({ },{ }));
+		__r.push(coconut_diffing_FactoryTools.vnode(coconut_vdom_Html.DIV,attr,hxxMeta1.key,hxxMeta1.ref,__r1));
+		var hxxMeta1 = { };
+		var attr = { className : tink_domspec_ClassName.ofString("fullscreen overflow-hidden")};
+		var children = new tink_state_internal_AutoObservable(tink_state_internal__$AutoObservable_Computation.sync(function() {
+			return tink_pure_List.fromArray(["./images/test.png","./images/face.png"]);
+		}),null,null);
+		var children1 = new tink_state__$Observable_ConstObservable(10000,null);
+		var children2 = [client_view_utilities_image_ImageCarousel.fromHxx({ },{ paths : children, timeInMsPerImage : children1})];
+		__r.push(coconut_diffing_FactoryTools.vnode(coconut_vdom_Html.DIV,attr,hxxMeta1.key,hxxMeta1.ref,children2));
+		return coconut_diffing_FactoryTools.vnode(coconut_vdom_Html.DIV,{ },hxxMeta.key,hxxMeta.ref,__r);
+	}
+	,__initAttributes: function(attributes) {
+	}
+});
 var client_view_Media = function(__coco_data_,implicits) {
+	this.names = ["LinkedIn","Github","Mail"];
+	this.logos = ["./images/linkedin.svg","./images/github.svg","./images/email.svg"];
 	var _gthis = this;
 	this._coco_implicits = implicits;
 	this.__initAttributes(__coco_data_);
@@ -736,59 +797,51 @@ client_view_Media.__super__ = coconut_vdom_View;
 client_view_Media.prototype = $extend(coconut_vdom_View.prototype,{
 	render: function() {
 		var hxxMeta = { };
-		var hxxMeta1 = { };
 		var attr = { className : tink_domspec_ClassName.ofString("fullscreen flex flex-column")};
 		var __r = [];
-		var hxxMeta2 = { };
+		var hxxMeta1 = { };
 		var attr1 = { className : tink_domspec_ClassName.ofString("text-tertiary pt-20 text-center w-full")};
 		var children = [coconut_diffing_FactoryTools.vnode(coconut_vdom__$Html_Text.inst,"Medias",null,null,null)];
-		__r.push(coconut_diffing_FactoryTools.vnode(coconut_vdom_Html.H1,attr1,hxxMeta2.key,hxxMeta2.ref,children));
-		var hxxMeta2 = { };
+		__r.push(coconut_diffing_FactoryTools.vnode(coconut_vdom_Html.H1,attr1,hxxMeta1.key,hxxMeta1.ref,children));
+		var hxxMeta1 = { };
 		var attr1 = { className : tink_domspec_ClassName.ofString("w-full h-full flex justify-center items-center")};
-		var hxxMeta3 = { };
-		var attr2 = { className : tink_domspec_ClassName.ofString("flex flex-row justify-center items-center space-x-3")};
+		var hxxMeta2 = { };
+		var attr2 = { className : tink_domspec_ClassName.ofString("flex lg:flex-row sm:flex-col justify-center items-center space-x-4")};
 		var __r1 = [];
-		var hxxMeta4 = { };
-		var attr3 = { className : tink_domspec_ClassName.ofString("square-highlight h-96 w-64 flex flex-column")};
-		var __r2 = [];
-		var hxxMeta5 = { };
-		var attr4 = { className : tink_domspec_ClassName.ofString("w-full h-48 p-2 flex flex-column justify-center items-center")};
-		var hxxMeta6 = { };
-		var children = [coconut_diffing_FactoryTools.vnode(coconut_vdom_Html.IMG,{ src : "./images/face.png"},hxxMeta6.key,hxxMeta6.ref)];
-		__r2.push(coconut_diffing_FactoryTools.vnode(coconut_vdom_Html.DIV,attr4,hxxMeta5.key,hxxMeta5.ref,children));
-		var hxxMeta5 = { };
-		var attr4 = { className : tink_domspec_ClassName.ofString("w-full h-48 interactible text-center flex flex-column justify-center items-center")};
-		var hxxMeta6 = { };
-		var attr5 = { className : tink_domspec_ClassName.ofString("text-5xl")};
-		var children = [coconut_diffing_FactoryTools.vnode(coconut_vdom__$Html_Text.inst,"LinkedIn",null,null,null)];
-		var children1 = [coconut_diffing_FactoryTools.vnode(coconut_vdom_Html.P,attr5,hxxMeta6.key,hxxMeta6.ref,children)];
-		__r2.push(coconut_diffing_FactoryTools.vnode(coconut_vdom_Html.A,attr4,hxxMeta5.key,hxxMeta5.ref,children1));
-		__r1.push(coconut_diffing_FactoryTools.vnode(coconut_vdom_Html.DIV,attr3,hxxMeta4.key,hxxMeta4.ref,__r2));
-		var hxxMeta4 = { };
-		var attr3 = { className : tink_domspec_ClassName.ofString("square-highlight h-96 w-64 flex flex-column")};
-		var __r2 = [];
-		var hxxMeta5 = { };
-		var attr4 = { className : tink_domspec_ClassName.ofString("w-full h-48 p-2 flex flex-column justify-center items-center")};
-		var hxxMeta6 = { };
-		var children = [coconut_diffing_FactoryTools.vnode(coconut_vdom_Html.IMG,{ src : "./images/face.png"},hxxMeta6.key,hxxMeta6.ref)];
-		__r2.push(coconut_diffing_FactoryTools.vnode(coconut_vdom_Html.DIV,attr4,hxxMeta5.key,hxxMeta5.ref,children));
-		var hxxMeta5 = { };
-		var attr4 = { className : tink_domspec_ClassName.ofString("w-full h-48 interactible text-center flex flex-column justify-center items-center")};
-		var hxxMeta6 = { };
-		var attr5 = { className : tink_domspec_ClassName.ofString("text-5xl")};
-		var children = [coconut_diffing_FactoryTools.vnode(coconut_vdom__$Html_Text.inst,"LinkedIn",null,null,null)];
-		var children1 = [coconut_diffing_FactoryTools.vnode(coconut_vdom_Html.P,attr5,hxxMeta6.key,hxxMeta6.ref,children)];
-		__r2.push(coconut_diffing_FactoryTools.vnode(coconut_vdom_Html.A,attr4,hxxMeta5.key,hxxMeta5.ref,children1));
-		__r1.push(coconut_diffing_FactoryTools.vnode(coconut_vdom_Html.DIV,attr3,hxxMeta4.key,hxxMeta4.ref,__r2));
-		var children = [coconut_diffing_FactoryTools.vnode(coconut_vdom_Html.DIV,attr2,hxxMeta3.key,hxxMeta3.ref,__r1)];
-		__r.push(coconut_diffing_FactoryTools.vnode(coconut_vdom_Html.DIV,attr1,hxxMeta2.key,hxxMeta2.ref,children));
-		var children = [coconut_diffing_FactoryTools.vnode(coconut_vdom_Html.DIV,attr,hxxMeta1.key,hxxMeta1.ref,__r)];
-		return coconut_diffing_FactoryTools.vnode(coconut_vdom_Html.DIV,{ },hxxMeta.key,hxxMeta.ref,children);
+		var _g = 0;
+		var _g1 = this.logos.length;
+		while(_g < _g1) {
+			var i = _g++;
+			var hxxMeta3 = { };
+			var attr3 = { target : "_blank", className : tink_domspec_ClassName.ofString("lg:square-highlight h-64 lg:h-96 w-64 flex flex-column")};
+			var __r2 = [];
+			var hxxMeta4 = { };
+			var attr4 = { className : tink_domspec_ClassName.ofString("w-full lg:h-48 h-full p-2 flex flex-column justify-center items-center")};
+			var hxxMeta5 = { };
+			var attr5 = { className : tink_domspec_ClassName.ofString("p-4 h-32 w-32 bg-transparent-white rounded-md")};
+			var hxxMeta6 = { };
+			var children = [coconut_diffing_FactoryTools.vnode(coconut_vdom_Html.IMG,{ src : this.logos[i], className : tink_domspec_ClassName.ofString("w-full h-auto")},hxxMeta6.key,hxxMeta6.ref)];
+			var children1 = [coconut_diffing_FactoryTools.vnode(coconut_vdom_Html.DIV,attr5,hxxMeta5.key,hxxMeta5.ref,children)];
+			__r2.push(coconut_diffing_FactoryTools.vnode(coconut_vdom_Html.DIV,attr4,hxxMeta4.key,hxxMeta4.ref,children1));
+			var hxxMeta7 = { };
+			var attr6 = { className : tink_domspec_ClassName.ofString("phone-invisible w-full h-48 text-center flex flex-column justify-center items-center")};
+			var hxxMeta8 = { };
+			var attr7 = { className : tink_domspec_ClassName.ofString("interactible basic-border-highlight w-9/12 text-2xl")};
+			var s = this.names[i];
+			var children2 = s == null ? null : coconut_diffing_FactoryTools.vnode(coconut_vdom__$Html_Text.inst,s,null,null,null);
+			var children3 = [coconut_diffing_FactoryTools.vnode(coconut_vdom_Html.P,attr7,hxxMeta8.key,hxxMeta8.ref,[children2])];
+			__r2.push(coconut_diffing_FactoryTools.vnode(coconut_vdom_Html.DIV,attr6,hxxMeta7.key,hxxMeta7.ref,children3));
+			__r1.push(coconut_diffing_FactoryTools.vnode(coconut_vdom_Html.A,attr3,hxxMeta3.key,hxxMeta3.ref,__r2));
+		}
+		var children = [coconut_diffing_FactoryTools.vnode(coconut_vdom_Html.DIV,attr2,hxxMeta2.key,hxxMeta2.ref,__r1)];
+		__r.push(coconut_diffing_FactoryTools.vnode(coconut_vdom_Html.DIV,attr1,hxxMeta1.key,hxxMeta1.ref,children));
+		return coconut_diffing_FactoryTools.vnode(coconut_vdom_Html.DIV,attr,hxxMeta.key,hxxMeta.ref,__r);
 	}
 	,__initAttributes: function(attributes) {
 	}
 });
 var client_view_Nav = function(__coco_data_,implicits) {
+	this.languageChoiceOpened = false;
 	var _gthis = this;
 	this._coco_implicits = implicits;
 	this.__initAttributes(__coco_data_);
@@ -851,7 +904,22 @@ client_view_Nav.prototype = $extend(coconut_vdom_View.prototype,{
 		return coconut_diffing_FactoryTools.vnode(coconut_vdom_Html.DIV,attr,hxxMeta.key,hxxMeta.ref,children);
 	}
 	,onLanguageClicked: function(languageIndex) {
-		console.log("src/client/view/Nav.hx:35:","Language changed " + languageIndex);
+		if(this.languageChoiceOpened) {
+			this.setInteractibilityState(false);
+			console.log("src/client/view/Nav.hx:36:","Language changed " + languageIndex);
+			$("#language").blur();
+			this.languageChoiceOpened = false;
+		} else {
+			this.setInteractibilityState(true);
+			this.languageChoiceOpened = true;
+		}
+	}
+	,setInteractibilityState: function(state) {
+		if(state) {
+			$("#language").addClass("interacted");
+		} else {
+			$("#language").removeClass("interacted");
+		}
 	}
 	,__initAttributes: function(attributes) {
 	}
@@ -888,42 +956,32 @@ client_view_Presentation.prototype = $extend(coconut_vdom_View.prototype,{
 		var attr = { className : tink_domspec_ClassName.ofString("fullscreen flex justify-center items-center")};
 		var hxxMeta1 = { };
 		var attr1 = { className : tink_domspec_ClassName.ofString("h-75 w-75 rounded-md p-4 flex flex-col justify-center items-center")};
-		var __r = [];
 		var hxxMeta2 = { };
-		var attr2 = { className : tink_domspec_ClassName.ofString("w-full h-52 flex justify-center items-center mb-8")};
-		var __r1 = [];
+		var attr2 = { className : tink_domspec_ClassName.ofString("w-full h-1/2 flex flex-col justify-center items-center mb-8")};
+		var __r = [];
 		var hxxMeta3 = { };
-		var attr3 = { className : tink_domspec_ClassName.ofString("h-52 w-40 p-0.5 bg-gradient-to-r from-second to-tertiary rounded-3xl")};
+		var attr3 = { className : tink_domspec_ClassName.ofString("h-64 w-auto p-0.5 bg-gradient-to-r from-second to-tertiary rounded-3xl mb-4")};
 		var hxxMeta4 = { };
 		var attr4 = { className : tink_domspec_ClassName.ofString("h-full w-full rounded-3xl overflow-hidden")};
 		var hxxMeta5 = { };
 		var children = [coconut_diffing_FactoryTools.vnode(coconut_vdom_Html.IMG,{ src : "./images/face.png", className : tink_domspec_ClassName.ofString("h-full")},hxxMeta5.key,hxxMeta5.ref)];
 		var children1 = [coconut_diffing_FactoryTools.vnode(coconut_vdom_Html.DIV,attr4,hxxMeta4.key,hxxMeta4.ref,children)];
-		__r1.push(coconut_diffing_FactoryTools.vnode(coconut_vdom_Html.DIV,attr3,hxxMeta3.key,hxxMeta3.ref,children1));
+		__r.push(coconut_diffing_FactoryTools.vnode(coconut_vdom_Html.DIV,attr3,hxxMeta3.key,hxxMeta3.ref,children1));
 		var hxxMeta3 = { };
-		var attr3 = { className : tink_domspec_ClassName.ofString("w-full h-full flex flex-col justify-center items-center")};
-		var __r2 = [];
+		var attr3 = { className : tink_domspec_ClassName.ofString("w-full flex flex-col justify-center items-center")};
 		var hxxMeta4 = { };
-		var attr4 = { className : tink_domspec_ClassName.ofString("w-full pl-4 mb-4")};
+		var attr4 = { className : tink_domspec_ClassName.ofString("w-full mb-4 text-center")};
 		var children = [coconut_diffing_FactoryTools.vnode(coconut_vdom__$Html_Text.inst," Erik Kubiak - Ingénieur",null,null,null)];
-		__r2.push(coconut_diffing_FactoryTools.vnode(coconut_vdom_Html.H3,attr4,hxxMeta4.key,hxxMeta4.ref,children));
-		var hxxMeta4 = { };
-		var attr4 = { className : tink_domspec_ClassName.ofString("w-full h-full align-middle text-justify pl-4 pr-4")};
-		var s = client_model_util_Content.GetLoremIpsum();
-		var children = s == null ? null : coconut_diffing_FactoryTools.vnode(coconut_vdom__$Html_Text.inst,s,null,null,null);
-		__r2.push(coconut_diffing_FactoryTools.vnode(coconut_vdom_Html.P,attr4,hxxMeta4.key,hxxMeta4.ref,[children]));
-		__r1.push(coconut_diffing_FactoryTools.vnode(coconut_vdom_Html.DIV,attr3,hxxMeta3.key,hxxMeta3.ref,__r2));
-		__r.push(coconut_diffing_FactoryTools.vnode(coconut_vdom_Html.DIV,attr2,hxxMeta2.key,hxxMeta2.ref,__r1));
-		var hxxMeta2 = { };
-		var attr2 = { className : tink_domspec_ClassName.ofString("w-full")};
+		var children1 = [coconut_diffing_FactoryTools.vnode(coconut_vdom_Html.H3,attr4,hxxMeta4.key,hxxMeta4.ref,children)];
+		__r.push(coconut_diffing_FactoryTools.vnode(coconut_vdom_Html.DIV,attr3,hxxMeta3.key,hxxMeta3.ref,children1));
 		var hxxMeta3 = { };
-		var attr3 = { className : tink_domspec_ClassName.ofString("w-full text-justify pr-4")};
-		var s = client_model_util_Content.GetLoremIpsum();
+		var attr3 = { className : tink_domspec_ClassName.ofString("w-full h-full text-lg align-middle text-justify")};
+		var s = client_model_util_Content.GetSmallLoremIpsum();
 		var children = s == null ? null : coconut_diffing_FactoryTools.vnode(coconut_vdom__$Html_Text.inst,s,null,null,null);
-		var children1 = [coconut_diffing_FactoryTools.vnode(coconut_vdom_Html.P,attr3,hxxMeta3.key,hxxMeta3.ref,[children])];
-		__r.push(coconut_diffing_FactoryTools.vnode(coconut_vdom_Html.DIV,attr2,hxxMeta2.key,hxxMeta2.ref,children1));
-		var children = [coconut_diffing_FactoryTools.vnode(coconut_vdom_Html.DIV,attr1,hxxMeta1.key,hxxMeta1.ref,__r)];
-		return coconut_diffing_FactoryTools.vnode(coconut_vdom_Html.DIV,attr,hxxMeta.key,hxxMeta.ref,children);
+		__r.push(coconut_diffing_FactoryTools.vnode(coconut_vdom_Html.P,attr3,hxxMeta3.key,hxxMeta3.ref,[children]));
+		var children = [coconut_diffing_FactoryTools.vnode(coconut_vdom_Html.DIV,attr2,hxxMeta2.key,hxxMeta2.ref,__r)];
+		var children1 = [coconut_diffing_FactoryTools.vnode(coconut_vdom_Html.DIV,attr1,hxxMeta1.key,hxxMeta1.ref,children)];
+		return coconut_diffing_FactoryTools.vnode(coconut_vdom_Html.DIV,attr,hxxMeta.key,hxxMeta.ref,children1);
 	}
 	,__initAttributes: function(attributes) {
 	}
@@ -957,14 +1015,13 @@ client_view_experiences_ExperienceItem.__super__ = coconut_vdom_View;
 client_view_experiences_ExperienceItem.prototype = $extend(coconut_vdom_View.prototype,{
 	render: function() {
 		var hxxMeta = { };
-		var hxxMeta1 = { };
 		var attr = { className : tink_domspec_ClassName.ofString("fullscreen")};
-		var hxxMeta2 = { };
-		var attr1 = { className : tink_domspec_ClassName.ofString("experience-item h-full w-full flex justify-center items-center")};
+		var hxxMeta1 = { };
+		var attr1 = { className : tink_domspec_ClassName.ofString("experience-item h-full w-full flex")};
 		var __r = [];
+		var hxxMeta2 = { };
+		var attr2 = { className : tink_domspec_ClassName.ofString("h-full w-50 phone-full-width flex justify-center items-center")};
 		var hxxMeta3 = { };
-		var attr2 = { className : tink_domspec_ClassName.ofString("h-full w-50 flex justify-center items-center")};
-		var hxxMeta4 = { };
 		var attr3 = { className : tink_domspec_ClassName.ofString("column-highlight h-full w-2/3 flex flex-col justify-center p-8")};
 		var children = new tink_state_internal_AutoObservable(tink_state_internal__$AutoObservable_Computation.sync(function() {
 			return tink_pure_List.fromArray(["Poste","Poste"]);
@@ -975,14 +1032,18 @@ client_view_experiences_ExperienceItem.prototype = $extend(coconut_vdom_View.pro
 			return tink_pure_List.fromArray([client_model_util_Content.GetLoremIpsum()]);
 		}),null,null);
 		var children4 = [client_view_utilities_BasicItem.fromHxx({ },{ headers : children, dates : children1, place : children2, content : children3})];
-		var children = [coconut_diffing_FactoryTools.vnode(coconut_vdom_Html.DIV,attr3,hxxMeta4.key,hxxMeta4.ref,children4)];
-		__r.push(coconut_diffing_FactoryTools.vnode(coconut_vdom_Html.DIV,attr2,hxxMeta3.key,hxxMeta3.ref,children));
-		var hxxMeta3 = { };
-		var __r1 = [];
-		__r.push(coconut_diffing_FactoryTools.vnode(coconut_vdom_Html.DIV,{ className : tink_domspec_ClassName.ofString("h-full w-50 overflow-visible experience-item-image")},hxxMeta3.key,hxxMeta3.ref,__r1));
-		var children = [coconut_diffing_FactoryTools.vnode(coconut_vdom_Html.DIV,attr1,hxxMeta2.key,hxxMeta2.ref,__r)];
-		var children1 = [coconut_diffing_FactoryTools.vnode(coconut_vdom_Html.DIV,attr,hxxMeta1.key,hxxMeta1.ref,children)];
-		return coconut_diffing_FactoryTools.vnode(coconut_vdom_Html.DIV,{ },hxxMeta.key,hxxMeta.ref,children1);
+		var children = [coconut_diffing_FactoryTools.vnode(coconut_vdom_Html.DIV,attr3,hxxMeta3.key,hxxMeta3.ref,children4)];
+		__r.push(coconut_diffing_FactoryTools.vnode(coconut_vdom_Html.DIV,attr2,hxxMeta2.key,hxxMeta2.ref,children));
+		var hxxMeta2 = { };
+		var attr2 = { className : tink_domspec_ClassName.ofString("phone-invisible h-full w-50 overflow-hidden experience-item-image")};
+		var children = new tink_state_internal_AutoObservable(tink_state_internal__$AutoObservable_Computation.sync(function() {
+			return tink_pure_List.fromArray(["./images/face.png","./images/test.png"]);
+		}),null,null);
+		var children1 = new tink_state__$Observable_ConstObservable(10000,null);
+		var children2 = [client_view_utilities_image_ImageCarousel.fromHxx({ },{ paths : children, timeInMsPerImage : children1})];
+		__r.push(coconut_diffing_FactoryTools.vnode(coconut_vdom_Html.DIV,attr2,hxxMeta2.key,hxxMeta2.ref,children2));
+		var children = [coconut_diffing_FactoryTools.vnode(coconut_vdom_Html.DIV,attr1,hxxMeta1.key,hxxMeta1.ref,__r)];
+		return coconut_diffing_FactoryTools.vnode(coconut_vdom_Html.DIV,attr,hxxMeta.key,hxxMeta.ref,children);
 	}
 	,__initAttributes: function(attributes) {
 	}
@@ -1246,6 +1307,77 @@ client_view_utilities_BasicItem.prototype = $extend(coconut_vdom_View.prototype,
 		this.__coco_content.setData(attributes.content);
 	}
 });
+var client_view_utilities_image_ImageCarousel = function(__coco_data_,implicits) {
+	var _gthis = this;
+	this._coco_implicits = implicits;
+	this.__coco_paths = new coconut_ui_internal_Slot(this,null,null);
+	this.__coco_timeInMsPerImage = new coconut_ui_internal_Slot(this,null,null);
+	this.__initAttributes(__coco_data_);
+	var snapshot = null;
+	coconut_vdom_View.call(this,function() {
+		return _gthis.render();
+	},null,null,null,function(firstTime) {
+		if(firstTime) {
+			_gthis.viewDidMount();
+		}
+	});
+};
+client_view_utilities_image_ImageCarousel.__name__ = true;
+client_view_utilities_image_ImageCarousel.fromHxx = function(hxxMeta,attributes) {
+	var _g = client_view_utilities_image_ImageCarousel.__factory;
+	var tmp;
+	if(_g == null) {
+		tmp = client_view_utilities_image_ImageCarousel.__factory = new coconut_diffing_internal_WidgetFactory(function(__coco_data_,implicits) {
+			return new client_view_utilities_image_ImageCarousel(__coco_data_,implicits);
+		},function(v,attr) {
+			v.__initAttributes(attr);
+		});
+	} else {
+		var v = _g;
+		tmp = v;
+	}
+	return new coconut_diffing_internal_VWidget(tmp,attributes,hxxMeta.key,hxxMeta.ref);
+};
+client_view_utilities_image_ImageCarousel.__super__ = coconut_vdom_View;
+client_view_utilities_image_ImageCarousel.prototype = $extend(coconut_vdom_View.prototype,{
+	render: function() {
+		var this1 = $bind(this,this._coco_set_container);
+		var hxxMeta = { ref : this1};
+		var attr = { className : tink_domspec_ClassName.ofString("h-full w-auto flex carousel-image-container")};
+		var __r = [];
+		var _g = new tink_pure_NodeIterator(tink_state_Observable.get_value(this.__coco_paths));
+		while(_g.list.length > 0) {
+			var path = _g.next();
+			var hxxMeta1 = { };
+			__r.push(coconut_diffing_FactoryTools.vnode(coconut_vdom_Html.IMG,{ src : path},hxxMeta1.key,hxxMeta1.ref));
+		}
+		return coconut_diffing_FactoryTools.vnode(coconut_vdom_Html.DIV,attr,hxxMeta.key,hxxMeta.ref,__r);
+	}
+	,viewDidMount: function() {
+		this.containerQuery = $(this.container);
+		this.scrollToEnd();
+	}
+	,scrollToEnd: function() {
+		var tmp = this.containerQuery;
+		var tmp1 = { scrollLeft : this.containerQuery.width()};
+		var tmp2 = tink_state_Observable.get_value(this.__coco_timeInMsPerImage);
+		var this1 = tink_state_Observable.get_value(this.__coco_paths);
+		tmp.animate(tmp1,{ duration : tmp2 * (this1 == null ? 0 : this1.length), complete : $bind(this,this.onScrollAnimationEnded)});
+	}
+	,onScrollAnimationEnded: function() {
+		var tmp = this.containerQuery;
+		var tmp1 = tink_state_Observable.get_value(this.__coco_timeInMsPerImage);
+		var this1 = tink_state_Observable.get_value(this.__coco_paths);
+		tmp.animate({ scrollLeft : 0},{ duration : tmp1 * (this1 == null ? 0 : this1.length), complete : $bind(this,this.scrollToEnd)});
+	}
+	,_coco_set_container: function(param) {
+		this.container = param;
+	}
+	,__initAttributes: function(attributes) {
+		this.__coco_paths.setData(attributes.paths);
+		this.__coco_timeInMsPerImage.setData(attributes.timeInMsPerImage);
+	}
+});
 var client_view_utilities_scroll_BrowserScrollUtility = function() {
 	window.addEventListener("scroll",$bind(this,this.onScroll));
 	this.lastScrollTop = window.scrollY;
@@ -1253,7 +1385,6 @@ var client_view_utilities_scroll_BrowserScrollUtility = function() {
 client_view_utilities_scroll_BrowserScrollUtility.__name__ = true;
 client_view_utilities_scroll_BrowserScrollUtility.prototype = {
 	onScroll: function(event) {
-		console.log("src/client/view/utilities/scroll/BrowserScrollUtility.hx:19:",event.target);
 		if(window.scrollY > this.lastScrollTop) {
 			client_utilities_AppEvents.onScroll.dispatch(1);
 		} else if(window.scrollY < this.lastScrollTop) {
@@ -1312,7 +1443,6 @@ var client_view_utilities_scroll_ScrollUtility = function(delay) {
 	this.currentScreenIndex = 0;
 	this.delayBetweenScroll = delay;
 	client_utilities_AppEvents.onScroll.add($bind(this,this.onScroll));
-	console.log("src/client/view/utilities/scroll/ScrollUtility.hx:22:","Full screen query length = " + this.fullScreenQuery.length);
 };
 client_view_utilities_scroll_ScrollUtility.__name__ = true;
 client_view_utilities_scroll_ScrollUtility.prototype = {
@@ -1323,7 +1453,6 @@ client_view_utilities_scroll_ScrollUtility.prototype = {
 		this.nextTimeScrollAvailable = HxOverrides.now() / 1000 + this.delayBetweenScroll;
 		this.currentScreenIndex += delta;
 		this.currentScreenIndex = Math.min(this.fullScreenQuery.length - 1,Math.max(this.currentScreenIndex,0));
-		console.log("src/client/view/utilities/scroll/ScrollUtility.hx:34:","Delta = " + delta + " , current screen index = " + this.currentScreenIndex);
 	}
 };
 var coconut_diffing_FactoryTools = function() { };
