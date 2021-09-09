@@ -33493,6 +33493,10 @@ h5 {
   max-height: 75%;
 }
 
+.h-full-important {
+  height: 100% !important;
+}
+
 @media (min-width: 640px) {
   .sm\:container {
     width: 100%;

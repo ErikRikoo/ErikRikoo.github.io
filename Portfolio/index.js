@@ -887,7 +887,7 @@ client_view_NavView.prototype = $extend(coconut_vdom_View.prototype,{
 			_g(languageIndex);
 		}, className : tink_domspec_ClassName.ofString("interactible order-first")};
 		var hxxMeta4 = { };
-		var children = [coconut_diffing_FactoryTools.vnode(coconut_vdom_Html.IMG,{ src : "./images/french-flag.png", className : tink_domspec_ClassName.ofString("h-full")},hxxMeta4.key,hxxMeta4.ref)];
+		var children = [coconut_diffing_FactoryTools.vnode(coconut_vdom_Html.IMG,{ src : "./images/french-flag.png", className : tink_domspec_ClassName.ofString("h-full-important")},hxxMeta4.key,hxxMeta4.ref)];
 		__r1.push(coconut_diffing_FactoryTools.vnode(coconut_vdom_Html.BUTTON,attr3,hxxMeta3.key,hxxMeta3.ref,children));
 		var hxxMeta3 = { };
 		var _g1 = $bind(this,this.onLanguageClicked);
@@ -896,7 +896,7 @@ client_view_NavView.prototype = $extend(coconut_vdom_View.prototype,{
 			_g1(languageIndex1);
 		}, className : tink_domspec_ClassName.ofString("interactible")};
 		var hxxMeta4 = { };
-		var children = [coconut_diffing_FactoryTools.vnode(coconut_vdom_Html.IMG,{ src : "./images/uk-flag.png", className : tink_domspec_ClassName.ofString("h-full")},hxxMeta4.key,hxxMeta4.ref)];
+		var children = [coconut_diffing_FactoryTools.vnode(coconut_vdom_Html.IMG,{ src : "./images/uk-flag.png", className : tink_domspec_ClassName.ofString("h-full-important")},hxxMeta4.key,hxxMeta4.ref)];
 		__r1.push(coconut_diffing_FactoryTools.vnode(coconut_vdom_Html.BUTTON,attr3,hxxMeta3.key,hxxMeta3.ref,children));
 		__r.push(coconut_diffing_FactoryTools.vnode(coconut_vdom_Html.DIV,attr2,hxxMeta2.key,hxxMeta2.ref,__r1));
 		var children = [coconut_diffing_FactoryTools.vnode(coconut_vdom_Html.NAV,attr1,hxxMeta1.key,hxxMeta1.ref,__r)];
@@ -979,7 +979,7 @@ client_view_PresentationView.prototype = $extend(coconut_vdom_View.prototype,{
 		var hxxMeta4 = { };
 		var attr4 = { className : tink_domspec_ClassName.ofString("h-full w-full rounded-3xl overflow-hidden")};
 		var hxxMeta5 = { };
-		var children = [coconut_diffing_FactoryTools.vnode(coconut_vdom_Html.IMG,{ src : "./images/face.jpg", className : tink_domspec_ClassName.ofString("h-full")},hxxMeta5.key,hxxMeta5.ref)];
+		var children = [coconut_diffing_FactoryTools.vnode(coconut_vdom_Html.IMG,{ src : "./images/face.jpg", className : tink_domspec_ClassName.ofString("h-full-important")},hxxMeta5.key,hxxMeta5.ref)];
 		var children1 = [coconut_diffing_FactoryTools.vnode(coconut_vdom_Html.DIV,attr4,hxxMeta4.key,hxxMeta4.ref,children)];
 		__r.push(coconut_diffing_FactoryTools.vnode(coconut_vdom_Html.DIV,attr3,hxxMeta3.key,hxxMeta3.ref,children1));
 		var hxxMeta3 = { };
@@ -1326,7 +1326,7 @@ client_view_experiences_ExperienceItemView.prototype = $extend(coconut_vdom_View
 				var attr = function() {
 					_g();
 				};
-				var attr1 = { className : tink_domspec_ClassName.ofString("visible-phone-only mb-3 p-3 interactible square-highlight w-2/3 flex-center relative overflow-hidden"), onclick : attr};
+				var attr1 = { className : tink_domspec_ClassName.ofString("mb-3 p-3 interactible square-highlight w-2/3 flex-center relative overflow-hidden"), onclick : attr};
 				var __r = [];
 				var hxxMeta1 = { };
 				var attr = { className : tink_domspec_ClassName.ofString("w-full h-full text-center font-header font-semibold uppercase z-10 relative")};
