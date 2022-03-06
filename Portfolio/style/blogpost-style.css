@@ -1,0 +1,52 @@
+.navbar-brand {
+  margin: auto !important;
+  font-size: 1.5rem;
+}
+
+#language {
+  display: none !important;
+}
+
+.blogpost {
+  width: 85%;
+  margin:auto;
+  padding: 2rem;
+}
+
+.blogpost > * {
+  margin-bottom: 0.5rem;
+}
+
+.blogpost h1 {
+  text-align: center;
+  font-size: 2.25rem;
+}
+
+.blogpost img {
+  max-width: 80% !important;
+  height: auto;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.blogpost details {
+  width: 95%;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0.6rem;
+  --tw-bg-opacity: 1;
+  background-color: rgba(0, 58, 83, var(--tw-bg-opacity));
+}
+
+.blogpost details > summary {
+  font-size: 1.1rem;
+  margin-left: 1rem;
+}
+
+.blogpost details[open] > summary {
+  margin-bottom: 1rem;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  letter-spacing: 6px;
+}
