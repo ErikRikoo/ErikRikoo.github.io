@@ -906,14 +906,16 @@ client_view_NavView.prototype = $extend(coconut_vdom_View.prototype,{
 			var i = _g1++;
 			_g.push("../");
 		}
-		var imageFolder = _g.join("") + "./images/";
+		var rewind = _g.join("");
+		var rootLink = rewind + "index.html";
+		var imageFolder = rewind + "./images/";
 		var hxxMeta = { };
 		var attr = { className : tink_domspec_ClassName.ofString("header z-50")};
 		var hxxMeta1 = { };
 		var attr1 = { className : tink_domspec_ClassName.ofString("navbar navbar-primary")};
 		var __r = [];
 		var hxxMeta2 = { };
-		var attr2 = { className : tink_domspec_ClassName.ofString("navbar-brand"), href : "#"};
+		var attr2 = { className : tink_domspec_ClassName.ofString("navbar-brand"), href : rootLink};
 		var children = [coconut_vdom__$Html_Text.inst.vnode("Erik Kubiak",null,null,null)];
 		__r.push(coconut_vdom_Html.A.vnode(attr2,hxxMeta2.key,hxxMeta2.ref,children));
 		var hxxMeta2 = { };
