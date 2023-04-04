@@ -1,0 +1,24 @@
+.half-height {
+    height: 50%;
+}
+
+.full-width {
+    width: 100%;
+}
+
+.full-size {
+    width: 100%;
+    height: 100%;
+}
+
+@media screen and (min-aspect-ratio: 5/4) {
+    .my-phone-only, .my-phone-only * {
+        display: none !important;
+    }
+}
+
+@media screen and (max-aspect-ratio: 5/4) {
+    .my-computer-only, .my-computer-only * {
+        display: none !important;
+    }
+}

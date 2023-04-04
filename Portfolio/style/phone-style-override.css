@@ -1,0 +1,151 @@
+@media screen and (max-aspect-ratio: 5/4) {
+    :root {
+        font-size: 3.5vmin;
+    }
+
+    #presentation-holder {
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+    }
+
+    #presentation-display {
+        flex-direction: column;
+        width: 95%;
+        height: 95%;
+    }
+
+    #presentation-display .my-phone-only {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+    }
+
+    #presentation-holder {
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+    }
+
+    #presentation-background {
+        max-height: 50%;
+    }
+
+    .presentation-phone-content {
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        height: 75%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        padding: 1rem;
+    }
+
+    .face {
+        position: absolute;
+        top: 30%;
+        left: 50%;
+        transform: translate(-50%, -80%);
+    }
+
+    .presentation-phone-content > * {
+        margin-bottom: 1rem;
+    }
+
+    .description {
+        padding-right: 0;
+    }
+
+    #main-work-holder {
+        height: 100vh;
+        width: 100%;
+    }
+
+    #main-work-item-display {
+        height: 100%;
+        min-width: 100%;
+        overflow-y: hidden;
+        overflow-x: scroll;
+        justify-content: flex-start;
+    }
+
+    #main-work-controller {
+        display: none;
+    }
+
+    #main-work-holder .main-work-item-holder {
+        height: 100%;
+        width: 100vw !important;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        aspect-ratio: unset;
+        flex-shrink: 0;
+    }
+
+    #main-work-holder .work-item-holder {
+        width: 90%;
+        height: 90%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+    }
+
+   
+
+    #all-work-holder {
+        padding: 1em;
+    }
+
+    #all-work-filter-holder {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: row;
+
+        font-size: 0.6rem !important;
+    }
+
+    #all-work-items {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+
+    .filter-checkbox {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+    }
+
+    #all-work-items > .main-work-item-holder {
+        aspect-ratio: 3 / 4;
+        height: 33vh;
+        max-width: 33vh;
+        margin: 2px;
+    }
+
+    #all-work-items {
+        font-size: 0.6rem;
+    }
+
+    #pop-up-visual-header {
+        padding: 0rem;
+        width: 100%;
+        aspect-ratio: 16/9;
+        background-color: var(--background-very-dark);
+    }
+}

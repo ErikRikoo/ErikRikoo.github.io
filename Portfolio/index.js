@@ -1,4 +1,4 @@
-(function ($hx_exports, $global) { "use strict";
+(function ($global) { "use strict";
 var $estr = function() { return js_Boot.__string_rec(this,''); },$hxEnums = $hxEnums || {},$_;
 function $extend(from, fields) {
 	var proto = Object.create(from);
@@ -38,25 +38,6 @@ Reflect.field = function(o,field) {
 		return o[field];
 	} catch( _g ) {
 		return null;
-	}
-};
-Reflect.getProperty = function(o,field) {
-	var tmp;
-	if(o == null) {
-		return null;
-	} else {
-		var tmp1;
-		if(o.__properties__) {
-			tmp = o.__properties__["get_" + field];
-			tmp1 = tmp;
-		} else {
-			tmp1 = false;
-		}
-		if(tmp1) {
-			return o[tmp]();
-		} else {
-			return o[field];
-		}
 	}
 };
 Reflect.fields = function(o) {
@@ -116,20 +97,7 @@ StringTools.rtrim = function(s) {
 StringTools.trim = function(s) {
 	return StringTools.ltrim(StringTools.rtrim(s));
 };
-var client_model_util_LocalizedString = {};
-client_model_util_LocalizedString.fromString = function(s) {
-	var this1 = client_model_util_LocalizedStringEnum.Unique(s);
-	return this1;
-};
-client_model_util_LocalizedString.fromArrayOfString = function(values) {
-	var this1 = client_model_util_LocalizedStringEnum.Multiple(tink_pure_List.fromArray(values));
-	return this1;
-};
-var client_model_util_LocalizedStringEnum = $hxEnums["client.model.util.LocalizedStringEnum"] = { __ename__:true,__constructs__:null
-	,Unique: ($_=function(value) { return {_hx_index:0,value:value,__enum__:"client.model.util.LocalizedStringEnum",toString:$estr}; },$_._hx_name="Unique",$_.__params__ = ["value"],$_)
-	,Multiple: ($_=function(values) { return {_hx_index:1,values:values,__enum__:"client.model.util.LocalizedStringEnum",toString:$estr}; },$_._hx_name="Multiple",$_.__params__ = ["values"],$_)
-};
-client_model_util_LocalizedStringEnum.__constructs__ = [client_model_util_LocalizedStringEnum.Unique,client_model_util_LocalizedStringEnum.Multiple];
+var client_WorkItemType = {};
 var tink_pure_List = {};
 tink_pure_List.get = function(this1,index) {
 	if(index < 0) {
@@ -158,376 +126,633 @@ var tink_pure__$List_Node = function(length,value,tails) {
 	this.tails = tails == null ? tink_pure__$List_Node.EMPTY : tails;
 };
 tink_pure__$List_Node.__name__ = true;
-var client_data_Data = function() { };
-client_data_Data.__name__ = true;
-var haxe_ds_Either = $hxEnums["haxe.ds.Either"] = { __ename__:true,__constructs__:null
-	,Left: ($_=function(v) { return {_hx_index:0,v:v,__enum__:"haxe.ds.Either",toString:$estr}; },$_._hx_name="Left",$_.__params__ = ["v"],$_)
-	,Right: ($_=function(v) { return {_hx_index:1,v:v,__enum__:"haxe.ds.Either",toString:$estr}; },$_._hx_name="Right",$_.__params__ = ["v"],$_)
+tink_pure__$List_Node.prototype = {
+	__class__: tink_pure__$List_Node
 };
-haxe_ds_Either.__constructs__ = [haxe_ds_Either.Left,haxe_ds_Either.Right];
-var client_model_util_DateYear = {};
-client_model_util_DateYear._new = function(value) {
-	var this1 = value;
-	return this1;
+var coconut_diffing_Factory = function() {
+	var this1 = coconut_diffing_TypeId.idCounter++;
+	this.type = this1;
 };
-client_model_util_DateYear.fromInt = function(i) {
-	return client_model_util_DateYear._new(client_model_util_DateYearData.Numeral(i));
+coconut_diffing_Factory.__name__ = true;
+coconut_diffing_Factory.prototype = {
+	adopt: function(target) {
+		return null;
+	}
+	,hydrate: function(target,data) {
+	}
+	,vnode: function(data,key,ref,children) {
+		return new coconut_diffing_internal_VNative(this,data,key,ref,children);
+	}
+	,__class__: coconut_diffing_Factory
 };
-client_model_util_DateYear.fromString = function(s) {
-	return client_model_util_DateYear._new(client_model_util_DateYearData.Literal(client_model_util_LocalizedString.fromString(s)));
+var coconut_vdom__$Html_Updater = function(unset,rules,getRule) {
+	this.deleters = new Map();
+	this.applicators = new Map();
+	this.unset = unset;
+	this.rules = rules;
+	this.getRule = getRule;
 };
-client_model_util_DateYear.fromMultipleString = function(values) {
-	var immutableList = values;
-	return client_model_util_DateYear._new(client_model_util_DateYearData.Literal(client_model_util_LocalizedString.fromArrayOfString(values)));
+coconut_vdom__$Html_Updater.__name__ = true;
+coconut_vdom__$Html_Updater.getFields = function(o) {
+	var ret = Object.getOwnPropertyNames(o);
+	switch(ret.length) {
+	case 0:
+		break;
+	case 1:
+		var _g = ret[0];
+		break;
+	case 2:
+		var a = ret[0];
+		var b = ret[1];
+		if(a > b) {
+			ret[0] = b;
+			ret[1] = a;
+		}
+		break;
+	default:
+		ret.sort();
+	}
+	return ret;
 };
-var client_model_util_DateYearData = $hxEnums["client.model.util.DateYearData"] = { __ename__:true,__constructs__:null
-	,Numeral: ($_=function(year) { return {_hx_index:0,year:year,__enum__:"client.model.util.DateYearData",toString:$estr}; },$_._hx_name="Numeral",$_.__params__ = ["year"],$_)
-	,Literal: ($_=function(year) { return {_hx_index:1,year:year,__enum__:"client.model.util.DateYearData",toString:$estr}; },$_._hx_name="Literal",$_.__params__ = ["year"],$_)
+coconut_vdom__$Html_Updater.prototype = {
+	update: function(target,newVal,oldVal) {
+		if(newVal != null) {
+			(this.getApplicator(newVal))(target,newVal,oldVal);
+		}
+		if(oldVal != null) {
+			(this.getDeleter(oldVal,newVal))(target);
+		}
+	}
+	,getApplicator: function(obj) {
+		var _gthis = this;
+		var props = coconut_vdom__$Html_Updater.getFields(obj);
+		var key = props.toString();
+		var apply = this.applicators.get(key);
+		if(apply == null) {
+			var source = "if (old) {";
+			var add = function(prefix) {
+				var _g = 0;
+				while(_g < props.length) {
+					var p = props[_g];
+					++_g;
+					var source1 = source;
+					var source2 = "\n  " + prefix(p);
+					var _g1 = _gthis.getRule(_gthis.rules,p);
+					var source3;
+					if(_g1 == null) {
+						source3 = "if (nu." + p + " == null) { " + _gthis.unset("target",p) + " } else target." + p + " = nu." + p + ";";
+					} else {
+						var rule = _g1;
+						source3 = "this." + rule + "(target, \"" + p + "\", nu." + p + ", old && old." + p + ");";
+					}
+					source = source1 + (source2 + source3);
+				}
+			};
+			add(function(p) {
+				return "if (nu." + p + " !== old." + p + ") ";
+			});
+			source += "\n} else {";
+			add(function(p) {
+				return "";
+			});
+			source += "\n}";
+			apply = new Function("target","nu","old",source).bind(this.rules);
+			this.applicators.set(key,apply);
+		}
+		return apply;
+	}
+	,noop: function(target) {
+	}
+	,getDeleter: function(old,nu) {
+		var _gthis = this;
+		var forFields = function(fields) {
+			var key = fields.toString();
+			var ret = _gthis.deleters.get(key);
+			if(ret == null) {
+				var body = "";
+				var _g = 0;
+				var _g1 = fields;
+				while(_g < _g1.length) {
+					var f = _g1[_g];
+					++_g;
+					var _g2 = _gthis.getRule(_gthis.rules,f);
+					var body1;
+					if(_g2 == null) {
+						body1 = _gthis.unset("target",f);
+					} else {
+						var rule = _g2;
+						body1 = "this." + rule + "(target, \"" + f + "\", null);";
+					}
+					body += "\n" + body1;
+				}
+				var _gthis1 = _gthis.deleters;
+				ret = new Function("target",body).bind(_gthis.rules);
+				_gthis1.set(key,ret);
+			}
+			return ret;
+		};
+		if(nu == null) {
+			return forFields(coconut_vdom__$Html_Updater.getFields(old));
+		} else {
+			var oldFields = coconut_vdom__$Html_Updater.getFields(old);
+			var nuFields = coconut_vdom__$Html_Updater.getFields(nu);
+			var nuKey = nuFields.toString();
+			var oldKey = oldFields.toString();
+			if(nuKey == oldKey) {
+				return $bind(this,this.noop);
+			} else {
+				var key = "" + nuKey + ":" + oldKey;
+				var ret = this.deleters.get(key);
+				if(ret == null) {
+					var tmp = this.deleters;
+					var forFields1 = forFields;
+					var _g = [];
+					var _g1 = 0;
+					while(_g1 < oldFields.length) {
+						var f = oldFields[_g1];
+						++_g1;
+						if(nuFields.indexOf(f) == -1) {
+							_g.push(f);
+						}
+					}
+					ret = forFields1(_g);
+					tmp.set(key,ret);
+				}
+				return ret;
+			}
+		}
+	}
+	,__class__: coconut_vdom__$Html_Updater
 };
-client_model_util_DateYearData.__constructs__ = [client_model_util_DateYearData.Numeral,client_model_util_DateYearData.Literal];
-var client_model_util_TextData = {};
-client_model_util_TextData._new = function(value) {
-	var this1 = value;
-	return this1;
+var coconut_diffing_Properties = function(construct,apply) {
+	coconut_diffing_Factory.call(this);
+	this.construct = construct;
+	this.apply = apply;
 };
-client_model_util_TextData.fromMultipleString = function(values) {
-	return client_model_util_TextData._new(client_model_util_ETextData.SimpleText(client_model_util_LocalizedString.fromArrayOfString(values)));
+coconut_diffing_Properties.__name__ = true;
+coconut_diffing_Properties.set = function(target,nu,old,apply) {
+	if(nu == null) {
+		if(old != null) {
+			var old1 = old;
+			var _g = 0;
+			var _g1 = Reflect.fields(old1);
+			while(_g < _g1.length) {
+				var k = _g1[_g];
+				++_g;
+				apply(target,k,null,null);
+			}
+		}
+	} else if(old == null) {
+		var nu1 = nu;
+		var access = nu1;
+		var _g_access = access;
+		var _g_keys = Reflect.fields(access);
+		var _g_index = 0;
+		while(_g_index < _g_keys.length) {
+			var key = _g_keys[_g_index++];
+			var _g1_value = _g_access[key];
+			var _g1_key = key;
+			var k = _g1_key;
+			var v = _g1_value;
+			apply(target,k,v,null);
+		}
+	} else {
+		var nu1 = nu;
+		var old1 = old;
+		var access = nu1;
+		var _g_access = access;
+		var _g_keys = Reflect.fields(access);
+		var _g_index = 0;
+		while(_g_index < _g_keys.length) {
+			var key = _g_keys[_g_index++];
+			var _g1_value = _g_access[key];
+			var _g1_key = key;
+			var k = _g1_key;
+			var v = _g1_value;
+			var old = old1[k];
+			if(v != old) {
+				apply(target,k,v,old);
+			}
+		}
+		var _g = 0;
+		var _g1 = Reflect.fields(old1);
+		while(_g < _g1.length) {
+			var k = _g1[_g];
+			++_g;
+			if(!Object.prototype.hasOwnProperty.call(nu1,k)) {
+				apply(target,k,null,null);
+			}
+		}
+	}
 };
-var client_model_util_ETextData = $hxEnums["client.model.util.ETextData"] = { __ename__:true,__constructs__:null
-	,SimpleText: ($_=function(text) { return {_hx_index:0,text:text,__enum__:"client.model.util.ETextData",toString:$estr}; },$_._hx_name="SimpleText",$_.__params__ = ["text"],$_)
-	,TextList: ($_=function(texts) { return {_hx_index:1,texts:texts,__enum__:"client.model.util.ETextData",toString:$estr}; },$_._hx_name="TextList",$_.__params__ = ["texts"],$_)
+coconut_diffing_Properties.__super__ = coconut_diffing_Factory;
+coconut_diffing_Properties.prototype = $extend(coconut_diffing_Factory.prototype,{
+	create: function(data) {
+		var ret = this.construct();
+		this.update(ret,data,null);
+		return ret;
+	}
+	,update: function(target,next,prev) {
+		coconut_diffing_Properties.set(target,next,prev,this.apply);
+	}
+	,__class__: coconut_diffing_Properties
+});
+var coconut_vdom__$Html_Elt = function(tag) {
+	coconut_diffing_Factory.call(this);
+	this.tag = tag.toUpperCase();
 };
-client_model_util_ETextData.__constructs__ = [client_model_util_ETextData.SimpleText,client_model_util_ETextData.TextList];
-var client_model_util_MediaType = $hxEnums["client.model.util.MediaType"] = { __ename__:true,__constructs__:null
-	,Image: {_hx_name:"Image",_hx_index:0,__enum__:"client.model.util.MediaType",toString:$estr}
-	,Video: {_hx_name:"Video",_hx_index:1,__enum__:"client.model.util.MediaType",toString:$estr}
+coconut_vdom__$Html_Elt.__name__ = true;
+coconut_vdom__$Html_Elt.hydrateEvents = function(target,attr) {
+	var events = coconut_vdom__$Html_Elt.events;
+	for (var name in attr) {
+      if (name.startsWith("on")) {
+        events.push(name);
+      }
+    }
+	if(events.length > 0) {
+		var handler = target.__eventHandler = { handleEvent : function(e) {
+			this[e.type](e);
+		}};
+		var _g = 0;
+		while(_g < events.length) {
+			var event = events[_g];
+			++_g;
+			var fn = Reflect.field(attr,event);
+			event = HxOverrides.substr(event,2,null);
+			target.addEventListener(event,handler);
+			handler[event] = fn;
+		}
+		events.length = 0;
+	}
 };
-client_model_util_MediaType.__constructs__ = [client_model_util_MediaType.Image,client_model_util_MediaType.Video];
-var client_data_Showoff = function() { };
-client_data_Showoff.__name__ = true;
-var client_data_Experiences = function() { };
-client_data_Experiences.__name__ = true;
-var client_data_Formation = function() { };
-client_data_Formation.__name__ = true;
-var client_data_Medias = function() { };
-client_data_Medias.__name__ = true;
-var client_data_Presentation = function() { };
-client_data_Presentation.__name__ = true;
-var client_data_Skills = function() { };
-client_data_Skills.__name__ = true;
+coconut_vdom__$Html_Elt.setAttributes = function(t,nu,old) {
+	coconut_diffing_Properties.set(t,nu,old,function(t,k,v,_) {
+		if(v == null) {
+			t.removeAttribute(k);
+		} else {
+			t.setAttribute(k,v);
+		}
+	});
+};
+coconut_vdom__$Html_Elt.setEvent = function(element,event,newVal,_) {
+	var event1 = HxOverrides.substr(event,2,null);
+	var handler = element.__eventHandler;
+	if(handler == null) {
+		handler = { handleEvent : function(e) {
+			this[e.type](e);
+		}};
+		element.__eventHandler = handler;
+	}
+	if(!Object.prototype.hasOwnProperty.call(handler,event1)) {
+		element.addEventListener(event1,handler);
+	}
+	handler[event1] = newVal == null ? coconut_vdom__$Html_Elt.noop : newVal;
+};
+coconut_vdom__$Html_Elt.updateStyle = function(target,newVal,oldVal) {
+	coconut_vdom__$Html_Elt.STYLES.update(target,newVal,oldVal);
+};
+coconut_vdom__$Html_Elt.noop = function(_) {
+};
+coconut_vdom__$Html_Elt.__super__ = coconut_diffing_Factory;
+coconut_vdom__$Html_Elt.prototype = $extend(coconut_diffing_Factory.prototype,{
+	create: function(attr) {
+		var ret = window.document.createElement(this.tag);
+		coconut_vdom__$Html_Elt.ELEMENTS.update(ret,attr,null);
+		return ret;
+	}
+	,adopt: function(node) {
+		if(node.nodeName == this.tag) {
+			return node;
+		} else {
+			return null;
+		}
+	}
+	,hydrate: function(target,attr) {
+		coconut_vdom__$Html_Elt.hydrateEvents(target,attr);
+	}
+	,update: function(target,nu,old) {
+		coconut_vdom__$Html_Elt.ELEMENTS.update(target,nu,old);
+	}
+	,__class__: coconut_vdom__$Html_Elt
+});
+var coconut_vdom__$Html_Svg = function(tag) {
+	coconut_diffing_Factory.call(this);
+	this.tag = tag.toLowerCase();
+};
+coconut_vdom__$Html_Svg.__name__ = true;
+coconut_vdom__$Html_Svg.setSvgProp = function(element,name,newVal,oldVal) {
+	var _hx_tmp;
+	switch(name) {
+	case "attributes":
+		coconut_vdom__$Html_Elt.setAttributes(element,newVal,oldVal);
+		break;
+	case "className":
+		coconut_vdom__$Html_Svg.setSvgProp(element,"class",newVal,oldVal);
+		break;
+	case "style":
+		_hx_tmp = StringTools.startsWith(name,"on");
+		if(_hx_tmp == true) {
+			coconut_vdom__$Html_Elt.setEvent(element,name,newVal,oldVal);
+		} else {
+			coconut_vdom__$Html_Elt.updateStyle(element.style,newVal,oldVal);
+		}
+		break;
+	case "xmlns":
+		break;
+	default:
+		_hx_tmp = StringTools.startsWith(name,"on");
+		if(_hx_tmp == true) {
+			coconut_vdom__$Html_Elt.setEvent(element,name,newVal,oldVal);
+		} else if(newVal == null) {
+			element.removeAttribute(name);
+		} else {
+			element.setAttribute(name,newVal);
+		}
+	}
+};
+coconut_vdom__$Html_Svg.__super__ = coconut_diffing_Factory;
+coconut_vdom__$Html_Svg.prototype = $extend(coconut_diffing_Factory.prototype,{
+	adopt: function(node) {
+		if(node.namespaceURI == "http://www.w3.org/2000/svg" && node.nodeName == this.tag) {
+			return node;
+		} else {
+			return null;
+		}
+	}
+	,hydrate: function(target,attr) {
+		coconut_vdom__$Html_Elt.hydrateEvents(target,attr);
+	}
+	,create: function(attr) {
+		var ret = window.document.createElementNS("http://www.w3.org/2000/svg",this.tag);
+		this.update(ret,attr,null);
+		return ret;
+	}
+	,update: function(target,nu,old) {
+		coconut_diffing_Properties.set(target,nu,old,coconut_vdom__$Html_Svg.setSvgProp);
+	}
+	,__class__: coconut_vdom__$Html_Svg
+});
+var coconut_vdom_Html = function() { };
+coconut_vdom_Html.__name__ = true;
+coconut_vdom_Html.nodeType = function(tag) {
+	var _g = coconut_vdom_Html.nodeTypes.h[tag];
+	var tmp;
+	if(_g == null) {
+		var this1 = coconut_vdom_Html.nodeTypes;
+		var v;
+		var _g1 = tag.split(":");
+		switch(_g1.length) {
+		case 1:
+			var _g2 = _g1[0];
+			v = new coconut_vdom__$Html_Elt(tag);
+			break;
+		case 2:
+			var _g2 = _g1[0];
+			if(_g2 == "svg") {
+				var tag1 = _g1[1];
+				v = new coconut_vdom__$Html_Svg(tag1);
+			} else {
+				var unknown = _g2;
+				throw haxe_Exception.thrown("unknown namespace " + unknown);
+			}
+			break;
+		default:
+			throw haxe_Exception.thrown("invalid tag " + tag);
+		}
+		this1.h[tag] = v;
+		tmp = v;
+	} else {
+		var v = _g;
+		tmp = v;
+	}
+	return tmp;
+};
+var tink_domspec_ClassName = {};
+tink_domspec_ClassName.ofString = function(s) {
+	if(s == null) {
+		return null;
+	} else {
+		var this1 = StringTools.trim(s);
+		return this1;
+	}
+};
+var coconut_vdom__$Html_Text = function() {
+	coconut_diffing_Factory.call(this);
+};
+coconut_vdom__$Html_Text.__name__ = true;
+coconut_vdom__$Html_Text.__super__ = coconut_diffing_Factory;
+coconut_vdom__$Html_Text.prototype = $extend(coconut_diffing_Factory.prototype,{
+	adopt: function(target) {
+		if(target.nodeType == 3) {
+			return target;
+		} else {
+			return null;
+		}
+	}
+	,create: function(text) {
+		return window.document.createTextNode(text);
+	}
+	,update: function(target,nu,old) {
+		if(nu != old) {
+			target.textContent = nu;
+		}
+	}
+	,__class__: coconut_vdom__$Html_Text
+});
+var client_WorkData = function() { };
+client_WorkData.__name__ = true;
+client_WorkData.defaultDisplay = function(title,visualHeader,textContent) {
+	var hxxMeta = { };
+	var __r = [];
+	var hxxMeta1 = { };
+	__r.push(coconut_vdom_Html.DIV.vnode({ id : "pop-up-visual-header"},hxxMeta1.key,hxxMeta1.ref,[visualHeader != null ? visualHeader : null]));
+	var hxxMeta1 = { };
+	var hxxMeta2 = { };
+	var attr = { className : tink_domspec_ClassName.ofString("title-holder title-text highlighted-text")};
+	var hxxMeta3 = { };
+	var children = title == null ? null : coconut_vdom__$Html_Text.inst.vnode(title,null,null,null);
+	var children1 = [coconut_vdom_Html.SPAN.vnode({ },hxxMeta3.key,hxxMeta3.ref,[children])];
+	var children = [coconut_vdom_Html.DIV.vnode(attr,hxxMeta2.key,hxxMeta2.ref,children1)];
+	__r.push(coconut_vdom_Html.DIV.vnode({ id : "pop-up-title"},hxxMeta1.key,hxxMeta1.ref,children));
+	var hxxMeta1 = { };
+	__r.push(coconut_vdom_Html.DIV.vnode({ id : "pop-up-text-content"},hxxMeta1.key,hxxMeta1.ref,[textContent != null ? textContent : null]));
+	return coconut_vdom_Html.DIV.vnode({ id : "pop-up-content"},hxxMeta.key,hxxMeta.ref,__r);
+};
+client_WorkData.sortNMapIndex = function(data) {
+	data.sort(function(x,y) {
+		return x.value - y.value;
+	});
+	return client_WorkData.mapIndex(data);
+};
+client_WorkData.mapIndex = function(data) {
+	var _g = 0;
+	var _g1 = data.length;
+	while(_g < _g1) {
+		var i = _g++;
+		data[i].index = i;
+	}
+	return data;
+};
+client_WorkData.fromTitle = function(title,newTitle) {
+	var _g = 0;
+	var _g1 = client_WorkData.allWorkItem;
+	while(_g < _g1.length) {
+		var i = _g1[_g];
+		++_g;
+		if(i.title == title) {
+			return { overrideTitle : newTitle == null ? i.title : newTitle, overridenItem : i};
+		}
+	}
+	return null;
+};
 var client_home_Main = function() { };
 client_home_Main.__name__ = true;
 client_home_Main.main = function() {
-	var tmp = window.document.getElementById("app");
-	var tmp1 = new tink_state_internal_AutoObservable(tink_state_internal__$AutoObservable_Computation.sync(function() {
-		return function(languageIndex) {
-			var hxxMeta = { };
-			var __r = [];
-			var compute = new tink_state_internal_AutoObservable(tink_state_internal__$AutoObservable_Computation.sync(function() {
-				return languageIndex;
-			}),null);
-			__r.push(client_view_PresentationView.fromHxx({ },{ languageIndex : compute}));
-			var compute = new tink_state_internal_AutoObservable(tink_state_internal__$AutoObservable_Computation.sync(function() {
-				return languageIndex;
-			}),null);
-			__r.push(client_view_SkillsView.fromHxx({ },{ languageIndex : compute}));
-			var compute = new tink_state_internal_AutoObservable(tink_state_internal__$AutoObservable_Computation.sync(function() {
-				return languageIndex;
-			}),null);
-			__r.push(client_view_experiences_ExperiencesView.fromHxx({ },{ languageIndex : compute}));
-			var compute = new tink_state_internal_AutoObservable(tink_state_internal__$AutoObservable_Computation.sync(function() {
-				return languageIndex;
-			}),null);
-			__r.push(client_view_formations_FormationsView.fromHxx({ },{ languageIndex : compute}));
-			var compute = new tink_state_internal_AutoObservable(tink_state_internal__$AutoObservable_Computation.sync(function() {
-				return languageIndex;
-			}),null);
-			__r.push(client_view_MediaView.fromHxx({ },{ languageIndex : compute}));
-			return coconut_vdom_Html.DIV.vnode({ },hxxMeta.key,hxxMeta.ref,__r);
-		};
-	}),null);
-	coconut_vdom_Renderer.mountInto(tmp,client_view_App.fromHxx({ },{ renderChildren : tmp1}));
+	coconut_vdom_Renderer.mountInto(window.document.getElementById("app"),client_view_App.fromHxx({ },{ }));
 };
-var client_model_util_OptionExtender = function() { };
-client_model_util_OptionExtender.__name__ = true;
-client_model_util_OptionExtender.getOrDefault = function(instance,def) {
-	if(def == null) {
-		def = "";
+var coconut_data_Model = function() { };
+coconut_data_Model.__name__ = true;
+coconut_data_Model.__isInterface__ = true;
+var client_view_Filters = function() {
+	this._updatePerformed = tink_core_Signal.trigger();
+	var _g = [];
+	var _g1 = 0;
+	var _g2 = client_WorkItemType.AllTypes;
+	while(_g1 < _g2.length) {
+		var i = _g2[_g1];
+		++_g1;
+		_g.push(new tink_core_NamedWith(i,true));
 	}
-	switch(instance._hx_index) {
-	case 0:
-		var s = instance.v;
-		return s;
-	case 1:
-		return def;
-	}
+	this.__coco_filters = tink_state_State._new(tink_pure_List.fromArray(_g),null,null,null);
+	this.__coco_isAll = tink_state_State._new(true,null,null,null);
+	this.__coco_transitionCount = tink_state_State._new(0);
+	this.errorTrigger = tink_core_Signal.trigger();
+	this.transitionErrors = this.errorTrigger;
+	this.annex = new coconut_data_helpers_Annex(this);
+	this.observables = { filters : this.__coco_filters, isAll : this.__coco_isAll, isInTransition : tink_state_Observable.map(this.__coco_transitionCount,tink_state_internal_Transform.plain(function(count) {
+		return count > 0;
+	}))};
 };
-var signals_BaseSignal = $hx_exports["BaseSignal"] = function(fireOnAdd) {
-	if(fireOnAdd == null) {
-		fireOnAdd = false;
-	}
-	this.defaultCallbackProps = 0;
-	this.requiresSort = false;
-	this.toTrigger = [];
-	this.callbacks = [];
-	this.mute = false;
-	this._fireOnAdd = false;
-	this._fireOnAdd = fireOnAdd;
-};
-signals_BaseSignal.__name__ = true;
-signals_BaseSignal.prototype = {
-	sortPriority: function() {
-		if(this.requiresSort) {
-			this.callbacks.sort($bind(this,this.sortCallbacks));
-			this.requiresSort = false;
+client_view_Filters.__name__ = true;
+client_view_Filters.__interfaces__ = [coconut_data_Model];
+client_view_Filters.prototype = {
+	get: function(index) {
+		var _g = tink_pure_List.get(tink_state_State.get_value(this.__coco_filters),index);
+		switch(_g._hx_index) {
+		case 0:
+			var s = _g.v;
+			return s;
+		case 1:
+			return null;
 		}
 	}
-	,dispatchCallbacks: function() {
-		var i = 0;
-		while(i < this.callbacks.length) {
-			var callbackData = this.callbacks[i];
-			if(callbackData.repeat < 0 || callbackData.callCount <= callbackData.repeat) {
-				this.toTrigger.push(callbackData);
-			} else {
-				callbackData.remove = true;
+	,toggleAll: function() {
+		var _gthis = this;
+		var d = !tink_state_State.get_value(_gthis.__coco_isAll);
+		var d1;
+		if(!tink_state_State.get_value(_gthis.__coco_isAll)) {
+			var _g = [];
+			var _g1 = 0;
+			var _g2 = client_WorkItemType.AllTypes;
+			while(_g1 < _g2.length) {
+				var i = _g2[_g1];
+				++_g1;
+				_g.push(new tink_core_NamedWith(i,true));
 			}
-			callbackData.callCount++;
-			++i;
-		}
-		var j = this.callbacks.length - 1;
-		while(j >= 0) {
-			var callbackData = this.callbacks[j];
-			if(callbackData.remove == true) {
-				this.callbacks.splice(j,1);
-			}
-			--j;
-		}
-		var _g = 0;
-		var _g1 = this.toTrigger.length;
-		while(_g < _g1) {
-			var l = _g++;
-			if(this.toTrigger[l] != null) {
-				this.toTrigger[l].dispatchMethod(this.toTrigger[l].callback,this.toTrigger[l]);
-			}
-		}
-		this.toTrigger = [];
-	}
-	,dispatchCallback: function(callback,callbackData) {
-		throw haxe_Exception.thrown("implement in override");
-	}
-	,dispatchCallback1: function(callback,callbackData) {
-		throw haxe_Exception.thrown("implement in override");
-	}
-	,dispatchCallback2: function(callback,callbackData) {
-		throw haxe_Exception.thrown("implement in override");
-	}
-	,dispatchCallback3: function(callback,callbackData) {
-		throw haxe_Exception.thrown("implement in override");
-	}
-	,dispatchCheck: function(callback,callbackData) {
-		try {
-			this.dispatchCallback(callback,callbackData);
-		} catch( _g ) {
-			var e = haxe_Exception.caught(_g).unwrap();
-			if(e == "Invalid call") {
-				return;
-			}
-		}
-		callbackData.dispatchMethod = $bind(this,this.dispatchCallback);
-	}
-	,dispatchCheck1: function(callback,callbackData) {
-		try {
-			this.dispatchCallback1(callback,callbackData);
-		} catch( _g ) {
-			var e = haxe_Exception.caught(_g).unwrap();
-			if(e == "Invalid call") {
-				this.dispatchCallback(callback,callbackData);
-				return;
-			}
-		}
-		callbackData.dispatchMethod = $bind(this,this.dispatchCallback1);
-	}
-	,dispatchCheck2: function(callback,callbackData) {
-		try {
-			this.dispatchCallback2(callback,callbackData);
-		} catch( _g ) {
-			var e = haxe_Exception.caught(_g).unwrap();
-			if(e == "Invalid call") {
-				this.dispatchCheck1(callback,callbackData);
-				return;
-			}
-		}
-		callbackData.dispatchMethod = $bind(this,this.dispatchCallback2);
-	}
-	,dispatchCheck3: function(callback,callbackData) {
-		try {
-			this.dispatchCallback3(callback,callbackData);
-		} catch( _g ) {
-			var e = haxe_Exception.caught(_g).unwrap();
-			if(e == "Invalid call") {
-				this.dispatchCheck2(callback,callbackData);
-				return;
-			}
-		}
-		callbackData.dispatchMethod = $bind(this,this.dispatchCallback3);
-	}
-	,sortCallbacks: function(s1,s2) {
-		if(s1.priority > s2.priority) {
-			return -1;
-		} else if(s1.priority < s2.priority) {
-			return 1;
+			d1 = tink_pure_List.fromArray(_g);
 		} else {
-			return 0;
+			d1 = tink_state_State.get_value(_gthis.__coco_filters);
 		}
+		return tink_core_Promise.next(this.__cocoupdate(new tink_core__$Future_SyncFuture(new tink_core__$Lazy_LazyConst(tink_core_Outcome.Success({ isAll : d, filters : d1})))),function(_) {
+			return new tink_core__$Future_SyncFuture(new tink_core__$Lazy_LazyConst(tink_core_Outcome.Success(null)));
+		});
 	}
-	,get_numListeners: function() {
-		return this.callbacks.length;
+	,allChecked: function(toSkip) {
+		var _g = new tink_pure_NodeIterator(tink_state_State.get_value(this.__coco_filters));
+		while(_g.list.length > 0) {
+			var i = _g.next();
+			if(i.name != toSkip.name && !i.value) {
+				return false;
+			}
+		}
+		return true;
 	}
-	,get_hasListeners: function() {
-		return this.get_numListeners() > 0;
+	,toggle: function(item) {
+		var _gthis = this;
+		var d = item.value ? false : tink_state_State.get_value(_gthis.__coco_isAll) || _gthis.allChecked(item);
+		var _g = [];
+		var _g1 = new tink_pure_NodeIterator(tink_state_State.get_value(_gthis.__coco_filters));
+		while(_g1.list.length > 0) {
+			var i = _g1.next();
+			_g.push(new tink_core_NamedWith(i.name,item.name == i.name ? !i.value : i.value));
+		}
+		return tink_core_Promise.next(this.__cocoupdate(new tink_core__$Future_SyncFuture(new tink_core__$Lazy_LazyConst(tink_core_Outcome.Success({ isAll : d, filters : tink_pure_List.fromArray(_g)})))),function(_) {
+			return new tink_core__$Future_SyncFuture(new tink_core__$Lazy_LazyConst(tink_core_Outcome.Success(null)));
+		});
 	}
-	,add: function(callback,fireOnce,priority,fireOnAdd) {
-		if(priority == null) {
-			priority = 0;
-		}
-		if(fireOnce == null) {
-			fireOnce = false;
-		}
-		if(fireOnce != false || priority != 0 || fireOnAdd != null) {
-			var warningMessage = "\nWARNING: fireOnce, priority and fireOnAdd params will be removed from 'Signals' in a future release\nInstead use daisy chain methods, eg: obj.add(callback).repeat(5).priority(1000).fireOnAdd();";
-			console.warn(warningMessage);
-		}
-		var numParams = this.getNumParams(callback);
-		var repeat = -1;
-		if(fireOnce == true) {
-			repeat = 0;
-		}
-		this.currentCallback = { params : numParams, callback : callback, callCount : 0, repeat : repeat, priority : priority, remove : false};
-		if(numParams == 0) {
-			this.currentCallback.dispatchMethod = $bind(this,this.dispatchCheck);
-		} else if(numParams == 1) {
-			this.currentCallback.dispatchMethod = $bind(this,this.dispatchCheck1);
-		} else if(numParams == 2) {
-			this.currentCallback.dispatchMethod = $bind(this,this.dispatchCheck2);
-		} else if(numParams == 3) {
-			this.currentCallback.dispatchMethod = $bind(this,this.dispatchCheck3);
-		}
-		this.callbacks.push(this.currentCallback);
-		if(priority != 0) {
-			this.requiresSort = true;
-		}
-		if(fireOnAdd == true || this._fireOnAdd == true) {
-			this.currentCallback.dispatchMethod(callback,this.currentCallback);
-		}
-		return this;
-	}
-	,getNumParams: function(callback) {
-		var length = Reflect.getProperty(callback,"length");
-		if(length != null) {
-			return length;
-		}
-		return this.defaultCallbackProps;
-	}
-	,priority: function(value) {
-		if(this.currentCallback == null) {
-			return this;
-		}
-		this.currentCallback.priority = value;
-		this.requiresSort = true;
-		return this;
-	}
-	,repeat: function(value) {
-		if(value == null) {
-			value = -1;
-		}
-		if(this.currentCallback == null) {
-			return this;
-		}
-		this.currentCallback.repeat = value;
-		return this;
-	}
-	,fireOnAdd: function() {
-		if(this.currentCallback == null) {
-			return;
-		}
-		this.currentCallback.callCount++;
-		this.currentCallback.dispatchMethod(this.currentCallback.callback,this.currentCallback);
-	}
-	,remove: function(callback) {
-		if(callback == null) {
-			callback = false;
-		}
-		if(callback == true) {
-			this.callbacks = [];
-		} else {
-			var j = 0;
-			while(j < this.callbacks.length) if(this.callbacks[j].callback == callback) {
-				this.callbacks.splice(j,1);
+	,isValid: function(tags) {
+		var _g = new tink_pure_NodeIterator(tink_state_State.get_value(this.__coco_filters));
+		while(_g.list.length > 0) {
+			var i = _g.next();
+			var tmp;
+			if(i.value) {
+				var ret = false;
+				var _g1 = new tink_pure_NodeIterator(tags);
+				while(_g1.list.length > 0) {
+					var x = _g1.next();
+					if(x == i.name) {
+						ret = true;
+						break;
+					}
+				}
+				tmp = ret;
 			} else {
-				++j;
+				tmp = false;
+			}
+			if(tmp) {
+				return true;
 			}
 		}
+		return false;
 	}
-	,__properties__: {get_hasListeners:"get_hasListeners",get_numListeners:"get_numListeners"}
+	,__cocoupdate: function(ret) {
+		var _gthis = this;
+		var sync = true;
+		var done = false;
+		ret.handle(function(o) {
+			done = true;
+			if(!sync) {
+				_gthis.__coco_transitionCount.set(tink_state_State.get_value(_gthis.__coco_transitionCount) - 1);
+			}
+			switch(o._hx_index) {
+			case 0:
+				var delta = o.data;
+				var delta1 = delta;
+				var existent = tink_Anon.getExistentFields(delta1);
+				if(existent.filters) {
+					_gthis.__coco_filters.set(delta1.filters);
+				}
+				if(existent.isAll) {
+					_gthis.__coco_isAll.set(delta1.isAll);
+				}
+				_gthis._updatePerformed.handlers.invoke(delta1);
+				break;
+			case 1:
+				var e = o.failure;
+				_gthis.errorTrigger.handlers.invoke(e);
+				break;
+			}
+		});
+		if(!done) {
+			sync = false;
+		}
+		if(!sync) {
+			this.__coco_transitionCount.set(tink_state_State.get_value(this.__coco_transitionCount) + 1);
+		}
+		return ret;
+	}
+	,__class__: client_view_Filters
 };
-var signals_Signal1 = $hx_exports["Signal1"] = function() {
-	signals_BaseSignal.call(this);
-	this.defaultCallbackProps = 1;
-};
-signals_Signal1.__name__ = true;
-signals_Signal1.__super__ = signals_BaseSignal;
-signals_Signal1.prototype = $extend(signals_BaseSignal.prototype,{
-	dispatch: function(value1) {
-		if(this.requiresSort) {
-			this.callbacks.sort($bind(this,this.sortCallbacks));
-			this.requiresSort = false;
-		}
-		this.value = value1;
-		var i = 0;
-		while(i < this.callbacks.length) {
-			var callbackData = this.callbacks[i];
-			if(callbackData.repeat < 0 || callbackData.callCount <= callbackData.repeat) {
-				this.toTrigger.push(callbackData);
-			} else {
-				callbackData.remove = true;
-			}
-			callbackData.callCount++;
-			++i;
-		}
-		var j = this.callbacks.length - 1;
-		while(j >= 0) {
-			var callbackData = this.callbacks[j];
-			if(callbackData.remove == true) {
-				this.callbacks.splice(j,1);
-			}
-			--j;
-		}
-		var _g = 0;
-		var _g1 = this.toTrigger.length;
-		while(_g < _g1) {
-			var l = _g++;
-			if(this.toTrigger[l] != null) {
-				this.toTrigger[l].dispatchMethod(this.toTrigger[l].callback,this.toTrigger[l]);
-			}
-		}
-		this.toTrigger = [];
-		this.value = null;
-	}
-	,dispatchCallback: function(callback,callbackData) {
-		callback();
-	}
-	,dispatchCallback1: function(callback,callbackData) {
-		callback(this.value);
-	}
-	,dispatchCallback2: function(callback,callbackData) {
-		throw haxe_Exception.thrown("Use Signal 2");
-	}
-	,dispatchCallback3: function(callback,callbackData) {
-		throw haxe_Exception.thrown("Use Signal 3");
-	}
-});
-var client_utilities_AppEvents = function() { };
-client_utilities_AppEvents.__name__ = true;
 var coconut_diffing_Widget = function(rendered,mounted,updated,unmounting) {
 	this._coco_vStructure = rendered;
 	this._coco_viewMounted = mounted;
@@ -535,6 +760,9 @@ var coconut_diffing_Widget = function(rendered,mounted,updated,unmounting) {
 	this._coco_viewUnmounting = unmounting;
 };
 coconut_diffing_Widget.__name__ = true;
+coconut_diffing_Widget.prototype = {
+	__class__: coconut_diffing_Widget
+};
 var coconut_vdom_View = function(render,shouldUpdate,track,beforeRerender,rendered) {
 	this.__au = [];
 	this.__bc = [];
@@ -649,26 +877,144 @@ coconut_vdom_View.prototype = $extend(coconut_diffing_Widget.prototype,{
 			tink_core_Callback.invoke(c,true);
 		}
 	}
+	,__class__: coconut_vdom_View
 });
-var client_view_App = function(__coco_data_,implicits) {
+var client_view_AllWorkView = function(__coco_data_,implicits) {
 	var _gthis = this;
 	this._coco_implicits = implicits;
-	this.__coco_renderChildren = new coconut_ui_internal_Slot(this,null,new tink_state_internal_AutoObservable(tink_state_internal__$AutoObservable_Computation.sync(function() {
-		return function(_) {
-			return null;
-		};
-	}),null));
-	this.__coco_nestedNess = new coconut_ui_internal_Slot(this,null,new tink_state__$Observable_ConstObservable(0));
-	this.__coco_languageIndex = new coconut_ui_internal_Slot(this,null,tink_state_State._new(0));
+	this.__coco_onCurrentItemChanged = new coconut_ui_internal_Slot(this,null,null);
+	this.__coco_filterObject = tink_state_State._new(new client_view_Filters(),null);
 	this.__initAttributes(__coco_data_);
 	var snapshot = null;
 	coconut_vdom_View.call(this,function() {
 		return _gthis.render();
-	},null,null,null,function(firstTime) {
-		if(firstTime) {
-			_gthis.viewDidMount();
+	},null,null,null,null);
+};
+client_view_AllWorkView.__name__ = true;
+client_view_AllWorkView.fromHxx = function(hxxMeta,attributes) {
+	var _g = client_view_AllWorkView.__factory;
+	var tmp;
+	if(_g == null) {
+		tmp = client_view_AllWorkView.__factory = new coconut_diffing_internal_WidgetFactory(function(__coco_data_,implicits) {
+			return new client_view_AllWorkView(__coco_data_,implicits);
+		},function(v,attr) {
+			v.__initAttributes(attr);
+		});
+	} else {
+		var v = _g;
+		tmp = v;
+	}
+	return new coconut_diffing_internal_VWidget(tmp,attributes,hxxMeta.key,hxxMeta.ref);
+};
+client_view_AllWorkView.__super__ = coconut_vdom_View;
+client_view_AllWorkView.prototype = $extend(coconut_vdom_View.prototype,{
+	onCurrentItemChanged: function(item) {
+		(tink_state_Observable.get_value(this.__coco_onCurrentItemChanged))(item);
+	}
+	,render: function() {
+		var hxxMeta = { };
+		var attr = { id : "all-work-holder", className : tink_domspec_ClassName.ofString("full-width")};
+		var __r = [];
+		var hxxMeta1 = { };
+		var attr1 = { id : "all-work-filter-holder", className : tink_domspec_ClassName.ofString("full-width")};
+		var hxxMeta2 = { };
+		var __r1 = [];
+		var hxxMeta3 = { };
+		var attr2 = { id : "all-checkbox", className : tink_domspec_ClassName.ofString("filter-checkbox")};
+		var __r2 = [];
+		var hxxMeta4 = { };
+		var attr3 = { className : tink_domspec_ClassName.ofString("title-text highlighted-text")};
+		var children = [coconut_vdom__$Html_Text.inst.vnode("All",null,null,null)];
+		__r2.push(coconut_vdom_Html.SPAN.vnode(attr3,hxxMeta4.key,hxxMeta4.ref,children));
+		var hxxMeta4 = { };
+		var attr3 = { className : tink_domspec_ClassName.ofString("checkbox-label-root")};
+		var __r3 = [];
+		var hxxMeta5 = { };
+		var _this = this;
+		var attr4 = function(event) {
+			tink_state_State.get_value(_this.__coco_filterObject).toggleAll();
+		};
+		__r3.push(coconut_vdom_Html.INPUT.vnode({ type : "checkbox", checked : tink_state_State.get_value(tink_state_State.get_value(this.__coco_filterObject).__coco_isAll), oninput : attr4},hxxMeta5.key,hxxMeta5.ref));
+		var hxxMeta5 = { };
+		var __r4 = [];
+		__r3.push(coconut_vdom_Html.SPAN.vnode({ },hxxMeta5.key,hxxMeta5.ref,__r4));
+		__r2.push(coconut_vdom_Html.LABEL.vnode(attr3,hxxMeta4.key,hxxMeta4.ref,__r3));
+		__r1.push(coconut_vdom_Html.DIV.vnode(attr2,hxxMeta3.key,hxxMeta3.ref,__r2));
+		var _g = 0;
+		var _g1 = client_WorkItemType.AllTypes.length;
+		while(_g < _g1) {
+			var i = _g++;
+			var item = [tink_state_State.get_value(this.__coco_filterObject).get(i)];
+			var hxxMeta3 = { };
+			var attr2 = i == client_WorkItemType.AllTypes.length - 1 ? tink_domspec_ClassName.ofString(" filter-checkbox last-child") : tink_domspec_ClassName.ofString("filter-checkbox");
+			var __r2 = [];
+			var hxxMeta4 = { };
+			var attr3 = { className : tink_domspec_ClassName.ofString("title-text highlighted-text")};
+			var s = js_Boot.__cast(item[0].name , String);
+			var children = s == null ? null : coconut_vdom__$Html_Text.inst.vnode(s,null,null,null);
+			__r2.push(coconut_vdom_Html.SPAN.vnode(attr3,hxxMeta4.key,hxxMeta4.ref,[children]));
+			var hxxMeta5 = { };
+			var attr4 = { className : tink_domspec_ClassName.ofString("checkbox-label-root")};
+			var __r3 = [];
+			var hxxMeta6 = { };
+			__r3.push(coconut_vdom_Html.INPUT.vnode({ type : "checkbox", checked : item[0].value, oninput : (function(_this,item) {
+				return function(event) {
+					tink_state_State.get_value(_this[0].__coco_filterObject).toggle(item[0]);
+				};
+			})([this],item)},hxxMeta6.key,hxxMeta6.ref));
+			var hxxMeta7 = { };
+			var __r4 = [];
+			__r3.push(coconut_vdom_Html.SPAN.vnode({ },hxxMeta7.key,hxxMeta7.ref,__r4));
+			__r2.push(coconut_vdom_Html.LABEL.vnode(attr4,hxxMeta5.key,hxxMeta5.ref,__r3));
+			__r1.push(coconut_vdom_Html.DIV.vnode({ className : attr2},hxxMeta3.key,hxxMeta3.ref,__r2));
 		}
-	});
+		var children = [coconut_vdom_Html.DIV.vnode({ id : "all-work-filter-inputs"},hxxMeta2.key,hxxMeta2.ref,__r1)];
+		__r.push(coconut_vdom_Html.DIV.vnode(attr1,hxxMeta1.key,hxxMeta1.ref,children));
+		var hxxMeta1 = { };
+		var __r1 = [];
+		var _g = 0;
+		var _g1 = client_WorkData.allWorkItem;
+		while(_g < _g1.length) {
+			var d = [_g1[_g]];
+			++_g;
+			if(tink_state_State.get_value(tink_state_State.get_value(this.__coco_filterObject).__coco_isAll) || tink_state_State.get_value(this.__coco_filterObject).isValid(d[0].type)) {
+				var hxxMeta2 = { };
+				var attr1 = { className : tink_domspec_ClassName.ofString("main-work-item-holder"), onclick : (function(_this,d) {
+					return function(event) {
+						_this[0].onCurrentItemChanged(d[0]);
+					};
+				})([this],d)};
+				var children = new tink_state_internal_AutoObservable(tink_state_internal__$AutoObservable_Computation.sync((function(d) {
+					return function() {
+						return d[0].title;
+					};
+				})(d)),null);
+				var children1 = new tink_state_internal_AutoObservable(tink_state_internal__$AutoObservable_Computation.sync((function(d) {
+					return function() {
+						return d[0].path;
+					};
+				})(d)),null);
+				var children2 = [client_view_WorkItem.fromHxx({ },{ title : children, imagePath : children1})];
+				__r1.push(coconut_vdom_Html.DIV.vnode(attr1,hxxMeta2.key,hxxMeta2.ref,children2));
+			}
+		}
+		__r.push(coconut_vdom_Html.DIV.vnode({ id : "all-work-items"},hxxMeta1.key,hxxMeta1.ref,__r1));
+		return coconut_vdom_Html.DIV.vnode(attr,hxxMeta.key,hxxMeta.ref,__r);
+	}
+	,__initAttributes: function(attributes) {
+		this.__coco_onCurrentItemChanged.setData(attributes.onCurrentItemChanged);
+	}
+	,__class__: client_view_AllWorkView
+});
+var client_view_App = function(__coco_data_,implicits) {
+	var _gthis = this;
+	this._coco_implicits = implicits;
+	this.__coco_currentItemIndex = tink_state_State._new(-1,null);
+	this.__initAttributes(__coco_data_);
+	var snapshot = null;
+	coconut_vdom_View.call(this,function() {
+		return _gthis.render();
+	},null,null,null,null);
 };
 client_view_App.__name__ = true;
 client_view_App.fromHxx = function(hxxMeta,attributes) {
@@ -688,73 +1034,69 @@ client_view_App.fromHxx = function(hxxMeta,attributes) {
 };
 client_view_App.__super__ = coconut_vdom_View;
 client_view_App.prototype = $extend(coconut_vdom_View.prototype,{
-	renderChildren: function(a0) {
-		return (tink_state_Observable.get_value(this.__coco_renderChildren))(a0);
+	onCurrentWorkItemChanged: function(item) {
+		var param = item == null ? -1 : item.index;
+		this.__coco_currentItemIndex.set(param);
 	}
-	,viewDidMount: function() {
-		$(".fullscreen").each(function(index,element) {
-			if((index & 1) == 1) {
-				element.className += " own-bg-primary";
-			} else {
-				element.className += " own-bg-primary-light";
-			}
-		});
-		this.browserScrollUtility = new client_view_utilities_scroll_BrowserScrollUtility();
-		this.scrollUtility = new client_view_utilities_scroll_ScrollUtility(1.0);
+	,moveToAllWork: function() {
+		window.document.getElementById("all-work-holder").scrollIntoView({ behavior : "smooth", block : "start", inline_ : "start"});
 	}
-	,onLanguageChanged: function(newIndex) {
-		this.set_languageIndex(newIndex);
+	,onPopUpClosed: function() {
+		this.__coco_currentItemIndex.set(-1);
 	}
 	,render: function() {
 		var _gthis = this;
 		var hxxMeta = { };
-		var attr = { className : tink_domspec_ClassName.ofString("own-bg-primary")};
 		var __r = [];
+		__r.push(client_view_PresentationView.fromHxx({ },{ }));
 		var tmp = new tink_state_internal_AutoObservable(tink_state_internal__$AutoObservable_Computation.sync(function() {
-			return tink_state_Observable.get_value(_gthis.__coco_nestedNess);
+			return function() {
+				_gthis.moveToAllWork();
+			};
 		}),null);
 		var tmp1 = new tink_state_internal_AutoObservable(tink_state_internal__$AutoObservable_Computation.sync(function() {
-			return $bind(_gthis,_gthis.onLanguageChanged);
+			return $bind(_gthis,_gthis.onCurrentWorkItemChanged);
 		}),null);
-		var tmp2 = new tink_state_internal_AutoObservable(tink_state_internal__$AutoObservable_Computation.sync(function() {
-			return tink_state_Observable.get_value(_gthis.__coco_languageIndex);
+		__r.push(client_view_MainWorkView.fromHxx({ },{ onMoreAsked : tmp, onCurrentItemChanged : tmp1}));
+		var tmp = new tink_state_internal_AutoObservable(tink_state_internal__$AutoObservable_Computation.sync(function() {
+			return $bind(_gthis,_gthis.onCurrentWorkItemChanged);
 		}),null);
-		__r.push(client_view_NavView.fromHxx({ },{ nestedNess : tmp, onLanguageChanged : tmp1, languageIndex : tmp2}));
-		__r.push(this.renderChildren(tink_state_Observable.get_value(this.__coco_languageIndex)));
-		return coconut_vdom_Html.DIV.vnode(attr,hxxMeta.key,hxxMeta.ref,__r);
-	}
-	,set_languageIndex: function(param) {
-		var _g = this.__coco_languageIndex.data;
-		if(_g != null) {
-			var v = _g;
-			v.set(param);
+		__r.push(client_view_AllWorkView.fromHxx({ },{ onCurrentItemChanged : tmp}));
+		if(tink_state_State.get_value(this.__coco_currentItemIndex) != -1) {
+			var tmp = new tink_state_internal_AutoObservable(tink_state_internal__$AutoObservable_Computation.sync(function() {
+				return $bind(_gthis,_gthis.onPopUpClosed);
+			}),null);
+			var tmp1 = new tink_state_internal_AutoObservable(tink_state_internal__$AutoObservable_Computation.sync(function() {
+				var compute = client_WorkData.allWorkItem[tink_state_State.get_value(_gthis.__coco_currentItemIndex)];
+				var compute1 = client_WorkData.allWorkItem[tink_state_State.get_value(_gthis.__coco_currentItemIndex)];
+				return compute.display(compute1);
+			}),null);
+			__r.push(client_view_PopUp.fromHxx({ },{ onClose : tmp, content : tmp1}));
 		}
-		return param;
+		return coconut_vdom_Html.DIV.vnode({ },hxxMeta.key,hxxMeta.ref,__r);
 	}
 	,__initAttributes: function(attributes) {
-		this.__coco_renderChildren.setData(attributes.renderChildren);
-		this.__coco_nestedNess.setData(attributes.nestedNess);
-		this.__coco_languageIndex.setData(attributes.languageIndex);
 	}
-	,__properties__: {set_languageIndex:"set_languageIndex"}
+	,__class__: client_view_App
 });
-var client_view_MediaView = function(__coco_data_,implicits) {
+var client_view_MainWorkView = function(__coco_data_,implicits) {
 	var _gthis = this;
 	this._coco_implicits = implicits;
-	this.__coco_languageIndex = new coconut_ui_internal_Slot(this,null,null);
+	this.__coco_onMoreAsked = new coconut_ui_internal_Slot(this,null,null);
+	this.__coco_onCurrentItemChanged = new coconut_ui_internal_Slot(this,null,null);
 	this.__initAttributes(__coco_data_);
 	var snapshot = null;
 	coconut_vdom_View.call(this,function() {
 		return _gthis.render();
 	},null,null,null,null);
 };
-client_view_MediaView.__name__ = true;
-client_view_MediaView.fromHxx = function(hxxMeta,attributes) {
-	var _g = client_view_MediaView.__factory;
+client_view_MainWorkView.__name__ = true;
+client_view_MainWorkView.fromHxx = function(hxxMeta,attributes) {
+	var _g = client_view_MainWorkView.__factory;
 	var tmp;
 	if(_g == null) {
-		tmp = client_view_MediaView.__factory = new coconut_diffing_internal_WidgetFactory(function(__coco_data_,implicits) {
-			return new client_view_MediaView(__coco_data_,implicits);
+		tmp = client_view_MainWorkView.__factory = new coconut_diffing_internal_WidgetFactory(function(__coco_data_,implicits) {
+			return new client_view_MainWorkView(__coco_data_,implicits);
 		},function(v,attr) {
 			v.__initAttributes(attr);
 		});
@@ -764,126 +1106,80 @@ client_view_MediaView.fromHxx = function(hxxMeta,attributes) {
 	}
 	return new coconut_diffing_internal_VWidget(tmp,attributes,hxxMeta.key,hxxMeta.ref);
 };
-client_view_MediaView.__super__ = coconut_vdom_View;
-client_view_MediaView.prototype = $extend(coconut_vdom_View.prototype,{
-	render: function() {
-		var hxxMeta = { };
-		var attr = { className : tink_domspec_ClassName.ofString("fullscreen exact-fullscreen flex flex-column")};
-		var __r = [];
-		var hxxMeta1 = { };
-		var attr1 = { className : tink_domspec_ClassName.ofString("text-tertiary pt-20 text-center w-full")};
-		var this1 = client_data_Medias.value.header;
-		var languageIndex = tink_state_Observable.get_value(this.__coco_languageIndex);
-		var s;
-		switch(this1._hx_index) {
-		case 0:
-			var value = this1.value;
-			s = value;
-			break;
-		case 1:
-			var values = this1.values;
-			if(languageIndex < 0 || languageIndex >= (values == null ? 0 : values.length)) {
-				console.log("src/client/model/util/LocalizedString.hx:32:","languageIndex should be between 0 and length, here: " + languageIndex);
-				s = client_model_util_OptionExtender.getOrDefault(tink_pure_List.get(values,0));
-			} else {
-				s = client_model_util_OptionExtender.getOrDefault(tink_pure_List.get(values,languageIndex));
-			}
-			break;
-		}
-		var children = s == null ? null : coconut_vdom__$Html_Text.inst.vnode(s,null,null,null);
-		__r.push(coconut_vdom_Html.H1.vnode(attr1,hxxMeta1.key,hxxMeta1.ref,[children]));
-		var hxxMeta1 = { };
-		var attr1 = { className : tink_domspec_ClassName.ofString("w-full h-full flex justify-center items-center")};
-		var hxxMeta2 = { };
-		var attr2 = { className : tink_domspec_ClassName.ofString("flex lg:flex-row sm:flex-col justify-center items-center lg:space-x-4 lg:space-y-0 space-y-12")};
-		var __r1 = [];
-		var _g = new tink_pure_NodeIterator(client_data_Medias.value.items);
-		while(_g.list.length > 0) {
-			var media = _g.next();
-			var hxxMeta3 = { };
-			var attr3 = { className : tink_domspec_ClassName.ofString("square-highlight-no-phone h-48 lg:h-96 w-48 lg:w-64 flex flex-column")};
-			var children;
-			if(media.link.link != null) {
-				var hxxMeta4 = { };
-				var attr4 = { target : "_blank", href : media.link.link, className : tink_domspec_ClassName.ofString("h-full w-full")};
-				var children1 = [this.renderMedia(media)];
-				children = coconut_vdom_Html.A.vnode(attr4,hxxMeta4.key,hxxMeta4.ref,children1);
-			} else {
-				children = this.renderMedia(media);
-			}
-			__r1.push(coconut_vdom_Html.DIV.vnode(attr3,hxxMeta3.key,hxxMeta3.ref,[children]));
-		}
-		var children = [coconut_vdom_Html.DIV.vnode(attr2,hxxMeta2.key,hxxMeta2.ref,__r1)];
-		__r.push(coconut_vdom_Html.DIV.vnode(attr1,hxxMeta1.key,hxxMeta1.ref,children));
-		return coconut_vdom_Html.DIV.vnode(attr,hxxMeta.key,hxxMeta.ref,__r);
+client_view_MainWorkView.__super__ = coconut_vdom_View;
+client_view_MainWorkView.prototype = $extend(coconut_vdom_View.prototype,{
+	onMoreAsked: function() {
+		(tink_state_Observable.get_value(this.__coco_onMoreAsked))();
 	}
-	,renderMedia: function(media) {
+	,onCurrentItemChanged: function(item) {
+		(tink_state_Observable.get_value(this.__coco_onCurrentItemChanged))(item);
+	}
+	,render: function() {
 		var hxxMeta = { };
-		var attr = { className : tink_domspec_ClassName.ofString("h-full w-full")};
 		var __r = [];
 		var hxxMeta1 = { };
-		var attr1 = { className : tink_domspec_ClassName.ofString("w-full lg:h-48 h-full p-2 flex flex-column justify-center items-center")};
-		var hxxMeta2 = { };
-		var attr2 = { className : tink_domspec_ClassName.ofString("p-4 h-32 w-32 bg-transparent-white rounded-md")};
-		var hxxMeta3 = { };
-		var children = [coconut_vdom_Html.IMG.vnode({ src : media.logoPath, className : tink_domspec_ClassName.ofString("w-full h-auto")},hxxMeta3.key,hxxMeta3.ref)];
-		var children1 = [coconut_vdom_Html.DIV.vnode(attr2,hxxMeta2.key,hxxMeta2.ref,children)];
-		__r.push(coconut_vdom_Html.DIV.vnode(attr1,hxxMeta1.key,hxxMeta1.ref,children1));
-		var hxxMeta1 = { };
-		var attr1 = { className : tink_domspec_ClassName.ofString("phone-invisible w-full h-48 text-center flex flex-column justify-center items-center")};
-		var hxxMeta2 = { };
-		var attr2 = { className : tink_domspec_ClassName.ofString("" + (media.link.link != null ? "interactible" : "") + " basic-border-highlight no-decoration w-9/12 text-l")};
-		var this1 = media.link.name;
-		var languageIndex = tink_state_Observable.get_value(this.__coco_languageIndex);
-		var s;
-		switch(this1._hx_index) {
-		case 0:
-			var value = this1.value;
-			s = value;
-			break;
-		case 1:
-			var values = this1.values;
-			if(languageIndex < 0 || languageIndex >= (values == null ? 0 : values.length)) {
-				console.log("src/client/model/util/LocalizedString.hx:32:","languageIndex should be between 0 and length, here: " + languageIndex);
-				s = client_model_util_OptionExtender.getOrDefault(tink_pure_List.get(values,0));
-			} else {
-				s = client_model_util_OptionExtender.getOrDefault(tink_pure_List.get(values,languageIndex));
-			}
-			break;
+		var __r1 = [];
+		var _g = 0;
+		var _g1 = client_WorkData.mainWorkItem;
+		while(_g < _g1.length) {
+			var d = [_g1[_g]];
+			++_g;
+			var hxxMeta2 = { };
+			var attr = { className : tink_domspec_ClassName.ofString("main-work-item-holder"), onclick : (function(_this,d) {
+				return function(event) {
+					_this[0].onCurrentItemChanged(d[0].overridenItem);
+				};
+			})([this],d)};
+			var children = new tink_state_internal_AutoObservable(tink_state_internal__$AutoObservable_Computation.sync((function(d) {
+				return function() {
+					return d[0].overrideTitle;
+				};
+			})(d)),null);
+			var children1 = new tink_state_internal_AutoObservable(tink_state_internal__$AutoObservable_Computation.sync((function(d) {
+				return function() {
+					return d[0].overridenItem.path;
+				};
+			})(d)),null);
+			var children2 = [client_view_WorkItem.fromHxx({ },{ title : children, imagePath : children1})];
+			__r1.push(coconut_vdom_Html.DIV.vnode(attr,hxxMeta2.key,hxxMeta2.ref,children2));
 		}
-		var children = s == null ? null : coconut_vdom__$Html_Text.inst.vnode(s,null,null,null);
-		var children1 = [coconut_vdom_Html.P.vnode(attr2,hxxMeta2.key,hxxMeta2.ref,[children])];
-		__r.push(coconut_vdom_Html.DIV.vnode(attr1,hxxMeta1.key,hxxMeta1.ref,children1));
-		return coconut_vdom_Html.DIV.vnode(attr,hxxMeta.key,hxxMeta.ref,__r);
+		var hxxMeta2 = { };
+		var attr = { className : tink_domspec_ClassName.ofString("main-work-item-holder"), onclick : $bind(this,this.onMoreAsked)};
+		var children = new tink_state__$Observable_ConstObservable("More...");
+		var children1 = [client_view_WorkItem.fromHxx({ },{ title : children, imagePath : new tink_state__$Observable_ConstObservable("./images/plus.svg")})];
+		__r1.push(coconut_vdom_Html.DIV.vnode(attr,hxxMeta2.key,hxxMeta2.ref,children1));
+		__r.push(coconut_vdom_Html.DIV.vnode({ id : "main-work-item-display"},hxxMeta1.key,hxxMeta1.ref,__r1));
+		var hxxMeta1 = { };
+		var attr = { id : "main-work-controller", className : tink_domspec_ClassName.ofString("full-width"), onclick : $bind(this,this.onMoreAsked)};
+		var hxxMeta2 = { };
+		var children = [coconut_vdom_Html.SPAN.vnode({ className : tink_domspec_ClassName.ofString("arrow bouncing-top")},hxxMeta2.key,hxxMeta2.ref,null)];
+		__r.push(coconut_vdom_Html.DIV.vnode(attr,hxxMeta1.key,hxxMeta1.ref,children));
+		return coconut_vdom_Html.DIV.vnode({ id : "main-work-holder"},hxxMeta.key,hxxMeta.ref,__r);
 	}
 	,__initAttributes: function(attributes) {
-		this.__coco_languageIndex.setData(attributes.languageIndex);
+		this.__coco_onMoreAsked.setData(attributes.onMoreAsked);
+		this.__coco_onCurrentItemChanged.setData(attributes.onCurrentItemChanged);
 	}
+	,__class__: client_view_MainWorkView
 });
-var client_view_NavView = function(__coco_data_,implicits) {
-	this.languageChoiceOpened = false;
+var client_view_PopUp = function(__coco_data_,implicits) {
 	var _gthis = this;
 	this._coco_implicits = implicits;
-	this.__coco_onLanguageChanged = new coconut_ui_internal_Slot(this,null,null);
-	this.__coco_languageIndex = new coconut_ui_internal_Slot(this,null,null);
-	this.__coco_nestedNess = new coconut_ui_internal_Slot(this,null,null);
+	this.__coco_onClose = new coconut_ui_internal_Slot(this,null,null);
+	this.__coco_content = new coconut_ui_internal_Slot(this,null,null);
 	this.__initAttributes(__coco_data_);
 	var snapshot = null;
 	coconut_vdom_View.call(this,function() {
 		return _gthis.render();
-	},null,null,null,function(firstTime) {
-		if(firstTime) {
-			_gthis.viewDidMount();
-		}
-	});
+	},null,null,null,null);
 };
-client_view_NavView.__name__ = true;
-client_view_NavView.fromHxx = function(hxxMeta,attributes) {
-	var _g = client_view_NavView.__factory;
+client_view_PopUp.__name__ = true;
+client_view_PopUp.fromHxx = function(hxxMeta,attributes) {
+	var _g = client_view_PopUp.__factory;
 	var tmp;
 	if(_g == null) {
-		tmp = client_view_NavView.__factory = new coconut_diffing_internal_WidgetFactory(function(__coco_data_,implicits) {
-			return new client_view_NavView(__coco_data_,implicits);
+		tmp = client_view_PopUp.__factory = new coconut_diffing_internal_WidgetFactory(function(__coco_data_,implicits) {
+			return new client_view_PopUp(__coco_data_,implicits);
 		},function(v,attr) {
 			v.__initAttributes(attr);
 		});
@@ -893,97 +1189,32 @@ client_view_NavView.fromHxx = function(hxxMeta,attributes) {
 	}
 	return new coconut_diffing_internal_VWidget(tmp,attributes,hxxMeta.key,hxxMeta.ref);
 };
-client_view_NavView.__super__ = coconut_vdom_View;
-client_view_NavView.prototype = $extend(coconut_vdom_View.prototype,{
-	onLanguageChanged: function(newIndex) {
-		(tink_state_Observable.get_value(this.__coco_onLanguageChanged))(newIndex);
+client_view_PopUp.__super__ = coconut_vdom_View;
+client_view_PopUp.prototype = $extend(coconut_vdom_View.prototype,{
+	onClose: function() {
+		(tink_state_Observable.get_value(this.__coco_onClose))();
 	}
 	,render: function() {
-		var _g = [];
-		var _g1 = 0;
-		var _g2 = tink_state_Observable.get_value(this.__coco_nestedNess);
-		while(_g1 < _g2) {
-			var i = _g1++;
-			_g.push("../");
-		}
-		var rewind = _g.join("");
-		var rootLink = rewind + "index.html";
-		var imageFolder = rewind + "./images/";
 		var hxxMeta = { };
-		var attr = { className : tink_domspec_ClassName.ofString("header z-50")};
 		var hxxMeta1 = { };
-		var attr1 = { className : tink_domspec_ClassName.ofString("navbar navbar-primary")};
 		var __r = [];
 		var hxxMeta2 = { };
-		var attr2 = { className : tink_domspec_ClassName.ofString("navbar-brand"), href : rootLink};
-		var children = [coconut_vdom__$Html_Text.inst.vnode("Erik Kubiak",null,null,null)];
-		__r.push(coconut_vdom_Html.A.vnode(attr2,hxxMeta2.key,hxxMeta2.ref,children));
-		var hxxMeta2 = { };
-		var attr2 = { className : tink_domspec_ClassName.ofString("flex flex-row-reverse mr-4"), id : "language"};
-		var __r1 = [];
-		var hxxMeta3 = { };
-		var _g = $bind(this,this.onLanguageClicked);
-		var languageIndex = 0;
-		var attr3 = { onclick : function() {
-			_g(languageIndex);
-		}, className : tink_domspec_ClassName.ofString("interactible order-first")};
-		var hxxMeta4 = { };
-		var children = [coconut_vdom_Html.IMG.vnode({ src : "" + imageFolder + "french-flag.png", className : tink_domspec_ClassName.ofString("h-full-important")},hxxMeta4.key,hxxMeta4.ref)];
-		__r1.push(coconut_vdom_Html.BUTTON.vnode(attr3,hxxMeta3.key,hxxMeta3.ref,children));
-		var hxxMeta3 = { };
-		var _g1 = $bind(this,this.onLanguageClicked);
-		var languageIndex1 = 1;
-		var attr3 = { onclick : function() {
-			_g1(languageIndex1);
-		}, className : tink_domspec_ClassName.ofString("interactible")};
-		var hxxMeta4 = { };
-		var children = [coconut_vdom_Html.IMG.vnode({ src : "" + imageFolder + "uk-flag.png", className : tink_domspec_ClassName.ofString("h-full-important")},hxxMeta4.key,hxxMeta4.ref)];
-		__r1.push(coconut_vdom_Html.BUTTON.vnode(attr3,hxxMeta3.key,hxxMeta3.ref,children));
-		__r.push(coconut_vdom_Html.DIV.vnode(attr2,hxxMeta2.key,hxxMeta2.ref,__r1));
-		var children = [coconut_vdom_Html.NAV.vnode(attr1,hxxMeta1.key,hxxMeta1.ref,__r)];
-		return coconut_vdom_Html.DIV.vnode(attr,hxxMeta.key,hxxMeta.ref,children);
-	}
-	,viewDidMount: function() {
-		this.languageButtons = $("#language > button");
-		if($global.navigator.language.indexOf("fr") == -1) {
-			var notFRIndex = 1;
-			this.changeLanguage(notFRIndex);
-			this.onLanguageChanged(notFRIndex);
-		}
-	}
-	,onLanguageClicked: function(languageIndex) {
-		if(this.languageChoiceOpened) {
-			this.setInteractibilityState(false);
-			this.changeLanguage(languageIndex);
-			this.onLanguageChanged(languageIndex);
-			$("#language").blur();
-			this.languageChoiceOpened = false;
-		} else {
-			this.setInteractibilityState(true);
-			this.languageChoiceOpened = true;
-		}
-	}
-	,changeLanguage: function(index) {
-		this.languageButtons.removeClass("order-first");
-		this.languageButtons[index].className += " order-first";
-	}
-	,setInteractibilityState: function(state) {
-		if(state) {
-			$("#language").addClass("interacted");
-		} else {
-			$("#language").removeClass("interacted");
-		}
+		var attr = { className : tink_domspec_ClassName.ofString("material-symbols-outlined close-symbol interactable"), onclick : $bind(this,this.onClose)};
+		var children = [coconut_vdom__$Html_Text.inst.vnode("close",null,null,null)];
+		__r.push(coconut_vdom_Html.SPAN.vnode(attr,hxxMeta2.key,hxxMeta2.ref,children));
+		__r.push(tink_state_Observable.get_value(this.__coco_content));
+		var children = [coconut_vdom_Html.DIV.vnode({ id : "pop-up"},hxxMeta1.key,hxxMeta1.ref,__r)];
+		return coconut_vdom_Html.DIV.vnode({ id : "pop-up-holder"},hxxMeta.key,hxxMeta.ref,children);
 	}
 	,__initAttributes: function(attributes) {
-		this.__coco_onLanguageChanged.setData(attributes.onLanguageChanged);
-		this.__coco_languageIndex.setData(attributes.languageIndex);
-		this.__coco_nestedNess.setData(attributes.nestedNess);
+		this.__coco_onClose.setData(attributes.onClose);
+		this.__coco_content.setData(attributes.content);
 	}
+	,__class__: client_view_PopUp
 });
 var client_view_PresentationView = function(__coco_data_,implicits) {
 	var _gthis = this;
 	this._coco_implicits = implicits;
-	this.__coco_languageIndex = new coconut_ui_internal_Slot(this,null,null);
 	this.__initAttributes(__coco_data_);
 	var snapshot = null;
 	coconut_vdom_View.call(this,function() {
@@ -1009,128 +1240,77 @@ client_view_PresentationView.fromHxx = function(hxxMeta,attributes) {
 client_view_PresentationView.__super__ = coconut_vdom_View;
 client_view_PresentationView.prototype = $extend(coconut_vdom_View.prototype,{
 	render: function() {
+		var title = "Erik Kubiak - Creative Developer";
+		var description = "I am Erik Kubiak, a code architect and creative developer that loves strong and SOLID code to push Gameplay, Tool and Visual to its limit. Fast-learner and autonomous, my curiosity consistently leads my knowledge more far. Still a good ear, I always accept feedback and will always give feedback, the most constructive possible, the pros of being a teacher for years.";
 		var hxxMeta = { };
-		var attr = { className : tink_domspec_ClassName.ofString("fullscreen exact-fullscreen flex justify-center items-center")};
 		var hxxMeta1 = { };
-		var attr1 = { className : tink_domspec_ClassName.ofString("mt-24 h-75 w-75 rounded-md p-4 flex flex-col justify-center items-center")};
-		var hxxMeta2 = { };
-		var attr2 = { className : tink_domspec_ClassName.ofString("w-full h-1/2 flex flex-col justify-center items-center mb-8")};
+		var attr = { id : "presentation-display", className : tink_domspec_ClassName.ofString("main-border lit-box")};
 		var __r = [];
-		var hxxMeta3 = { };
-		var attr3 = { className : tink_domspec_ClassName.ofString("h-64 w-auto p-0.5 bg-gradient-to-r from-second to-tertiary rounded-3xl mb-4")};
-		var hxxMeta4 = { };
-		var attr4 = { className : tink_domspec_ClassName.ofString("h-full w-full rounded-3xl overflow-hidden")};
-		var hxxMeta5 = { };
-		var children = [coconut_vdom_Html.IMG.vnode({ src : "./images/face.jpg", className : tink_domspec_ClassName.ofString("h-full-important")},hxxMeta5.key,hxxMeta5.ref)];
-		var children1 = [coconut_vdom_Html.DIV.vnode(attr4,hxxMeta4.key,hxxMeta4.ref,children)];
-		__r.push(coconut_vdom_Html.DIV.vnode(attr3,hxxMeta3.key,hxxMeta3.ref,children1));
-		var hxxMeta3 = { };
-		var attr3 = { className : tink_domspec_ClassName.ofString("w-full flex flex-col justify-center items-center")};
-		var hxxMeta4 = { };
-		var attr4 = { className : tink_domspec_ClassName.ofString("w-full mb-4 text-center")};
+		var hxxMeta2 = { };
+		__r.push(coconut_vdom_Html.DIV.vnode({ id : "presentation-background"},hxxMeta2.key,hxxMeta2.ref,null));
+		var hxxMeta2 = { };
+		var attr1 = { id : "presentation-left", className : tink_domspec_ClassName.ofString("my-computer-only")};
 		var __r1 = [];
-		__r1.push(coconut_vdom__$Html_Text.inst.vnode(" ",null,null,null));
-		var this1 = client_data_Presentation.value.name;
-		var languageIndex = tink_state_Observable.get_value(this.__coco_languageIndex);
-		var s;
-		switch(this1._hx_index) {
-		case 0:
-			var value = this1.value;
-			s = value;
-			break;
-		case 1:
-			var values = this1.values;
-			if(languageIndex < 0 || languageIndex >= (values == null ? 0 : values.length)) {
-				console.log("src/client/model/util/LocalizedString.hx:32:","languageIndex should be between 0 and length, here: " + languageIndex);
-				s = client_model_util_OptionExtender.getOrDefault(tink_pure_List.get(values,0));
-			} else {
-				s = client_model_util_OptionExtender.getOrDefault(tink_pure_List.get(values,languageIndex));
-			}
-			break;
-		}
-		__r1.push(s == null ? null : coconut_vdom__$Html_Text.inst.vnode(s,null,null,null));
-		__r1.push(coconut_vdom__$Html_Text.inst.vnode(" - ",null,null,null));
-		var this1 = client_data_Presentation.value.title;
-		var languageIndex = tink_state_Observable.get_value(this.__coco_languageIndex);
-		var s;
-		switch(this1._hx_index) {
-		case 0:
-			var value = this1.value;
-			s = value;
-			break;
-		case 1:
-			var values = this1.values;
-			if(languageIndex < 0 || languageIndex >= (values == null ? 0 : values.length)) {
-				console.log("src/client/model/util/LocalizedString.hx:32:","languageIndex should be between 0 and length, here: " + languageIndex);
-				s = client_model_util_OptionExtender.getOrDefault(tink_pure_List.get(values,0));
-			} else {
-				s = client_model_util_OptionExtender.getOrDefault(tink_pure_List.get(values,languageIndex));
-			}
-			break;
-		}
-		__r1.push(s == null ? null : coconut_vdom__$Html_Text.inst.vnode(s,null,null,null));
-		var children = [coconut_vdom_Html.H3.vnode(attr4,hxxMeta4.key,hxxMeta4.ref,__r1)];
-		__r.push(coconut_vdom_Html.DIV.vnode(attr3,hxxMeta3.key,hxxMeta3.ref,children));
-		var _g = new tink_pure_NodeIterator(client_data_Presentation.value.content);
-		while(_g.list.length > 0) {
-			var element = _g.next();
-			var hxxMeta3 = { };
-			var attr3 = { className : tink_domspec_ClassName.ofString("text-lg align-middle text-justify mb-1")};
-			var languageIndex = tink_state_Observable.get_value(this.__coco_languageIndex);
-			var s;
-			switch(element._hx_index) {
-			case 0:
-				var value = element.value;
-				s = value;
-				break;
-			case 1:
-				var values = element.values;
-				if(languageIndex < 0 || languageIndex >= (values == null ? 0 : values.length)) {
-					console.log("src/client/model/util/LocalizedString.hx:32:","languageIndex should be between 0 and length, here: " + languageIndex);
-					s = client_model_util_OptionExtender.getOrDefault(tink_pure_List.get(values,0));
-				} else {
-					s = client_model_util_OptionExtender.getOrDefault(tink_pure_List.get(values,languageIndex));
-				}
-				break;
-			}
-			var children = s == null ? null : coconut_vdom__$Html_Text.inst.vnode(s,null,null,null);
-			__r.push(coconut_vdom_Html.P.vnode(attr3,hxxMeta3.key,hxxMeta3.ref,[children]));
-		}
 		var hxxMeta3 = { };
-		var attr3 = { className : tink_domspec_ClassName.ofString("w-full flex flex-row justify-center items-center space-x-16 mt-4")};
+		__r1.push(coconut_vdom_Html.DIV.vnode({ className : tink_domspec_ClassName.ofString("face")},hxxMeta3.key,hxxMeta3.ref,null));
+		var hxxMeta3 = { };
+		var __r2 = [];
 		var hxxMeta4 = { };
-		var attr4 = { href : "./blog/index.html", className : tink_domspec_ClassName.ofString("mb-3 p-2 no-decoration interactible square-highlight w-1/3 text-center flex flex-column justify-center items-center own-bg-primary")};
-		var hxxMeta5 = { };
-		var attr5 = { className : tink_domspec_ClassName.ofString("no-decoration text-base")};
-		var children = [coconut_vdom__$Html_Text.inst.vnode("Blog",null,null,null)];
-		var children1 = [coconut_vdom_Html.H1.vnode(attr5,hxxMeta5.key,hxxMeta5.ref,children)];
-		var children = [coconut_vdom_Html.A.vnode(attr4,hxxMeta4.key,hxxMeta4.ref,children1)];
-		__r.push(coconut_vdom_Html.DIV.vnode(attr3,hxxMeta3.key,hxxMeta3.ref,children));
-		var children = [coconut_vdom_Html.DIV.vnode(attr2,hxxMeta2.key,hxxMeta2.ref,__r)];
-		var children1 = [coconut_vdom_Html.DIV.vnode(attr1,hxxMeta1.key,hxxMeta1.ref,children)];
-		return coconut_vdom_Html.DIV.vnode(attr,hxxMeta.key,hxxMeta.ref,children1);
+		var attr2 = { className : tink_domspec_ClassName.ofString("title title-text title-text-size")};
+		var children = title == null ? null : coconut_vdom__$Html_Text.inst.vnode(title,null,null,null);
+		__r2.push(coconut_vdom_Html.DIV.vnode(attr2,hxxMeta4.key,hxxMeta4.ref,[children]));
+		__r2.push(client_view_WebsiteView.fromHxx({ },{ }));
+		__r1.push(coconut_vdom_Html.DIV.vnode({ id : "presentation-left-bottom"},hxxMeta3.key,hxxMeta3.ref,__r2));
+		__r.push(coconut_vdom_Html.DIV.vnode(attr1,hxxMeta2.key,hxxMeta2.ref,__r1));
+		var hxxMeta2 = { };
+		var attr1 = { id : "presentation-right", className : tink_domspec_ClassName.ofString("my-computer-only")};
+		var hxxMeta3 = { };
+		var attr2 = { className : tink_domspec_ClassName.ofString("description")};
+		var children = description == null ? null : coconut_vdom__$Html_Text.inst.vnode(description,null,null,null);
+		var children1 = [coconut_vdom_Html.DIV.vnode(attr2,hxxMeta3.key,hxxMeta3.ref,[children])];
+		__r.push(coconut_vdom_Html.DIV.vnode(attr1,hxxMeta2.key,hxxMeta2.ref,children1));
+		var hxxMeta2 = { };
+		var attr1 = { className : tink_domspec_ClassName.ofString("my-phone-only full-size")};
+		var __r1 = [];
+		var hxxMeta3 = { };
+		__r1.push(coconut_vdom_Html.DIV.vnode({ className : tink_domspec_ClassName.ofString("face")},hxxMeta3.key,hxxMeta3.ref,null));
+		var hxxMeta3 = { };
+		var attr2 = { className : tink_domspec_ClassName.ofString("presentation-phone-content")};
+		var __r2 = [];
+		var hxxMeta4 = { };
+		var attr3 = { className : tink_domspec_ClassName.ofString(" title title-text title-text-size")};
+		var children = title == null ? null : coconut_vdom__$Html_Text.inst.vnode(title,null,null,null);
+		__r2.push(coconut_vdom_Html.DIV.vnode(attr3,hxxMeta4.key,hxxMeta4.ref,[children]));
+		var hxxMeta4 = { };
+		var attr3 = { className : tink_domspec_ClassName.ofString("description")};
+		var children = description == null ? null : coconut_vdom__$Html_Text.inst.vnode(description,null,null,null);
+		__r2.push(coconut_vdom_Html.DIV.vnode(attr3,hxxMeta4.key,hxxMeta4.ref,[children]));
+		__r2.push(client_view_WebsiteView.fromHxx({ },{ }));
+		__r1.push(coconut_vdom_Html.DIV.vnode(attr2,hxxMeta3.key,hxxMeta3.ref,__r2));
+		__r.push(coconut_vdom_Html.DIV.vnode(attr1,hxxMeta2.key,hxxMeta2.ref,__r1));
+		var children = [coconut_vdom_Html.DIV.vnode(attr,hxxMeta1.key,hxxMeta1.ref,__r)];
+		return coconut_vdom_Html.DIV.vnode({ id : "presentation-holder"},hxxMeta.key,hxxMeta.ref,children);
 	}
 	,__initAttributes: function(attributes) {
-		this.__coco_languageIndex.setData(attributes.languageIndex);
 	}
+	,__class__: client_view_PresentationView
 });
-var client_view_SkillsView = function(__coco_data_,implicits) {
+var client_view_WebsiteView = function(__coco_data_,implicits) {
 	var _gthis = this;
 	this._coco_implicits = implicits;
-	this.__coco_languageIndex = new coconut_ui_internal_Slot(this,null,null);
 	this.__initAttributes(__coco_data_);
 	var snapshot = null;
 	coconut_vdom_View.call(this,function() {
 		return _gthis.render();
 	},null,null,null,null);
 };
-client_view_SkillsView.__name__ = true;
-client_view_SkillsView.fromHxx = function(hxxMeta,attributes) {
-	var _g = client_view_SkillsView.__factory;
+client_view_WebsiteView.__name__ = true;
+client_view_WebsiteView.fromHxx = function(hxxMeta,attributes) {
+	var _g = client_view_WebsiteView.__factory;
 	var tmp;
 	if(_g == null) {
-		tmp = client_view_SkillsView.__factory = new coconut_diffing_internal_WidgetFactory(function(__coco_data_,implicits) {
-			return new client_view_SkillsView(__coco_data_,implicits);
+		tmp = client_view_WebsiteView.__factory = new coconut_diffing_internal_WidgetFactory(function(__coco_data_,implicits) {
+			return new client_view_WebsiteView(__coco_data_,implicits);
 		},function(v,attr) {
 			v.__initAttributes(attr);
 		});
@@ -1140,100 +1320,52 @@ client_view_SkillsView.fromHxx = function(hxxMeta,attributes) {
 	}
 	return new coconut_diffing_internal_VWidget(tmp,attributes,hxxMeta.key,hxxMeta.ref);
 };
-client_view_SkillsView.__super__ = coconut_vdom_View;
-client_view_SkillsView.prototype = $extend(coconut_vdom_View.prototype,{
+client_view_WebsiteView.__super__ = coconut_vdom_View;
+client_view_WebsiteView.prototype = $extend(coconut_vdom_View.prototype,{
 	render: function() {
-		var this1 = client_data_Skills.value.items;
-		var groupCount = this1 == null ? 0 : this1.length;
 		var hxxMeta = { };
-		var attr = { className : tink_domspec_ClassName.ofString("fullscreen min-fullscreen flex lg:flex-row flex-col justify-center items-center")};
+		var attr = { className : tink_domspec_ClassName.ofString("logos")};
 		var __r = [];
-		var _g = new tink_pure_NodeIterator(client_data_Skills.value.items);
-		while(_g.list.length > 0) {
-			var item = _g.next();
-			var hxxMeta1 = { };
-			var attr1 = { className : tink_domspec_ClassName.ofString("snap lg:w-1/" + groupCount + " w-full h-screen flex flex-col justify-center items-center")};
-			var hxxMeta2 = { };
-			var attr2 = { className : tink_domspec_ClassName.ofString("skill-group square-highlight h-3/4 w-3/4 flex flex-col items-center")};
-			var __r1 = [];
-			var hxxMeta3 = { };
-			var attr3 = { className : tink_domspec_ClassName.ofString("w-full text-center mb-3")};
-			var this1 = item.header;
-			var languageIndex = tink_state_Observable.get_value(this.__coco_languageIndex);
-			var s;
-			switch(this1._hx_index) {
-			case 0:
-				var value = this1.value;
-				s = value;
-				break;
-			case 1:
-				var values = this1.values;
-				if(languageIndex < 0 || languageIndex >= (values == null ? 0 : values.length)) {
-					console.log("src/client/model/util/LocalizedString.hx:32:","languageIndex should be between 0 and length, here: " + languageIndex);
-					s = client_model_util_OptionExtender.getOrDefault(tink_pure_List.get(values,0));
-				} else {
-					s = client_model_util_OptionExtender.getOrDefault(tink_pure_List.get(values,languageIndex));
-				}
-				break;
-			}
-			var children = s == null ? null : coconut_vdom__$Html_Text.inst.vnode(s,null,null,null);
-			__r1.push(coconut_vdom_Html.H3.vnode(attr3,hxxMeta3.key,hxxMeta3.ref,[children]));
-			var hxxMeta4 = { };
-			var attr4 = { className : tink_domspec_ClassName.ofString("w-full h-full text-center flex flex-col justify-center items-center")};
-			var __r2 = [];
-			var _g1 = new tink_pure_NodeIterator(item.skills);
-			while(_g1.list.length > 0) {
-				var skill = _g1.next();
-				var hxxMeta5 = { };
-				var attr5 = { className : tink_domspec_ClassName.ofString("leading-loose text-lg")};
-				var languageIndex1 = tink_state_Observable.get_value(this.__coco_languageIndex);
-				var s1;
-				switch(skill._hx_index) {
-				case 0:
-					var value1 = skill.value;
-					s1 = value1;
-					break;
-				case 1:
-					var values1 = skill.values;
-					if(languageIndex1 < 0 || languageIndex1 >= (values1 == null ? 0 : values1.length)) {
-						console.log("src/client/model/util/LocalizedString.hx:32:","languageIndex should be between 0 and length, here: " + languageIndex1);
-						s1 = client_model_util_OptionExtender.getOrDefault(tink_pure_List.get(values1,0));
-					} else {
-						s1 = client_model_util_OptionExtender.getOrDefault(tink_pure_List.get(values1,languageIndex1));
-					}
-					break;
-				}
-				var children1 = s1 == null ? null : coconut_vdom__$Html_Text.inst.vnode(s1,null,null,null);
-				__r2.push(coconut_vdom_Html.P.vnode(attr5,hxxMeta5.key,hxxMeta5.ref,[children1]));
-			}
-			__r1.push(coconut_vdom_Html.DIV.vnode(attr4,hxxMeta4.key,hxxMeta4.ref,__r2));
-			var children2 = [coconut_vdom_Html.DIV.vnode(attr2,hxxMeta2.key,hxxMeta2.ref,__r1)];
-			__r.push(coconut_vdom_Html.DIV.vnode(attr1,hxxMeta1.key,hxxMeta1.ref,children2));
-		}
+		var hxxMeta1 = { };
+		var hxxMeta2 = { };
+		var children = [coconut_vdom_Html.IMG.vnode({ src : "./images/logo/linkedin.svg"},hxxMeta2.key,hxxMeta2.ref)];
+		__r.push(coconut_vdom_Html.A.vnode({ href : "https://www.linkedin.com/in/erik-kubiak/", target : "blank"},hxxMeta1.key,hxxMeta1.ref,children));
+		var hxxMeta1 = { };
+		var hxxMeta2 = { };
+		var children = [coconut_vdom_Html.IMG.vnode({ src : "./images/logo/github.svg"},hxxMeta2.key,hxxMeta2.ref)];
+		__r.push(coconut_vdom_Html.A.vnode({ href : "https://github.com/ErikRikoo", target : "blank"},hxxMeta1.key,hxxMeta1.ref,children));
+		var hxxMeta1 = { };
+		var hxxMeta2 = { };
+		var children = [coconut_vdom_Html.IMG.vnode({ src : "./images/logo/twitter.svg"},hxxMeta2.key,hxxMeta2.ref)];
+		__r.push(coconut_vdom_Html.A.vnode({ href : "https://twitter.com/KubiakErik", target : "blank"},hxxMeta1.key,hxxMeta1.ref,children));
+		var hxxMeta1 = { };
+		var hxxMeta2 = { };
+		var children = [coconut_vdom_Html.IMG.vnode({ src : "./images/logo/artstation.svg"},hxxMeta2.key,hxxMeta2.ref)];
+		__r.push(coconut_vdom_Html.A.vnode({ href : "https://www.artstation.com/erikkubiak", target : "blank"},hxxMeta1.key,hxxMeta1.ref,children));
 		return coconut_vdom_Html.DIV.vnode(attr,hxxMeta.key,hxxMeta.ref,__r);
 	}
 	,__initAttributes: function(attributes) {
-		this.__coco_languageIndex.setData(attributes.languageIndex);
 	}
+	,__class__: client_view_WebsiteView
 });
-var client_view_experiences_ExperienceItemPairView = function(__coco_data_,implicits) {
+var client_view_WorkItem = function(__coco_data_,implicits) {
 	var _gthis = this;
 	this._coco_implicits = implicits;
-	this.__coco_languageIndex = new coconut_ui_internal_Slot(this,null,null);
-	this.__coco_item = new coconut_ui_internal_Slot(this,null,null);
+	this.__coco_title = new coconut_ui_internal_Slot(this,null,null);
+	this.__coco_imagePath = new coconut_ui_internal_Slot(this,null,null);
 	this.__initAttributes(__coco_data_);
 	var snapshot = null;
 	coconut_vdom_View.call(this,function() {
 		return _gthis.render();
 	},null,null,null,null);
 };
-client_view_experiences_ExperienceItemPairView.__name__ = true;
-client_view_experiences_ExperienceItemPairView.fromHxx = function(hxxMeta,attributes) {
-	var _g = client_view_experiences_ExperienceItemPairView.__factory;
+client_view_WorkItem.__name__ = true;
+client_view_WorkItem.fromHxx = function(hxxMeta,attributes) {
+	var _g = client_view_WorkItem.__factory;
 	var tmp;
 	if(_g == null) {
-		tmp = client_view_experiences_ExperienceItemPairView.__factory = new coconut_diffing_internal_WidgetFactory(function(__coco_data_,implicits) {
-			return new client_view_experiences_ExperienceItemPairView(__coco_data_,implicits);
+		tmp = client_view_WorkItem.__factory = new coconut_diffing_internal_WidgetFactory(function(__coco_data_,implicits) {
+			return new client_view_WorkItem(__coco_data_,implicits);
 		},function(v,attr) {
 			v.__initAttributes(attr);
 		});
@@ -1243,1092 +1375,52 @@ client_view_experiences_ExperienceItemPairView.fromHxx = function(hxxMeta,attrib
 	}
 	return new coconut_diffing_internal_VWidget(tmp,attributes,hxxMeta.key,hxxMeta.ref);
 };
-client_view_experiences_ExperienceItemPairView.__super__ = coconut_vdom_View;
-client_view_experiences_ExperienceItemPairView.prototype = $extend(coconut_vdom_View.prototype,{
+client_view_WorkItem.__super__ = coconut_vdom_View;
+client_view_WorkItem.prototype = $extend(coconut_vdom_View.prototype,{
 	render: function() {
-		var _gthis = this;
 		var hxxMeta = { };
-		var attr = { className : tink_domspec_ClassName.ofString("fullscreen min-fullscreen flex lg:flex-row flex-col justify-center items-center")};
+		var attr = { className : tink_domspec_ClassName.ofString("work-item-holder")};
+		var hxxMeta1 = { };
+		var attr1 = { className : tink_domspec_ClassName.ofString("work-item main-border")};
 		var __r = [];
-		var hxxMeta1 = { };
-		var attr1 = { className : tink_domspec_ClassName.ofString("snap lg:w-1/2 w-full h-screen flex flex-col justify-center items-center")};
 		var hxxMeta2 = { };
-		var attr2 = { className : tink_domspec_ClassName.ofString("h-full w-full phone-full-width flex justify-center items-center")};
-		var hxxMeta3 = { };
-		var attr3 = { className : tink_domspec_ClassName.ofString("column-highlight h-full w-2/3 flex flex-col justify-center p-8")};
-		var children = new tink_state_internal_AutoObservable(tink_state_internal__$AutoObservable_Computation.sync(function() {
-			return tink_state_Observable.get_value(_gthis.__coco_languageIndex);
-		}),null);
-		var children1 = new tink_state_internal_AutoObservable(tink_state_internal__$AutoObservable_Computation.sync(function() {
-			return tink_state_Observable.get_value(_gthis.__coco_item).first;
-		}),null);
-		var children2 = [client_view_utilities_BasicItemView.fromHxx({ },{ languageIndex : children, item : children1})];
-		var children = [coconut_vdom_Html.DIV.vnode(attr3,hxxMeta3.key,hxxMeta3.ref,children2)];
-		var children1 = [coconut_vdom_Html.DIV.vnode(attr2,hxxMeta2.key,hxxMeta2.ref,children)];
-		__r.push(coconut_vdom_Html.DIV.vnode(attr1,hxxMeta1.key,hxxMeta1.ref,children1));
-		var hxxMeta1 = { };
-		var attr1 = { className : tink_domspec_ClassName.ofString("snap lg:w-1/2 w-full h-screen flex flex-col justify-center items-center")};
+		__r.push(coconut_vdom_Html.IMG.vnode({ src : tink_state_Observable.get_value(this.__coco_imagePath)},hxxMeta2.key,hxxMeta2.ref));
 		var hxxMeta2 = { };
-		var attr2 = { className : tink_domspec_ClassName.ofString("h-full w-full phone-full-width flex justify-center items-center")};
+		var attr2 = { className : tink_domspec_ClassName.ofString("title-holder title-text highlighted-text")};
 		var hxxMeta3 = { };
-		var attr3 = { className : tink_domspec_ClassName.ofString("column-highlight h-full w-2/3 flex flex-col justify-center p-8")};
-		var children = new tink_state_internal_AutoObservable(tink_state_internal__$AutoObservable_Computation.sync(function() {
-			return tink_state_Observable.get_value(_gthis.__coco_languageIndex);
-		}),null);
-		var children1 = new tink_state_internal_AutoObservable(tink_state_internal__$AutoObservable_Computation.sync(function() {
-			return tink_state_Observable.get_value(_gthis.__coco_item).second;
-		}),null);
-		var children2 = [client_view_utilities_BasicItemView.fromHxx({ },{ languageIndex : children, item : children1})];
-		var children = [coconut_vdom_Html.DIV.vnode(attr3,hxxMeta3.key,hxxMeta3.ref,children2)];
-		var children1 = [coconut_vdom_Html.DIV.vnode(attr2,hxxMeta2.key,hxxMeta2.ref,children)];
-		__r.push(coconut_vdom_Html.DIV.vnode(attr1,hxxMeta1.key,hxxMeta1.ref,children1));
-		return coconut_vdom_Html.DIV.vnode(attr,hxxMeta.key,hxxMeta.ref,__r);
-	}
-	,__initAttributes: function(attributes) {
-		this.__coco_languageIndex.setData(attributes.languageIndex);
-		this.__coco_item.setData(attributes.item);
-	}
-});
-var client_view_experiences_ExperienceItemView = function(__coco_data_,implicits) {
-	var _gthis = this;
-	this._coco_implicits = implicits;
-	this.__coco_languageIndex = new coconut_ui_internal_Slot(this,null,null);
-	this.__coco_item = new coconut_ui_internal_Slot(this,null,null);
-	this.__initAttributes(__coco_data_);
-	var snapshot = null;
-	coconut_vdom_View.call(this,function() {
-		return _gthis.render();
-	},null,null,null,null);
-};
-client_view_experiences_ExperienceItemView.__name__ = true;
-client_view_experiences_ExperienceItemView.fromHxx = function(hxxMeta,attributes) {
-	var _g = client_view_experiences_ExperienceItemView.__factory;
-	var tmp;
-	if(_g == null) {
-		tmp = client_view_experiences_ExperienceItemView.__factory = new coconut_diffing_internal_WidgetFactory(function(__coco_data_,implicits) {
-			return new client_view_experiences_ExperienceItemView(__coco_data_,implicits);
-		},function(v,attr) {
-			v.__initAttributes(attr);
-		});
-	} else {
-		var v = _g;
-		tmp = v;
-	}
-	return new coconut_diffing_internal_VWidget(tmp,attributes,hxxMeta.key,hxxMeta.ref);
-};
-client_view_experiences_ExperienceItemView.__super__ = coconut_vdom_View;
-client_view_experiences_ExperienceItemView.prototype = $extend(coconut_vdom_View.prototype,{
-	render: function() {
-		var _gthis = this;
-		var textDivWidth = tink_state_Observable.get_value(this.__coco_item).medias != null ? "w-50" : "w-3/4";
-		var path;
-		var _g = tink_pure_List.get(tink_state_Observable.get_value(this.__coco_item).medias,0);
-		if(_g._hx_index == 0) {
-			var v = _g.v;
-			path = v.link;
-		} else {
-			path = "";
-		}
-		var hxxMeta = { };
-		var attr = { className : tink_domspec_ClassName.ofString("fullscreen exact-fullscreen")};
-		var __r = [];
-		if(tink_state_Observable.get_value(this.__coco_item).medias != null) {
-			var this1 = $bind(this,this._coco_set_popup);
-			var tmp = new tink_state_internal_AutoObservable(tink_state_internal__$AutoObservable_Computation.sync(function() {
-				return tink_state_Observable.get_value(_gthis.__coco_languageIndex);
-			}),null);
-			var tmp1 = new tink_state_internal_AutoObservable(tink_state_internal__$AutoObservable_Computation.sync(function() {
-				var __r = [];
-				var _g = new tink_pure_NodeIterator(tink_state_Observable.get_value(_gthis.__coco_item).medias);
-				while(_g.list.length > 0) {
-					var showoff = [_g.next()];
-					var compute = new tink_state_internal_AutoObservable(tink_state_internal__$AutoObservable_Computation.sync((function() {
-						return function() {
-							return tink_state_Observable.get_value(_gthis.__coco_languageIndex);
-						};
-					})()),null);
-					var compute1 = new tink_state_internal_AutoObservable(tink_state_internal__$AutoObservable_Computation.sync((function(showoff) {
-						return function() {
-							return showoff[0];
-						};
-					})(showoff)),null);
-					__r.push(client_view_utilities_ShowoffView.fromHxx({ },{ languageIndex : compute, item : compute1}));
-				}
-				return tink_pure_List.fromArray(__r);
-			}),null);
-			__r.push(client_view_utilities_FullscreenPopUp.fromHxx({ ref : this1},{ languageIndex : tmp, subelements : tmp1}));
-		}
-		var hxxMeta1 = { };
-		var attr1 = { className : tink_domspec_ClassName.ofString("experience-item h-full w-full flex " + (tink_state_Observable.get_value(this.__coco_item).medias != null ? "" : "justify-center"))};
-		var __r1 = [];
-		var hxxMeta2 = { };
-		var attr2 = { className : tink_domspec_ClassName.ofString("h-full " + textDivWidth + " phone-full-width flex justify-center items-center")};
-		var hxxMeta3 = { };
-		var attr3 = { className : tink_domspec_ClassName.ofString("column-highlight h-full w-2/3 flex flex-col justify-center p-8")};
-		var children = new tink_state_internal_AutoObservable(tink_state_internal__$AutoObservable_Computation.sync(function() {
-			return tink_state_Observable.get_value(_gthis.__coco_languageIndex);
-		}),null);
-		var children1 = new tink_state_internal_AutoObservable(tink_state_internal__$AutoObservable_Computation.sync(function() {
-			return tink_state_Observable.get_value(_gthis.__coco_item).value;
-		}),null);
-		var children2 = new tink_state_internal_AutoObservable(tink_state_internal__$AutoObservable_Computation.sync(function() {
-			if(tink_state_Observable.get_value(_gthis.__coco_item).medias != null) {
-				var hxxMeta = { };
-				var _g = $bind(_gthis,_gthis.openPopup);
-				var attr = function() {
-					_g();
-				};
-				var attr1 = { className : tink_domspec_ClassName.ofString("mb-3 p-3 interactible square-highlight w-2/3 flex-center relative overflow-hidden"), onclick : attr};
-				var __r = [];
-				var hxxMeta1 = { };
-				var attr = { className : tink_domspec_ClassName.ofString("w-full h-full text-center font-header font-semibold uppercase z-10 relative")};
-				var this1 = client_data_Medias.value.header;
-				var languageIndex = tink_state_Observable.get_value(_gthis.__coco_languageIndex);
-				var s;
-				switch(this1._hx_index) {
-				case 0:
-					var value = this1.value;
-					s = value;
-					break;
-				case 1:
-					var values = this1.values;
-					if(languageIndex < 0 || languageIndex >= (values == null ? 0 : values.length)) {
-						console.log("src/client/model/util/LocalizedString.hx:32:","languageIndex should be between 0 and length, here: " + languageIndex);
-						s = client_model_util_OptionExtender.getOrDefault(tink_pure_List.get(values,0));
-					} else {
-						s = client_model_util_OptionExtender.getOrDefault(tink_pure_List.get(values,languageIndex));
-					}
-					break;
-				}
-				var children = s == null ? null : coconut_vdom__$Html_Text.inst.vnode(s,null,null,null);
-				__r.push(coconut_vdom_Html.P.vnode(attr,hxxMeta1.key,hxxMeta1.ref,[children]));
-				var hxxMeta1 = { };
-				__r.push(coconut_vdom_Html.IMG.vnode({ src : path, className : tink_domspec_ClassName.ofString("w-full h-auto absolute-center filter blur scale-110")},hxxMeta1.key,hxxMeta1.ref));
-				return coconut_vdom_Html.DIV.vnode(attr1,hxxMeta.key,hxxMeta.ref,__r);
-			} else {
-				return null;
-			}
-		}),null);
-		var children3 = [client_view_utilities_BasicItemView.fromHxx({ },{ languageIndex : children, item : children1, extraLink : children2})];
-		var children = [coconut_vdom_Html.DIV.vnode(attr3,hxxMeta3.key,hxxMeta3.ref,children3)];
-		__r1.push(coconut_vdom_Html.DIV.vnode(attr2,hxxMeta2.key,hxxMeta2.ref,children));
-		if(tink_state_Observable.get_value(this.__coco_item).medias != null) {
-			var hxxMeta2 = { };
-			var attr2 = { className : tink_domspec_ClassName.ofString("phone-invisible h-full w-50 overflow-hidden experience-item-image relative")};
-			var __r2 = [];
-			var hxxMeta3 = { };
-			var attr3 = { className : tink_domspec_ClassName.ofString("h-full w-full flex justify-center")};
-			var hxxMeta4 = { };
-			var attr4 = { className : tink_domspec_ClassName.ofString("overflow-hidden")};
-			var hxxMeta5 = { };
-			var children = [coconut_vdom_Html.IMG.vnode({ src : path, className : tink_domspec_ClassName.ofString("img-full filter blur transform scale-110")},hxxMeta5.key,hxxMeta5.ref)];
-			var children1 = [coconut_vdom_Html.DIV.vnode(attr4,hxxMeta4.key,hxxMeta4.ref,children)];
-			__r2.push(coconut_vdom_Html.DIV.vnode(attr3,hxxMeta3.key,hxxMeta3.ref,children1));
-			var hxxMeta3 = { };
-			var attr3 = { className : tink_domspec_ClassName.ofString("absolute-center w-1/3")};
-			var hxxMeta4 = { };
-			var _g = $bind(this,this.openPopup);
-			var attr4 = function() {
-				_g();
-			};
-			var attr5 = { className : tink_domspec_ClassName.ofString("p-2 interactible solid-square-highlight flex justify-center items-center"), onclick : attr4};
-			var hxxMeta5 = { };
-			var attr4 = { className : tink_domspec_ClassName.ofString("font-header uppercase")};
-			var this1 = client_data_Medias.value.header;
-			var languageIndex = tink_state_Observable.get_value(this.__coco_languageIndex);
-			var s;
-			switch(this1._hx_index) {
-			case 0:
-				var value = this1.value;
-				s = value;
-				break;
-			case 1:
-				var values = this1.values;
-				if(languageIndex < 0 || languageIndex >= (values == null ? 0 : values.length)) {
-					console.log("src/client/model/util/LocalizedString.hx:32:","languageIndex should be between 0 and length, here: " + languageIndex);
-					s = client_model_util_OptionExtender.getOrDefault(tink_pure_List.get(values,0));
-				} else {
-					s = client_model_util_OptionExtender.getOrDefault(tink_pure_List.get(values,languageIndex));
-				}
-				break;
-			}
-			var children = s == null ? null : coconut_vdom__$Html_Text.inst.vnode(s,null,null,null);
-			var children1 = [coconut_vdom_Html.P.vnode(attr4,hxxMeta5.key,hxxMeta5.ref,[children])];
-			var children = [coconut_vdom_Html.DIV.vnode(attr5,hxxMeta4.key,hxxMeta4.ref,children1)];
-			__r2.push(coconut_vdom_Html.DIV.vnode(attr3,hxxMeta3.key,hxxMeta3.ref,children));
-			__r1.push(coconut_vdom_Html.DIV.vnode(attr2,hxxMeta2.key,hxxMeta2.ref,__r2));
-		}
-		__r.push(coconut_vdom_Html.DIV.vnode(attr1,hxxMeta1.key,hxxMeta1.ref,__r1));
-		return coconut_vdom_Html.DIV.vnode(attr,hxxMeta.key,hxxMeta.ref,__r);
-	}
-	,openPopup: function() {
-		this.popup.setOpened(true);
-	}
-	,_coco_set_popup: function(param) {
-		this.popup = param;
-	}
-	,__initAttributes: function(attributes) {
-		this.__coco_languageIndex.setData(attributes.languageIndex);
-		this.__coco_item.setData(attributes.item);
-	}
-});
-var client_view_experiences_ExperiencesView = function(__coco_data_,implicits) {
-	var _gthis = this;
-	this._coco_implicits = implicits;
-	this.__coco_languageIndex = new coconut_ui_internal_Slot(this,null,null);
-	this.__initAttributes(__coco_data_);
-	var snapshot = null;
-	coconut_vdom_View.call(this,function() {
-		return _gthis.render();
-	},null,null,null,function(firstTime) {
-		if(firstTime) {
-			_gthis.viewDidMount();
-		}
-	});
-};
-client_view_experiences_ExperiencesView.__name__ = true;
-client_view_experiences_ExperiencesView.fromHxx = function(hxxMeta,attributes) {
-	var _g = client_view_experiences_ExperiencesView.__factory;
-	var tmp;
-	if(_g == null) {
-		tmp = client_view_experiences_ExperiencesView.__factory = new coconut_diffing_internal_WidgetFactory(function(__coco_data_,implicits) {
-			return new client_view_experiences_ExperiencesView(__coco_data_,implicits);
-		},function(v,attr) {
-			v.__initAttributes(attr);
-		});
-	} else {
-		var v = _g;
-		tmp = v;
-	}
-	return new coconut_diffing_internal_VWidget(tmp,attributes,hxxMeta.key,hxxMeta.ref);
-};
-client_view_experiences_ExperiencesView.__super__ = coconut_vdom_View;
-client_view_experiences_ExperiencesView.prototype = $extend(coconut_vdom_View.prototype,{
-	viewDidMount: function() {
-		$(".experience-item").each(function(index,element) {
-			if((index & 1) == 1) {
-				element.className += " flex-row-reverse";
-			} else {
-				element.className += " flex-row";
-			}
-		});
-	}
-	,render: function() {
-		var _gthis = this;
-		var hxxMeta = { };
-		var __r = [];
-		var hxxMeta1 = { };
-		var attr = { className : tink_domspec_ClassName.ofString("fullscreen exact-fullscreen")};
-		var __r1 = [];
-		var hxxMeta2 = { };
-		var attr1 = { className : tink_domspec_ClassName.ofString("h-full w-full flex justify-center items-center")};
-		var hxxMeta3 = { };
-		var attr2 = { className : tink_domspec_ClassName.ofString("text-tertiary")};
-		var this1 = client_data_Experiences.value.header;
-		var languageIndex = tink_state_Observable.get_value(this.__coco_languageIndex);
-		var s;
-		switch(this1._hx_index) {
-		case 0:
-			var value = this1.value;
-			s = value;
-			break;
-		case 1:
-			var values = this1.values;
-			if(languageIndex < 0 || languageIndex >= (values == null ? 0 : values.length)) {
-				console.log("src/client/model/util/LocalizedString.hx:32:","languageIndex should be between 0 and length, here: " + languageIndex);
-				s = client_model_util_OptionExtender.getOrDefault(tink_pure_List.get(values,0));
-			} else {
-				s = client_model_util_OptionExtender.getOrDefault(tink_pure_List.get(values,languageIndex));
-			}
-			break;
-		}
+		var s = tink_state_Observable.get_value(this.__coco_title);
 		var children = s == null ? null : coconut_vdom__$Html_Text.inst.vnode(s,null,null,null);
-		var children1 = [coconut_vdom_Html.H1.vnode(attr2,hxxMeta3.key,hxxMeta3.ref,[children])];
-		__r1.push(coconut_vdom_Html.DIV.vnode(attr1,hxxMeta2.key,hxxMeta2.ref,children1));
-		__r1.push(client_view_utilities_scroll_ScrollArrow.fromHxx({ },{ }));
-		__r.push(coconut_vdom_Html.DIV.vnode(attr,hxxMeta1.key,hxxMeta1.ref,__r1));
-		var _g = new tink_pure_NodeIterator(client_data_Experiences.value.items);
-		while(_g.list.length > 0) {
-			var item = _g.next();
-			switch(item._hx_index) {
-			case 0:
-				var simple = [item.v];
-				var tmp = new tink_state_internal_AutoObservable(tink_state_internal__$AutoObservable_Computation.sync((function() {
-					return function() {
-						return tink_state_Observable.get_value(_gthis.__coco_languageIndex);
-					};
-				})()),null);
-				var tmp1 = new tink_state_internal_AutoObservable(tink_state_internal__$AutoObservable_Computation.sync((function(simple) {
-					return function() {
-						return simple[0];
-					};
-				})(simple)),null);
-				__r.push(client_view_experiences_ExperienceItemView.fromHxx({ },{ languageIndex : tmp, item : tmp1}));
-				break;
-			case 1:
-				var pair = [item.v];
-				var tmp2 = new tink_state_internal_AutoObservable(tink_state_internal__$AutoObservable_Computation.sync((function() {
-					return function() {
-						return tink_state_Observable.get_value(_gthis.__coco_languageIndex);
-					};
-				})()),null);
-				var tmp3 = new tink_state_internal_AutoObservable(tink_state_internal__$AutoObservable_Computation.sync((function(pair) {
-					return function() {
-						return pair[0];
-					};
-				})(pair)),null);
-				__r.push(client_view_experiences_ExperienceItemPairView.fromHxx({ },{ languageIndex : tmp2, item : tmp3}));
-				break;
-			}
-		}
-		return coconut_vdom_Html.DIV.vnode({ },hxxMeta.key,hxxMeta.ref,__r);
-	}
-	,__initAttributes: function(attributes) {
-		this.__coco_languageIndex.setData(attributes.languageIndex);
-	}
-});
-var client_view_formations_FormationItemView = function(__coco_data_,implicits) {
-	var _gthis = this;
-	this._coco_implicits = implicits;
-	this.__coco_languageIndex = new coconut_ui_internal_Slot(this,null,null);
-	this.__coco_item = new coconut_ui_internal_Slot(this,null,null);
-	this.__initAttributes(__coco_data_);
-	var snapshot = null;
-	coconut_vdom_View.call(this,function() {
-		return _gthis.render();
-	},null,null,null,null);
-};
-client_view_formations_FormationItemView.__name__ = true;
-client_view_formations_FormationItemView.fromHxx = function(hxxMeta,attributes) {
-	var _g = client_view_formations_FormationItemView.__factory;
-	var tmp;
-	if(_g == null) {
-		tmp = client_view_formations_FormationItemView.__factory = new coconut_diffing_internal_WidgetFactory(function(__coco_data_,implicits) {
-			return new client_view_formations_FormationItemView(__coco_data_,implicits);
-		},function(v,attr) {
-			v.__initAttributes(attr);
-		});
-	} else {
-		var v = _g;
-		tmp = v;
-	}
-	return new coconut_diffing_internal_VWidget(tmp,attributes,hxxMeta.key,hxxMeta.ref);
-};
-client_view_formations_FormationItemView.__super__ = coconut_vdom_View;
-client_view_formations_FormationItemView.prototype = $extend(coconut_vdom_View.prototype,{
-	render: function() {
-		var _gthis = this;
-		var hxxMeta = { };
-		var attr = { className : tink_domspec_ClassName.ofString("lg:h-screen w-full flex justify-center items-center p-8")};
-		var hxxMeta1 = { };
-		var attr1 = { className : tink_domspec_ClassName.ofString("square-highlight w-full lg:h-3/4 sm:h-full flex flex-col justify-center p-8 m-8")};
-		var children = new tink_state_internal_AutoObservable(tink_state_internal__$AutoObservable_Computation.sync(function() {
-			return tink_state_Observable.get_value(_gthis.__coco_item);
-		}),null);
-		var children1 = new tink_state_internal_AutoObservable(tink_state_internal__$AutoObservable_Computation.sync(function() {
-			return tink_state_Observable.get_value(_gthis.__coco_languageIndex);
-		}),null);
-		var children2 = [client_view_utilities_BasicItemView.fromHxx({ },{ item : children, languageIndex : children1})];
-		var children = [coconut_vdom_Html.DIV.vnode(attr1,hxxMeta1.key,hxxMeta1.ref,children2)];
+		var children1 = [coconut_vdom_Html.SPAN.vnode({ },hxxMeta3.key,hxxMeta3.ref,[children])];
+		__r.push(coconut_vdom_Html.DIV.vnode(attr2,hxxMeta2.key,hxxMeta2.ref,children1));
+		var hxxMeta2 = { };
+		var attr2 = { className : tink_domspec_ClassName.ofString("title-holder title-text highlighted")};
+		var hxxMeta3 = { };
+		var s = tink_state_Observable.get_value(this.__coco_title);
+		var children = s == null ? null : coconut_vdom__$Html_Text.inst.vnode(s,null,null,null);
+		var children1 = [coconut_vdom_Html.SPAN.vnode({ },hxxMeta3.key,hxxMeta3.ref,[children])];
+		__r.push(coconut_vdom_Html.DIV.vnode(attr2,hxxMeta2.key,hxxMeta2.ref,children1));
+		var children = [coconut_vdom_Html.DIV.vnode(attr1,hxxMeta1.key,hxxMeta1.ref,__r)];
 		return coconut_vdom_Html.DIV.vnode(attr,hxxMeta.key,hxxMeta.ref,children);
 	}
 	,__initAttributes: function(attributes) {
-		this.__coco_languageIndex.setData(attributes.languageIndex);
-		this.__coco_item.setData(attributes.item);
+		this.__coco_title.setData(attributes.title);
+		this.__coco_imagePath.setData(attributes.imagePath);
 	}
+	,__class__: client_view_WorkItem
 });
-var client_view_formations_FormationsView = function(__coco_data_,implicits) {
-	var _gthis = this;
-	this._coco_implicits = implicits;
-	this.__coco_languageIndex = new coconut_ui_internal_Slot(this,null,null);
-	this.__initAttributes(__coco_data_);
-	var snapshot = null;
-	coconut_vdom_View.call(this,function() {
-		return _gthis.render();
-	},null,null,null,null);
+var coconut_data_helpers_Annex = function(target) {
+	this.target = target;
+	this.registry = new haxe_ds_ObjectMap();
 };
-client_view_formations_FormationsView.__name__ = true;
-client_view_formations_FormationsView.fromHxx = function(hxxMeta,attributes) {
-	var _g = client_view_formations_FormationsView.__factory;
-	var tmp;
-	if(_g == null) {
-		tmp = client_view_formations_FormationsView.__factory = new coconut_diffing_internal_WidgetFactory(function(__coco_data_,implicits) {
-			return new client_view_formations_FormationsView(__coco_data_,implicits);
-		},function(v,attr) {
-			v.__initAttributes(attr);
-		});
-	} else {
-		var v = _g;
-		tmp = v;
-	}
-	return new coconut_diffing_internal_VWidget(tmp,attributes,hxxMeta.key,hxxMeta.ref);
+coconut_data_helpers_Annex.__name__ = true;
+coconut_data_helpers_Annex.prototype = {
+	__class__: coconut_data_helpers_Annex
 };
-client_view_formations_FormationsView.__super__ = coconut_vdom_View;
-client_view_formations_FormationsView.prototype = $extend(coconut_vdom_View.prototype,{
-	render: function() {
-		var _gthis = this;
-		var this1 = client_data_Formation.value.items;
-		var groupCount = this1 == null ? 0 : this1.length;
-		var hxxMeta = { };
-		var __r = [];
-		var hxxMeta1 = { };
-		var attr = { className : tink_domspec_ClassName.ofString("fullscreen exact-fullscreen")};
-		var __r1 = [];
-		var hxxMeta2 = { };
-		var attr1 = { className : tink_domspec_ClassName.ofString("h-full w-full flex justify-center items-center")};
-		var hxxMeta3 = { };
-		var attr2 = { className : tink_domspec_ClassName.ofString("text-tertiary")};
-		var this1 = client_data_Formation.value.header;
-		var languageIndex = tink_state_Observable.get_value(this.__coco_languageIndex);
-		var s;
-		switch(this1._hx_index) {
-		case 0:
-			var value = this1.value;
-			s = value;
-			break;
-		case 1:
-			var values = this1.values;
-			if(languageIndex < 0 || languageIndex >= (values == null ? 0 : values.length)) {
-				console.log("src/client/model/util/LocalizedString.hx:32:","languageIndex should be between 0 and length, here: " + languageIndex);
-				s = client_model_util_OptionExtender.getOrDefault(tink_pure_List.get(values,0));
-			} else {
-				s = client_model_util_OptionExtender.getOrDefault(tink_pure_List.get(values,languageIndex));
-			}
-			break;
-		}
-		var children = s == null ? null : coconut_vdom__$Html_Text.inst.vnode(s,null,null,null);
-		var children1 = [coconut_vdom_Html.H1.vnode(attr2,hxxMeta3.key,hxxMeta3.ref,[children])];
-		__r1.push(coconut_vdom_Html.DIV.vnode(attr1,hxxMeta2.key,hxxMeta2.ref,children1));
-		__r1.push(client_view_utilities_scroll_ScrollArrow.fromHxx({ },{ }));
-		__r.push(coconut_vdom_Html.DIV.vnode(attr,hxxMeta1.key,hxxMeta1.ref,__r1));
-		var hxxMeta1 = { };
-		var attr = { className : tink_domspec_ClassName.ofString("fullscreen min-fullscreen flex lg:flex-row flex-col justify-center items-center")};
-		var __r1 = [];
-		var _g = new tink_pure_NodeIterator(client_data_Formation.value.items);
-		while(_g.list.length > 0) {
-			var item = [_g.next()];
-			var hxxMeta2 = { };
-			var attr1 = { className : tink_domspec_ClassName.ofString("snap lg:w-1/" + groupCount + " w-full h-screen flex flex-col justify-center items-center")};
-			var children = new tink_state_internal_AutoObservable(tink_state_internal__$AutoObservable_Computation.sync((function() {
-				return function() {
-					return tink_state_Observable.get_value(_gthis.__coco_languageIndex);
-				};
-			})()),null);
-			var children1 = new tink_state_internal_AutoObservable(tink_state_internal__$AutoObservable_Computation.sync((function(item) {
-				return function() {
-					return item[0];
-				};
-			})(item)),null);
-			var children2 = [client_view_formations_FormationItemView.fromHxx({ },{ languageIndex : children, item : children1})];
-			__r1.push(coconut_vdom_Html.DIV.vnode(attr1,hxxMeta2.key,hxxMeta2.ref,children2));
-		}
-		__r.push(coconut_vdom_Html.DIV.vnode(attr,hxxMeta1.key,hxxMeta1.ref,__r1));
-		return coconut_vdom_Html.DIV.vnode({ },hxxMeta.key,hxxMeta.ref,__r);
-	}
-	,__initAttributes: function(attributes) {
-		this.__coco_languageIndex.setData(attributes.languageIndex);
-	}
-});
-var client_view_utilities_BasicItemView = function(__coco_data_,implicits) {
-	var _gthis = this;
-	this._coco_implicits = implicits;
-	this.__coco_languageIndex = new coconut_ui_internal_Slot(this,null,null);
-	this.__coco_item = new coconut_ui_internal_Slot(this,null,null);
-	this.__coco_extraLink = new coconut_ui_internal_Slot(this,null,null);
-	this.__initAttributes(__coco_data_);
-	var snapshot = null;
-	coconut_vdom_View.call(this,function() {
-		return _gthis.render();
-	},null,null,null,null);
-};
-client_view_utilities_BasicItemView.__name__ = true;
-client_view_utilities_BasicItemView.fromHxx = function(hxxMeta,attributes) {
-	var _g = client_view_utilities_BasicItemView.__factory;
-	var tmp;
-	if(_g == null) {
-		tmp = client_view_utilities_BasicItemView.__factory = new coconut_diffing_internal_WidgetFactory(function(__coco_data_,implicits) {
-			return new client_view_utilities_BasicItemView(__coco_data_,implicits);
-		},function(v,attr) {
-			v.__initAttributes(attr);
-		});
-	} else {
-		var v = _g;
-		tmp = v;
-	}
-	return new coconut_diffing_internal_VWidget(tmp,attributes,hxxMeta.key,hxxMeta.ref);
-};
-client_view_utilities_BasicItemView.__super__ = coconut_vdom_View;
-client_view_utilities_BasicItemView.prototype = $extend(coconut_vdom_View.prototype,{
-	render: function() {
-		var _gthis = this;
-		var hxxMeta = { };
-		var attr = { className : tink_domspec_ClassName.ofString("w-full")};
-		var __r = [];
-		var hxxMeta1 = { };
-		var attr1 = { className : tink_domspec_ClassName.ofString("w-full flex mb-0.5")};
-		var __r1 = [];
-		var hxxMeta2 = { };
-		var attr2 = { className : tink_domspec_ClassName.ofString("flex-grow flex flex-col")};
-		var hxxMeta3 = { };
-		var attr3 = { className : tink_domspec_ClassName.ofString("flex-grow")};
-		var this1 = tink_state_Observable.get_value(this.__coco_item).header;
-		var languageIndex = tink_state_Observable.get_value(this.__coco_languageIndex);
-		var s;
-		switch(this1._hx_index) {
-		case 0:
-			var value = this1.value;
-			s = value;
-			break;
-		case 1:
-			var values = this1.values;
-			if(languageIndex < 0 || languageIndex >= (values == null ? 0 : values.length)) {
-				console.log("src/client/model/util/LocalizedString.hx:32:","languageIndex should be between 0 and length, here: " + languageIndex);
-				s = client_model_util_OptionExtender.getOrDefault(tink_pure_List.get(values,0));
-			} else {
-				s = client_model_util_OptionExtender.getOrDefault(tink_pure_List.get(values,languageIndex));
-			}
-			break;
-		}
-		var children = s == null ? null : coconut_vdom__$Html_Text.inst.vnode(s,null,null,null);
-		var children1 = [coconut_vdom_Html.H4.vnode(attr3,hxxMeta3.key,hxxMeta3.ref,[children])];
-		__r1.push(coconut_vdom_Html.DIV.vnode(attr2,hxxMeta2.key,hxxMeta2.ref,children1));
-		var hxxMeta2 = { };
-		var attr2 = { className : tink_domspec_ClassName.ofString("w-auto")};
-		var __r2 = [];
-		var this1 = tink_state_Observable.get_value(this.__coco_item).dates.start;
-		var languageIndex = tink_state_Observable.get_value(this.__coco_languageIndex);
-		var s;
-		switch(this1._hx_index) {
-		case 0:
-			var year = this1.year;
-			s = Std.string(year);
-			break;
-		case 1:
-			var year = this1.year;
-			switch(year._hx_index) {
-			case 0:
-				var value = year.value;
-				s = value;
-				break;
-			case 1:
-				var values = year.values;
-				if(languageIndex < 0 || languageIndex >= (values == null ? 0 : values.length)) {
-					console.log("src/client/model/util/LocalizedString.hx:32:","languageIndex should be between 0 and length, here: " + languageIndex);
-					s = client_model_util_OptionExtender.getOrDefault(tink_pure_List.get(values,0));
-				} else {
-					s = client_model_util_OptionExtender.getOrDefault(tink_pure_List.get(values,languageIndex));
-				}
-				break;
-			}
-			break;
-		}
-		__r2.push(s == null ? null : coconut_vdom__$Html_Text.inst.vnode(s,null,null,null));
-		__r2.push(coconut_vdom__$Html_Text.inst.vnode(" - ",null,null,null));
-		var this1 = tink_state_Observable.get_value(this.__coco_item).dates.end;
-		var languageIndex = tink_state_Observable.get_value(this.__coco_languageIndex);
-		var s;
-		switch(this1._hx_index) {
-		case 0:
-			var year = this1.year;
-			s = Std.string(year);
-			break;
-		case 1:
-			var year = this1.year;
-			switch(year._hx_index) {
-			case 0:
-				var value = year.value;
-				s = value;
-				break;
-			case 1:
-				var values = year.values;
-				if(languageIndex < 0 || languageIndex >= (values == null ? 0 : values.length)) {
-					console.log("src/client/model/util/LocalizedString.hx:32:","languageIndex should be between 0 and length, here: " + languageIndex);
-					s = client_model_util_OptionExtender.getOrDefault(tink_pure_List.get(values,0));
-				} else {
-					s = client_model_util_OptionExtender.getOrDefault(tink_pure_List.get(values,languageIndex));
-				}
-				break;
-			}
-			break;
-		}
-		__r2.push(s == null ? null : coconut_vdom__$Html_Text.inst.vnode(s,null,null,null));
-		__r1.push(coconut_vdom_Html.H4.vnode(attr2,hxxMeta2.key,hxxMeta2.ref,__r2));
-		__r.push(coconut_vdom_Html.DIV.vnode(attr1,hxxMeta1.key,hxxMeta1.ref,__r1));
-		var hxxMeta1 = { };
-		var attr1 = { className : tink_domspec_ClassName.ofString("mb-3")};
-		var __r1 = [];
-		var _g = new tink_pure_NodeIterator(tink_state_Observable.get_value(this.__coco_item).subheaders);
-		while(_g.list.length > 0) {
-			var header = _g.next();
-			var hxxMeta2 = { };
-			var attr2 = { className : tink_domspec_ClassName.ofString("w-full mb-0.5")};
-			var languageIndex = tink_state_Observable.get_value(this.__coco_languageIndex);
-			var s;
-			switch(header._hx_index) {
-			case 0:
-				var value = header.value;
-				s = value;
-				break;
-			case 1:
-				var values = header.values;
-				if(languageIndex < 0 || languageIndex >= (values == null ? 0 : values.length)) {
-					console.log("src/client/model/util/LocalizedString.hx:32:","languageIndex should be between 0 and length, here: " + languageIndex);
-					s = client_model_util_OptionExtender.getOrDefault(tink_pure_List.get(values,0));
-				} else {
-					s = client_model_util_OptionExtender.getOrDefault(tink_pure_List.get(values,languageIndex));
-				}
-				break;
-			}
-			var children = s == null ? null : coconut_vdom__$Html_Text.inst.vnode(s,null,null,null);
-			__r1.push(coconut_vdom_Html.H5.vnode(attr2,hxxMeta2.key,hxxMeta2.ref,[children]));
-		}
-		__r.push(coconut_vdom_Html.DIV.vnode(attr1,hxxMeta1.key,hxxMeta1.ref,__r1));
-		if(tink_state_Observable.get_value(this.__coco_item).place != null) {
-			var hxxMeta1 = { };
-			var attr1 = { className : tink_domspec_ClassName.ofString("ml-8 w-full mb-3")};
-			var this1 = tink_state_Observable.get_value(this.__coco_item).place;
-			var languageIndex = tink_state_Observable.get_value(this.__coco_languageIndex);
-			var s;
-			switch(this1._hx_index) {
-			case 0:
-				var value = this1.value;
-				s = value;
-				break;
-			case 1:
-				var values = this1.values;
-				if(languageIndex < 0 || languageIndex >= (values == null ? 0 : values.length)) {
-					console.log("src/client/model/util/LocalizedString.hx:32:","languageIndex should be between 0 and length, here: " + languageIndex);
-					s = client_model_util_OptionExtender.getOrDefault(tink_pure_List.get(values,0));
-				} else {
-					s = client_model_util_OptionExtender.getOrDefault(tink_pure_List.get(values,languageIndex));
-				}
-				break;
-			}
-			var children = s == null ? null : coconut_vdom__$Html_Text.inst.vnode(s,null,null,null);
-			__r.push(coconut_vdom_Html.H5.vnode(attr1,hxxMeta1.key,hxxMeta1.ref,[children]));
-		}
-		var hxxMeta1 = { };
-		var attr1 = { className : tink_domspec_ClassName.ofString("w-full text-justify")};
-		var __r1 = [];
-		var _g = new tink_pure_NodeIterator(tink_state_Observable.get_value(this.__coco_item).content);
-		while(_g.list.length > 0) {
-			var item = [_g.next()];
-			var tmp = new tink_state_internal_AutoObservable(tink_state_internal__$AutoObservable_Computation.sync((function() {
-				return function() {
-					return tink_state_Observable.get_value(_gthis.__coco_languageIndex);
-				};
-			})()),null);
-			var tmp1 = new tink_state_internal_AutoObservable(tink_state_internal__$AutoObservable_Computation.sync((function(item) {
-				return function() {
-					return item[0];
-				};
-			})(item)),null);
-			__r1.push(client_view_utilities_TextDataView.fromHxx({ },{ languageIndex : tmp, item : tmp1}));
-		}
-		__r.push(coconut_vdom_Html.DIV.vnode(attr1,hxxMeta1.key,hxxMeta1.ref,__r1));
-		if(tink_state_Observable.get_value(this.__coco_item).links != null) {
-			var hxxMeta1 = { };
-			var attr1 = { className : tink_domspec_ClassName.ofString("mt-5 flex flex-column justify-center items-center w-full")};
-			var __r1 = [];
-			var _g = new tink_pure_NodeIterator(tink_state_Observable.get_value(this.__coco_item).links);
-			while(_g.list.length > 0) {
-				var link = _g.next();
-				var hxxMeta2 = { };
-				var attr2 = { target : "_blank", href : link.link, className : tink_domspec_ClassName.ofString("mb-3 p-2 no-decoration interactible square-highlight w-2/3 text-center flex flex-column justify-center items-center")};
-				var hxxMeta3 = { };
-				var attr3 = { className : tink_domspec_ClassName.ofString("no-decoration text-base")};
-				var this1 = link.name;
-				var languageIndex = tink_state_Observable.get_value(this.__coco_languageIndex);
-				var s;
-				switch(this1._hx_index) {
-				case 0:
-					var value = this1.value;
-					s = value;
-					break;
-				case 1:
-					var values = this1.values;
-					if(languageIndex < 0 || languageIndex >= (values == null ? 0 : values.length)) {
-						console.log("src/client/model/util/LocalizedString.hx:32:","languageIndex should be between 0 and length, here: " + languageIndex);
-						s = client_model_util_OptionExtender.getOrDefault(tink_pure_List.get(values,0));
-					} else {
-						s = client_model_util_OptionExtender.getOrDefault(tink_pure_List.get(values,languageIndex));
-					}
-					break;
-				}
-				var children = s == null ? null : coconut_vdom__$Html_Text.inst.vnode(s,null,null,null);
-				var children1 = [coconut_vdom_Html.P.vnode(attr3,hxxMeta3.key,hxxMeta3.ref,[children])];
-				__r1.push(coconut_vdom_Html.A.vnode(attr2,hxxMeta2.key,hxxMeta2.ref,children1));
-			}
-			__r1.push(tink_state_Observable.get_value(this.__coco_extraLink));
-			__r.push(coconut_vdom_Html.DIV.vnode(attr1,hxxMeta1.key,hxxMeta1.ref,__r1));
-		}
-		return coconut_vdom_Html.DIV.vnode(attr,hxxMeta.key,hxxMeta.ref,__r);
-	}
-	,__initAttributes: function(attributes) {
-		this.__coco_languageIndex.setData(attributes.languageIndex);
-		this.__coco_item.setData(attributes.item);
-		this.__coco_extraLink.setData(attributes.extraLink);
-	}
-});
-var client_view_utilities_FullscreenPopUp = function(__coco_data_,implicits) {
-	var _gthis = this;
-	this._coco_implicits = implicits;
-	this.__coco_languageIndex = new coconut_ui_internal_Slot(this,null,null);
-	this.__coco_subelements = new coconut_ui_internal_Slot(this,null,null);
-	this.__coco_opened = tink_state_State._new(false,null);
-	this.__coco_currentIndex = tink_state_State._new(0,null);
-	this.__initAttributes(__coco_data_);
-	var snapshot = null;
-	coconut_vdom_View.call(this,function() {
-		return _gthis.render();
-	},null,null,null,null);
-};
-client_view_utilities_FullscreenPopUp.__name__ = true;
-client_view_utilities_FullscreenPopUp.fromHxx = function(hxxMeta,attributes) {
-	var _g = client_view_utilities_FullscreenPopUp.__factory;
-	var tmp;
-	if(_g == null) {
-		tmp = client_view_utilities_FullscreenPopUp.__factory = new coconut_diffing_internal_WidgetFactory(function(__coco_data_,implicits) {
-			return new client_view_utilities_FullscreenPopUp(__coco_data_,implicits);
-		},function(v,attr) {
-			v.__initAttributes(attr);
-		});
-	} else {
-		var v = _g;
-		tmp = v;
-	}
-	return new coconut_diffing_internal_VWidget(tmp,attributes,hxxMeta.key,hxxMeta.ref);
-};
-client_view_utilities_FullscreenPopUp.__super__ = coconut_vdom_View;
-client_view_utilities_FullscreenPopUp.prototype = $extend(coconut_vdom_View.prototype,{
-	render: function() {
-		var elementToDisplay;
-		var _g = tink_pure_List.get(tink_state_Observable.get_value(this.__coco_subelements),tink_state_State.get_value(this.__coco_currentIndex));
-		if(_g._hx_index == 0) {
-			var v = _g.v;
-			elementToDisplay = v;
-		} else {
-			elementToDisplay = null;
-		}
-		var hxxMeta = { };
-		var attr = { className : tink_domspec_ClassName.ofString("" + (tink_state_State.get_value(this.__coco_opened) ? "" : "hidden") + " fixed inset-8 top-16 popup")};
-		var __r = [];
-		var hxxMeta1 = { };
-		var _g = $bind(this,this.setOpened);
-		var newState = false;
-		var attr1 = function() {
-			_g(newState);
-		};
-		var attr2 = { className : tink_domspec_ClassName.ofString("absolute top-2 right-2 interactible h-16 w-16"), onclick : attr1};
-		var hxxMeta2 = { };
-		var attr1 = { className : tink_domspec_ClassName.ofString("material-icons absolute top-0 right-0")};
-		var children = [coconut_vdom__$Html_Text.inst.vnode("close",null,null,null)];
-		var children1 = [coconut_vdom_Html.SPAN.vnode(attr1,hxxMeta2.key,hxxMeta2.ref,children)];
-		__r.push(coconut_vdom_Html.DIV.vnode(attr2,hxxMeta1.key,hxxMeta1.ref,children1));
-		var this1 = tink_state_Observable.get_value(this.__coco_subelements);
-		if((this1 == null ? 0 : this1.length) > 1) {
-			var hxxMeta1 = { };
-			var _g1 = $bind(this,this.onIndexChange);
-			var delta = -1;
-			var attr1 = function() {
-				_g1(delta);
-			};
-			var attr2 = { className : tink_domspec_ClassName.ofString("material-icons popup-arrow left interactible"), onclick : attr1};
-			var children = [coconut_vdom__$Html_Text.inst.vnode("arrow_back_ios",null,null,null)];
-			__r.push(coconut_vdom_Html.SPAN.vnode(attr2,hxxMeta1.key,hxxMeta1.ref,children));
-			var hxxMeta1 = { };
-			var _g2 = $bind(this,this.onIndexChange);
-			var delta1 = 1;
-			var attr1 = function() {
-				_g2(delta1);
-			};
-			var attr2 = { className : tink_domspec_ClassName.ofString("material-icons popup-arrow right interactible"), onclick : attr1};
-			var children = [coconut_vdom__$Html_Text.inst.vnode("arrow_forward_ios",null,null,null)];
-			__r.push(coconut_vdom_Html.SPAN.vnode(attr2,hxxMeta1.key,hxxMeta1.ref,children));
-		}
-		var hxxMeta1 = { };
-		__r.push(coconut_vdom_Html.DIV.vnode({ className : tink_domspec_ClassName.ofString("absolute inset-8")},hxxMeta1.key,hxxMeta1.ref,[elementToDisplay]));
-		return coconut_vdom_Html.DIV.vnode(attr,hxxMeta.key,hxxMeta.ref,__r);
-	}
-	,onIndexChange: function(delta) {
-		var param = tink_state_State.get_value(this.__coco_currentIndex) + delta;
-		this.__coco_currentIndex.set(param);
-		if(tink_state_State.get_value(this.__coco_currentIndex) < 0) {
-			var this1 = tink_state_Observable.get_value(this.__coco_subelements);
-			var param = (this1 == null ? 0 : this1.length) - 1;
-			this.__coco_currentIndex.set(param);
-		} else {
-			var tmp = tink_state_State.get_value(this.__coco_currentIndex);
-			var this1 = tink_state_Observable.get_value(this.__coco_subelements);
-			if(tmp >= (this1 == null ? 0 : this1.length)) {
-				this.__coco_currentIndex.set(0);
-			}
-		}
-	}
-	,setOpened: function(newState) {
-		this.__coco_opened.set(newState);
-		$("body").css({ "overflow" : newState ? "hidden" : "visible"});
-	}
-	,__initAttributes: function(attributes) {
-		this.__coco_languageIndex.setData(attributes.languageIndex);
-		this.__coco_subelements.setData(attributes.subelements);
-	}
-});
-var client_view_utilities_ShowoffView = function(__coco_data_,implicits) {
-	var _gthis = this;
-	this._coco_implicits = implicits;
-	this.__coco_languageIndex = new coconut_ui_internal_Slot(this,null,null);
-	this.__coco_item = new coconut_ui_internal_Slot(this,null,null);
-	this.__initAttributes(__coco_data_);
-	var snapshot = null;
-	coconut_vdom_View.call(this,function() {
-		return _gthis.render();
-	},null,null,null,null);
-};
-client_view_utilities_ShowoffView.__name__ = true;
-client_view_utilities_ShowoffView.fromHxx = function(hxxMeta,attributes) {
-	var _g = client_view_utilities_ShowoffView.__factory;
-	var tmp;
-	if(_g == null) {
-		tmp = client_view_utilities_ShowoffView.__factory = new coconut_diffing_internal_WidgetFactory(function(__coco_data_,implicits) {
-			return new client_view_utilities_ShowoffView(__coco_data_,implicits);
-		},function(v,attr) {
-			v.__initAttributes(attr);
-		});
-	} else {
-		var v = _g;
-		tmp = v;
-	}
-	return new coconut_diffing_internal_VWidget(tmp,attributes,hxxMeta.key,hxxMeta.ref);
-};
-client_view_utilities_ShowoffView.__super__ = coconut_vdom_View;
-client_view_utilities_ShowoffView.prototype = $extend(coconut_vdom_View.prototype,{
-	render: function() {
-		var _gthis = this;
-		var hxxMeta = { };
-		var attr = { className : tink_domspec_ClassName.ofString("w-full h-full flex flex-column justify-center content-center ")};
-		var __r = [];
-		if(tink_state_Observable.get_value(this.__coco_item).title != null) {
-			var hxxMeta1 = { };
-			var attr1 = { className : tink_domspec_ClassName.ofString("w-full text-center mb-4")};
-			var this1 = tink_state_Observable.get_value(this.__coco_item).title;
-			var languageIndex = tink_state_Observable.get_value(this.__coco_languageIndex);
-			var s;
-			switch(this1._hx_index) {
-			case 0:
-				var value = this1.value;
-				s = value;
-				break;
-			case 1:
-				var values = this1.values;
-				if(languageIndex < 0 || languageIndex >= (values == null ? 0 : values.length)) {
-					console.log("src/client/model/util/LocalizedString.hx:32:","languageIndex should be between 0 and length, here: " + languageIndex);
-					s = client_model_util_OptionExtender.getOrDefault(tink_pure_List.get(values,0));
-				} else {
-					s = client_model_util_OptionExtender.getOrDefault(tink_pure_List.get(values,languageIndex));
-				}
-				break;
-			}
-			var children = s == null ? null : coconut_vdom__$Html_Text.inst.vnode(s,null,null,null);
-			__r.push(coconut_vdom_Html.H4.vnode(attr1,hxxMeta1.key,hxxMeta1.ref,[children]));
-		}
-		var _g = tink_state_Observable.get_value(this.__coco_item).type;
-		if(_g == null) {
-			var hxxMeta1 = { };
-			__r.push(coconut_vdom_Html.IMG.vnode({ src : tink_state_Observable.get_value(this.__coco_item).link, className : tink_domspec_ClassName.ofString("w-auto max-h-3/4 object-contain mb-4")},hxxMeta1.key,hxxMeta1.ref));
-		} else if(_g._hx_index == 1) {
-			var hxxMeta1 = { };
-			__r.push(coconut_vdom_Html.IFRAME.vnode({ src : tink_state_Observable.get_value(this.__coco_item).link, className : tink_domspec_ClassName.ofString("mb-4"), width : 560, height : 315},hxxMeta1.key,hxxMeta1.ref,null));
-		} else {
-			var hxxMeta1 = { };
-			__r.push(coconut_vdom_Html.IMG.vnode({ src : tink_state_Observable.get_value(this.__coco_item).link, className : tink_domspec_ClassName.ofString("w-auto max-h-3/4 object-contain mb-4")},hxxMeta1.key,hxxMeta1.ref));
-		}
-		if(tink_state_Observable.get_value(this.__coco_item).description != null) {
-			var hxxMeta1 = { };
-			var attr1 = { className : tink_domspec_ClassName.ofString("h-40 min-width-50 text-justify overflow-y-scroll no-scrollbar")};
-			var children = new tink_state_internal_AutoObservable(tink_state_internal__$AutoObservable_Computation.sync(function() {
-				return tink_state_Observable.get_value(_gthis.__coco_languageIndex);
-			}),null);
-			var children1 = new tink_state_internal_AutoObservable(tink_state_internal__$AutoObservable_Computation.sync(function() {
-				return tink_state_Observable.get_value(_gthis.__coco_item).description;
-			}),null);
-			var children2 = [client_view_utilities_TextDataView.fromHxx({ },{ languageIndex : children, item : children1})];
-			__r.push(coconut_vdom_Html.DIV.vnode(attr1,hxxMeta1.key,hxxMeta1.ref,children2));
-		}
-		return coconut_vdom_Html.DIV.vnode(attr,hxxMeta.key,hxxMeta.ref,__r);
-	}
-	,__initAttributes: function(attributes) {
-		this.__coco_languageIndex.setData(attributes.languageIndex);
-		this.__coco_item.setData(attributes.item);
-	}
-});
-var client_view_utilities_TextDataView = function(__coco_data_,implicits) {
-	var _gthis = this;
-	this._coco_implicits = implicits;
-	this.__coco_languageIndex = new coconut_ui_internal_Slot(this,null,null);
-	this.__coco_item = new coconut_ui_internal_Slot(this,null,null);
-	this.__initAttributes(__coco_data_);
-	var snapshot = null;
-	coconut_vdom_View.call(this,function() {
-		return _gthis.render();
-	},null,null,null,null);
-};
-client_view_utilities_TextDataView.__name__ = true;
-client_view_utilities_TextDataView.fromHxx = function(hxxMeta,attributes) {
-	var _g = client_view_utilities_TextDataView.__factory;
-	var tmp;
-	if(_g == null) {
-		tmp = client_view_utilities_TextDataView.__factory = new coconut_diffing_internal_WidgetFactory(function(__coco_data_,implicits) {
-			return new client_view_utilities_TextDataView(__coco_data_,implicits);
-		},function(v,attr) {
-			v.__initAttributes(attr);
-		});
-	} else {
-		var v = _g;
-		tmp = v;
-	}
-	return new coconut_diffing_internal_VWidget(tmp,attributes,hxxMeta.key,hxxMeta.ref);
-};
-client_view_utilities_TextDataView.__super__ = coconut_vdom_View;
-client_view_utilities_TextDataView.prototype = $extend(coconut_vdom_View.prototype,{
-	render: function() {
-		var _g = tink_state_Observable.get_value(this.__coco_item);
-		switch(_g._hx_index) {
-		case 0:
-			var text = _g.text;
-			var hxxMeta = { };
-			var attr = { className : tink_domspec_ClassName.ofString("mb-2")};
-			var languageIndex = tink_state_Observable.get_value(this.__coco_languageIndex);
-			var s;
-			switch(text._hx_index) {
-			case 0:
-				var value = text.value;
-				s = value;
-				break;
-			case 1:
-				var values = text.values;
-				if(languageIndex < 0 || languageIndex >= (values == null ? 0 : values.length)) {
-					console.log("src/client/model/util/LocalizedString.hx:32:","languageIndex should be between 0 and length, here: " + languageIndex);
-					s = client_model_util_OptionExtender.getOrDefault(tink_pure_List.get(values,0));
-				} else {
-					s = client_model_util_OptionExtender.getOrDefault(tink_pure_List.get(values,languageIndex));
-				}
-				break;
-			}
-			var children = s == null ? null : coconut_vdom__$Html_Text.inst.vnode(s,null,null,null);
-			return coconut_vdom_Html.P.vnode(attr,hxxMeta.key,hxxMeta.ref,[children]);
-		case 1:
-			var texts = _g.texts;
-			var hxxMeta = { };
-			var __r = [];
-			var _g = new tink_pure_NodeIterator(texts);
-			while(_g.list.length > 0) {
-				var text = _g.next();
-				var hxxMeta1 = { };
-				var languageIndex = tink_state_Observable.get_value(this.__coco_languageIndex);
-				var s;
-				switch(text._hx_index) {
-				case 0:
-					var value = text.value;
-					s = value;
-					break;
-				case 1:
-					var values = text.values;
-					if(languageIndex < 0 || languageIndex >= (values == null ? 0 : values.length)) {
-						console.log("src/client/model/util/LocalizedString.hx:32:","languageIndex should be between 0 and length, here: " + languageIndex);
-						s = client_model_util_OptionExtender.getOrDefault(tink_pure_List.get(values,0));
-					} else {
-						s = client_model_util_OptionExtender.getOrDefault(tink_pure_List.get(values,languageIndex));
-					}
-					break;
-				}
-				var children = s == null ? null : coconut_vdom__$Html_Text.inst.vnode(s,null,null,null);
-				__r.push(coconut_vdom_Html.LI.vnode({ },hxxMeta1.key,hxxMeta1.ref,[children]));
-			}
-			return coconut_vdom_Html.UL.vnode({ },hxxMeta.key,hxxMeta.ref,__r);
-		}
-	}
-	,__initAttributes: function(attributes) {
-		this.__coco_languageIndex.setData(attributes.languageIndex);
-		this.__coco_item.setData(attributes.item);
-	}
-});
-var client_view_utilities_scroll_BrowserScrollUtility = function() {
-	window.addEventListener("scroll",$bind(this,this.onScroll));
-	this.lastScrollTop = window.scrollY;
-};
-client_view_utilities_scroll_BrowserScrollUtility.__name__ = true;
-client_view_utilities_scroll_BrowserScrollUtility.prototype = {
-	onScroll: function(event) {
-		if(window.scrollY > this.lastScrollTop) {
-			client_utilities_AppEvents.onScroll.dispatch(1);
-		} else if(window.scrollY < this.lastScrollTop) {
-			client_utilities_AppEvents.onScroll.dispatch(-1);
-		} else {
-			window.scroll(window.scrollX,this.lastScrollTop);
-		}
-		this.lastScrollTop = window.scrollY;
-	}
-};
-var client_view_utilities_scroll_ScrollArrow = function(__coco_data_,implicits) {
-	var _gthis = this;
-	this._coco_implicits = implicits;
-	this.__initAttributes(__coco_data_);
-	var snapshot = null;
-	coconut_vdom_View.call(this,function() {
-		return _gthis.render();
-	},null,null,null,null);
-};
-client_view_utilities_scroll_ScrollArrow.__name__ = true;
-client_view_utilities_scroll_ScrollArrow.fromHxx = function(hxxMeta,attributes) {
-	var _g = client_view_utilities_scroll_ScrollArrow.__factory;
-	var tmp;
-	if(_g == null) {
-		tmp = client_view_utilities_scroll_ScrollArrow.__factory = new coconut_diffing_internal_WidgetFactory(function(__coco_data_,implicits) {
-			return new client_view_utilities_scroll_ScrollArrow(__coco_data_,implicits);
-		},function(v,attr) {
-			v.__initAttributes(attr);
-		});
-	} else {
-		var v = _g;
-		tmp = v;
-	}
-	return new coconut_diffing_internal_VWidget(tmp,attributes,hxxMeta.key,hxxMeta.ref);
-};
-client_view_utilities_scroll_ScrollArrow.__super__ = coconut_vdom_View;
-client_view_utilities_scroll_ScrollArrow.prototype = $extend(coconut_vdom_View.prototype,{
-	render: function() {
-		var hxxMeta = { };
-		var attr = { className : tink_domspec_ClassName.ofString("scroll-arrow"), onclick : $bind(this,this.onScrollAsked)};
-		var hxxMeta1 = { };
-		var attr1 = { className : tink_domspec_ClassName.ofString("bouncing-arrow material-icons")};
-		var children = [coconut_vdom__$Html_Text.inst.vnode("expand_more",null,null,null)];
-		var children1 = [coconut_vdom_Html.SPAN.vnode(attr1,hxxMeta1.key,hxxMeta1.ref,children)];
-		return coconut_vdom_Html.DIV.vnode(attr,hxxMeta.key,hxxMeta.ref,children1);
-	}
-	,onScrollAsked: function() {
-		client_utilities_AppEvents.onScroll.dispatch(1);
-	}
-	,__initAttributes: function(attributes) {
-	}
-});
-var client_view_utilities_scroll_ScrollUtility = function(delay) {
-	this.nextTimeScrollAvailable = -Infinity;
-	this.fullScreenQuery = $(".fullscreen");
-	this.currentScreenIndex = 0;
-	this.delayBetweenScroll = delay;
-	client_utilities_AppEvents.onScroll.add($bind(this,this.onScroll));
-};
-client_view_utilities_scroll_ScrollUtility.__name__ = true;
-client_view_utilities_scroll_ScrollUtility.prototype = {
-	onScroll: function(delta) {
-		if(this.nextTimeScrollAvailable > HxOverrides.now() / 1000) {
-			return;
-		}
-		this.nextTimeScrollAvailable = HxOverrides.now() / 1000 + this.delayBetweenScroll;
-		this.currentScreenIndex += delta;
-		this.currentScreenIndex = Math.min(this.fullScreenQuery.length - 1,Math.max(this.currentScreenIndex,0));
-	}
+var coconut_diffing_Applicator = function() { };
+coconut_diffing_Applicator.__name__ = true;
+coconut_diffing_Applicator.__isInterface__ = true;
+coconut_diffing_Applicator.prototype = {
+	__class__: coconut_diffing_Applicator
 };
 var coconut_diffing_Cursor = function(applicator) {
 	this.applicator = applicator;
@@ -2338,100 +1430,21 @@ coconut_diffing_Cursor.prototype = {
 	current: function() {
 		return null;
 	}
+	,__class__: coconut_diffing_Cursor
 };
-var coconut_diffing_Factory = function() {
-	var this1 = coconut_diffing_TypeId.idCounter++;
-	this.type = this1;
+var coconut_diffing_internal_Child = function() { };
+coconut_diffing_internal_Child.__name__ = true;
+coconut_diffing_internal_Child.__isInterface__ = true;
+coconut_diffing_internal_Child.prototype = {
+	__class__: coconut_diffing_internal_Child
 };
-coconut_diffing_Factory.__name__ = true;
-coconut_diffing_Factory.prototype = {
-	adopt: function(target) {
-		return null;
-	}
-	,hydrate: function(target,data) {
-	}
-	,vnode: function(data,key,ref,children) {
-		return new coconut_diffing_internal_VNative(this,data,key,ref,children);
-	}
-};
-var coconut_diffing_Properties = function(construct,apply) {
-	coconut_diffing_Factory.call(this);
-	this.construct = construct;
-	this.apply = apply;
-};
-coconut_diffing_Properties.__name__ = true;
-coconut_diffing_Properties.set = function(target,nu,old,apply) {
-	if(nu == null) {
-		if(old != null) {
-			var old1 = old;
-			var _g = 0;
-			var _g1 = Reflect.fields(old1);
-			while(_g < _g1.length) {
-				var k = _g1[_g];
-				++_g;
-				apply(target,k,null,null);
-			}
-		}
-	} else if(old == null) {
-		var nu1 = nu;
-		var access = nu1;
-		var _g_access = access;
-		var _g_keys = Reflect.fields(access);
-		var _g_index = 0;
-		while(_g_index < _g_keys.length) {
-			var key = _g_keys[_g_index++];
-			var _g1_value = _g_access[key];
-			var _g1_key = key;
-			var k = _g1_key;
-			var v = _g1_value;
-			apply(target,k,v,null);
-		}
-	} else {
-		var nu1 = nu;
-		var old1 = old;
-		var access = nu1;
-		var _g_access = access;
-		var _g_keys = Reflect.fields(access);
-		var _g_index = 0;
-		while(_g_index < _g_keys.length) {
-			var key = _g_keys[_g_index++];
-			var _g1_value = _g_access[key];
-			var _g1_key = key;
-			var k = _g1_key;
-			var v = _g1_value;
-			var old = old1[k];
-			if(v != old) {
-				apply(target,k,v,old);
-			}
-		}
-		var _g = 0;
-		var _g1 = Reflect.fields(old1);
-		while(_g < _g1.length) {
-			var k = _g1[_g];
-			++_g;
-			if(!Object.prototype.hasOwnProperty.call(nu1,k)) {
-				apply(target,k,null,null);
-			}
-		}
-	}
-};
-coconut_diffing_Properties.__super__ = coconut_diffing_Factory;
-coconut_diffing_Properties.prototype = $extend(coconut_diffing_Factory.prototype,{
-	create: function(data) {
-		var ret = this.construct();
-		this.update(ret,data,null);
-		return ret;
-	}
-	,update: function(target,next,prev) {
-		coconut_diffing_Properties.set(target,next,prev,this.apply);
-	}
-});
 var coconut_diffing_internal_Parent = function(context,parent) {
 	this.pendingUpdates = [];
 	this.context = context;
 	this.parent = parent;
 };
 coconut_diffing_internal_Parent.__name__ = true;
+coconut_diffing_internal_Parent.__interfaces__ = [coconut_diffing_internal_Child];
 coconut_diffing_internal_Parent.withLater = function(f) {
 	var tasks = [];
 	var ret = f(function(task) {
@@ -2476,6 +1489,7 @@ coconut_diffing_internal_Parent.prototype = {
 			v.scheduleUpdate(this);
 		}
 	}
+	,__class__: coconut_diffing_internal_Parent
 };
 var coconut_diffing_Root = function(parent,applicator,content,hydration) {
 	if(hydration == null) {
@@ -2510,6 +1524,7 @@ coconut_diffing_Root.prototype = $extend(coconut_diffing_internal_Parent.prototy
 			return _gthis.rendered.update(v,null,later);
 		});
 	}
+	,__class__: coconut_diffing_Root
 });
 var coconut_diffing_TypeId = {};
 var coconut_diffing_internal_RCell = function(parent,virtual,cursor,later,hydrate) {
@@ -2554,6 +1569,7 @@ coconut_diffing_internal_RCell.prototype = {
 	,destroy: function(applicator) {
 		return this.rendered.destroy(applicator);
 	}
+	,__class__: coconut_diffing_internal_RCell
 };
 var coconut_diffing_internal_RChildren = function(parent,children,cursor,later,hydrate) {
 	this.order = [];
@@ -2738,22 +1754,38 @@ coconut_diffing_internal_RChildren.prototype = {
 		}
 		return ret;
 	}
+	,__class__: coconut_diffing_internal_RChildren
+};
+var coconut_diffing_internal_RNode = function() { };
+coconut_diffing_internal_RNode.__name__ = true;
+coconut_diffing_internal_RNode.__isInterface__ = true;
+coconut_diffing_internal_RNode.prototype = {
+	__class__: coconut_diffing_internal_RNode
+};
+var coconut_diffing_internal_VNode = function() { };
+coconut_diffing_internal_VNode.__name__ = true;
+coconut_diffing_internal_VNode.__isInterface__ = true;
+coconut_diffing_internal_VNode.prototype = {
+	__class__: coconut_diffing_internal_VNode
 };
 var coconut_diffing_internal_VEmpty = function() {
 	this.key = null;
 	this.type = coconut_diffing_internal_VEmpty.TYPE;
 };
 coconut_diffing_internal_VEmpty.__name__ = true;
+coconut_diffing_internal_VEmpty.__interfaces__ = [coconut_diffing_internal_VNode];
 coconut_diffing_internal_VEmpty.prototype = {
 	render: function(_,cursor,_1,hydrate) {
 		return new coconut_diffing_internal_REmpty(cursor);
 	}
+	,__class__: coconut_diffing_internal_VEmpty
 };
 var coconut_diffing_internal_REmpty = function(cursor) {
 	this.type = coconut_diffing_internal_VEmpty.TYPE;
 	cursor.insert(this.marker = cursor.applicator.createMarker());
 };
 coconut_diffing_internal_REmpty.__name__ = true;
+coconut_diffing_internal_REmpty.__interfaces__ = [coconut_diffing_internal_RNode];
 coconut_diffing_internal_REmpty.prototype = {
 	reiterate: function(applicator) {
 		return applicator.siblings(this.marker);
@@ -2768,6 +1800,7 @@ coconut_diffing_internal_REmpty.prototype = {
 		applicator.releaseMarker(this.marker);
 		return 1;
 	}
+	,__class__: coconut_diffing_internal_REmpty
 };
 var coconut_diffing_internal_VNativeBase = function(type,key,ref,children) {
 	this.type = type;
@@ -2776,6 +1809,7 @@ var coconut_diffing_internal_VNativeBase = function(type,key,ref,children) {
 	this.children = children;
 };
 coconut_diffing_internal_VNativeBase.__name__ = true;
+coconut_diffing_internal_VNativeBase.__interfaces__ = [coconut_diffing_internal_VNode];
 coconut_diffing_internal_VNativeBase.prototype = {
 	render: function(parent,cursor,later,hydrate) {
 		return new coconut_diffing_internal_RNativeBase(this,coconut_diffing_internal_VNativeBase,parent,cursor,later,hydrate);
@@ -2783,6 +1817,7 @@ coconut_diffing_internal_VNativeBase.prototype = {
 	,create: function(previous) {
 		throw haxe_Exception.thrown("abstract");
 	}
+	,__class__: coconut_diffing_internal_VNativeBase
 };
 var coconut_diffing_internal_VNative = function(factory,data,key,ref,children) {
 	coconut_diffing_internal_VNativeBase.call(this,factory.type,key,ref,children);
@@ -2810,6 +1845,7 @@ coconut_diffing_internal_VNative.prototype = $extend(coconut_diffing_internal_VN
 			}
 		}
 	}
+	,__class__: coconut_diffing_internal_VNative
 });
 var coconut_diffing_internal_RNativeBase = function(v,cls,parent,cursor,later,hydrate) {
 	this.last = v;
@@ -2825,6 +1861,7 @@ var coconut_diffing_internal_RNativeBase = function(v,cls,parent,cursor,later,hy
 	}
 };
 coconut_diffing_internal_RNativeBase.__name__ = true;
+coconut_diffing_internal_RNativeBase.__interfaces__ = [coconut_diffing_internal_RNode];
 coconut_diffing_internal_RNativeBase.prototype = {
 	justInsert: function(cursor,_) {
 		cursor.insert(this.native);
@@ -2868,6 +1905,7 @@ coconut_diffing_internal_RNativeBase.prototype = {
 		}
 		return 1;
 	}
+	,__class__: coconut_diffing_internal_RNativeBase
 };
 var coconut_diffing_internal_RNative = function(v,cls,parent,cursor,later,hydrate) {
 	coconut_diffing_internal_RNativeBase.call(this,v,cls,parent,cursor,later,hydrate);
@@ -2878,6 +1916,7 @@ coconut_diffing_internal_RNative.prototype = $extend(coconut_diffing_internal_RN
 	updateNative: function(native,next,last,_,_1) {
 		next.factory.update(native,next.data,last.data);
 	}
+	,__class__: coconut_diffing_internal_RNative
 });
 var coconut_diffing_internal_VWidget = function(factory,data,key,ref) {
 	this.factory = factory;
@@ -2887,10 +1926,18 @@ var coconut_diffing_internal_VWidget = function(factory,data,key,ref) {
 	this.key = key;
 };
 coconut_diffing_internal_VWidget.__name__ = true;
+coconut_diffing_internal_VWidget.__interfaces__ = [coconut_diffing_internal_VNode];
 coconut_diffing_internal_VWidget.prototype = {
 	render: function(parent,cursor,later,hydrate) {
 		return new coconut_diffing_internal_RWidget(parent,this,cursor,later,hydrate);
 	}
+	,__class__: coconut_diffing_internal_VWidget
+};
+var tink_state_internal_Invalidatable = function() { };
+tink_state_internal_Invalidatable.__name__ = true;
+tink_state_internal_Invalidatable.__isInterface__ = true;
+tink_state_internal_Invalidatable.prototype = {
+	__class__: tink_state_internal_Invalidatable
 };
 var coconut_diffing_internal_WidgetLifeCycle = function(owner,context,parent,cursor,later,hydrate) {
 	coconut_diffing_internal_Parent.call(this,context,parent);
@@ -2902,6 +1949,7 @@ var coconut_diffing_internal_WidgetLifeCycle = function(owner,context,parent,cur
 	later(owner._coco_viewMounted);
 };
 coconut_diffing_internal_WidgetLifeCycle.__name__ = true;
+coconut_diffing_internal_WidgetLifeCycle.__interfaces__ = [tink_state_internal_Invalidatable];
 coconut_diffing_internal_WidgetLifeCycle.__super__ = coconut_diffing_internal_Parent;
 coconut_diffing_internal_WidgetLifeCycle.prototype = $extend(coconut_diffing_internal_Parent.prototype,{
 	poll: function() {
@@ -2945,6 +1993,7 @@ coconut_diffing_internal_WidgetLifeCycle.prototype = $extend(coconut_diffing_int
 		this.owner._coco_lifeCycle = null;
 		return this.rendered.destroy(applicator);
 	}
+	,__class__: coconut_diffing_internal_WidgetLifeCycle
 });
 var coconut_diffing_internal_RWidget = function(parent,v,cursor,later,hydrate) {
 	var context = parent.context;
@@ -2960,6 +2009,7 @@ var coconut_diffing_internal_RWidget = function(parent,v,cursor,later,hydrate) {
 	}
 };
 coconut_diffing_internal_RWidget.__name__ = true;
+coconut_diffing_internal_RWidget.__interfaces__ = [coconut_diffing_internal_RNode];
 coconut_diffing_internal_RWidget.__super__ = coconut_diffing_internal_WidgetLifeCycle;
 coconut_diffing_internal_RWidget.prototype = $extend(coconut_diffing_internal_WidgetLifeCycle.prototype,{
 	update: function(next,cursor,later) {
@@ -2992,6 +2042,7 @@ coconut_diffing_internal_RWidget.prototype = $extend(coconut_diffing_internal_Wi
 		}
 		return coconut_diffing_internal_WidgetLifeCycle.prototype.destroy.call(this,applicator);
 	}
+	,__class__: coconut_diffing_internal_RWidget
 });
 var coconut_diffing_internal_WidgetFactory = function(create,update) {
 	var this1 = coconut_diffing_TypeId.idCounter++;
@@ -3007,12 +2058,20 @@ coconut_diffing_internal_WidgetFactory.prototype = {
 	,update: function(target,next) {
 		this._update(target,next);
 	}
+	,__class__: coconut_diffing_internal_WidgetFactory
+};
+var tink_state_internal_ObservableObject = function() { };
+tink_state_internal_ObservableObject.__name__ = true;
+tink_state_internal_ObservableObject.__isInterface__ = true;
+tink_state_internal_ObservableObject.prototype = {
+	__class__: tink_state_internal_ObservableObject
 };
 var tink_state__$Observable_ConstObservable = function(value,toString) {
 	this.revision = tink_state_internal_Revision._new();
 	this.value = value;
 };
 tink_state__$Observable_ConstObservable.__name__ = true;
+tink_state__$Observable_ConstObservable.__interfaces__ = [tink_state_internal_ObservableObject];
 tink_state__$Observable_ConstObservable.prototype = {
 	getRevision: function() {
 		return this.revision;
@@ -3029,11 +2088,34 @@ tink_state__$Observable_ConstObservable.prototype = {
 	,onInvalidate: function(i) {
 		return null;
 	}
+	,__class__: tink_state__$Observable_ConstObservable
+};
+var tink_core__$Lazy_Computable = function() { };
+tink_core__$Lazy_Computable.__name__ = true;
+tink_core__$Lazy_Computable.__isInterface__ = true;
+tink_core__$Lazy_Computable.prototype = {
+	__class__: tink_core__$Lazy_Computable
+};
+var tink_core__$Lazy_LazyObject = function() { };
+tink_core__$Lazy_LazyObject.__name__ = true;
+tink_core__$Lazy_LazyObject.__isInterface__ = true;
+tink_core__$Lazy_LazyObject.__interfaces__ = [tink_core__$Lazy_Computable];
+tink_core__$Lazy_LazyObject.prototype = {
+	__class__: tink_core__$Lazy_LazyObject
 };
 var tink_core__$Lazy_LazyConst = function(value) {
 	this.value = value;
 };
 tink_core__$Lazy_LazyConst.__name__ = true;
+tink_core__$Lazy_LazyConst.__interfaces__ = [tink_core__$Lazy_LazyObject];
+tink_core__$Lazy_LazyConst.prototype = {
+	get: function() {
+		return this.value;
+	}
+	,compute: function() {
+	}
+	,__class__: tink_core__$Lazy_LazyConst
+};
 var coconut_ui_internal_ImplicitContext = function(parent) {
 	var tmp;
 	if(parent == null) {
@@ -3045,6 +2127,16 @@ var coconut_ui_internal_ImplicitContext = function(parent) {
 	this.parent = tmp;
 };
 coconut_ui_internal_ImplicitContext.__name__ = true;
+coconut_ui_internal_ImplicitContext.prototype = {
+	__class__: coconut_ui_internal_ImplicitContext
+};
+var tink_core_Disposable = function() { };
+tink_core_Disposable.__name__ = true;
+tink_core_Disposable.__isInterface__ = true;
+var tink_core_OwnedDisposable = function() { };
+tink_core_OwnedDisposable.__name__ = true;
+tink_core_OwnedDisposable.__isInterface__ = true;
+tink_core_OwnedDisposable.__interfaces__ = [tink_core_Disposable];
 var tink_state_internal_Invalidator = function() {
 	this.list = new tink_core_CallbackList();
 	var this1 = new Map();
@@ -3052,6 +2144,7 @@ var tink_state_internal_Invalidator = function() {
 	this.revision = tink_state_internal_Revision._new();
 };
 tink_state_internal_Invalidator.__name__ = true;
+tink_state_internal_Invalidator.__interfaces__ = [tink_core_OwnedDisposable];
 tink_state_internal_Invalidator.prototype = {
 	canFire: function() {
 		return this.list.disposeHandlers != null;
@@ -3096,6 +2189,7 @@ tink_state_internal_Invalidator.prototype = {
 		this.revision = tink_state_internal_Revision._new();
 		this.list.invoke(null);
 	}
+	,__class__: tink_state_internal_Invalidator
 };
 var coconut_ui_internal_Slot = function(owner,comparator,defaultData,toString) {
 	var _gthis = this;
@@ -3113,6 +2207,7 @@ var coconut_ui_internal_Slot = function(owner,comparator,defaultData,toString) {
 	};
 };
 coconut_ui_internal_Slot.__name__ = true;
+coconut_ui_internal_Slot.__interfaces__ = [tink_state_internal_ObservableObject,tink_state_internal_Invalidatable];
 coconut_ui_internal_Slot.__super__ = tink_state_internal_Invalidator;
 coconut_ui_internal_Slot.prototype = $extend(tink_state_internal_Invalidator.prototype,{
 	heatup: function() {
@@ -3184,339 +2279,13 @@ coconut_ui_internal_Slot.prototype = $extend(tink_state_internal_Invalidator.pro
 		}
 		this.fire();
 	}
-});
-var coconut_vdom__$Html_Updater = function(unset,rules,getRule) {
-	this.deleters = new Map();
-	this.applicators = new Map();
-	this.unset = unset;
-	this.rules = rules;
-	this.getRule = getRule;
-};
-coconut_vdom__$Html_Updater.__name__ = true;
-coconut_vdom__$Html_Updater.getFields = function(o) {
-	var ret = Object.getOwnPropertyNames(o);
-	switch(ret.length) {
-	case 0:
-		break;
-	case 1:
-		var _g = ret[0];
-		break;
-	case 2:
-		var a = ret[0];
-		var b = ret[1];
-		if(a > b) {
-			ret[0] = b;
-			ret[1] = a;
-		}
-		break;
-	default:
-		ret.sort();
-	}
-	return ret;
-};
-coconut_vdom__$Html_Updater.prototype = {
-	update: function(target,newVal,oldVal) {
-		if(newVal != null) {
-			(this.getApplicator(newVal))(target,newVal,oldVal);
-		}
-		if(oldVal != null) {
-			(this.getDeleter(oldVal,newVal))(target);
-		}
-	}
-	,getApplicator: function(obj) {
-		var _gthis = this;
-		var props = coconut_vdom__$Html_Updater.getFields(obj);
-		var key = props.toString();
-		var apply = this.applicators.get(key);
-		if(apply == null) {
-			var source = "if (old) {";
-			var add = function(prefix) {
-				var _g = 0;
-				while(_g < props.length) {
-					var p = props[_g];
-					++_g;
-					var source1 = source;
-					var source2 = "\n  " + prefix(p);
-					var _g1 = _gthis.getRule(_gthis.rules,p);
-					var source3;
-					if(_g1 == null) {
-						source3 = "if (nu." + p + " == null) { " + _gthis.unset("target",p) + " } else target." + p + " = nu." + p + ";";
-					} else {
-						var rule = _g1;
-						source3 = "this." + rule + "(target, \"" + p + "\", nu." + p + ", old && old." + p + ");";
-					}
-					source = source1 + (source2 + source3);
-				}
-			};
-			add(function(p) {
-				return "if (nu." + p + " !== old." + p + ") ";
-			});
-			source += "\n} else {";
-			add(function(p) {
-				return "";
-			});
-			source += "\n}";
-			apply = new Function("target","nu","old",source).bind(this.rules);
-			this.applicators.set(key,apply);
-		}
-		return apply;
-	}
-	,noop: function(target) {
-	}
-	,getDeleter: function(old,nu) {
-		var _gthis = this;
-		var forFields = function(fields) {
-			var key = fields.toString();
-			var ret = _gthis.deleters.get(key);
-			if(ret == null) {
-				var body = "";
-				var _g = 0;
-				var _g1 = fields;
-				while(_g < _g1.length) {
-					var f = _g1[_g];
-					++_g;
-					var _g2 = _gthis.getRule(_gthis.rules,f);
-					var body1;
-					if(_g2 == null) {
-						body1 = _gthis.unset("target",f);
-					} else {
-						var rule = _g2;
-						body1 = "this." + rule + "(target, \"" + f + "\", null);";
-					}
-					body += "\n" + body1;
-				}
-				var _gthis1 = _gthis.deleters;
-				ret = new Function("target",body).bind(_gthis.rules);
-				_gthis1.set(key,ret);
-			}
-			return ret;
-		};
-		if(nu == null) {
-			return forFields(coconut_vdom__$Html_Updater.getFields(old));
-		} else {
-			var oldFields = coconut_vdom__$Html_Updater.getFields(old);
-			var nuFields = coconut_vdom__$Html_Updater.getFields(nu);
-			var nuKey = nuFields.toString();
-			var oldKey = oldFields.toString();
-			if(nuKey == oldKey) {
-				return $bind(this,this.noop);
-			} else {
-				var key = "" + nuKey + ":" + oldKey;
-				var ret = this.deleters.get(key);
-				if(ret == null) {
-					var tmp = this.deleters;
-					var forFields1 = forFields;
-					var _g = [];
-					var _g1 = 0;
-					while(_g1 < oldFields.length) {
-						var f = oldFields[_g1];
-						++_g1;
-						if(nuFields.indexOf(f) == -1) {
-							_g.push(f);
-						}
-					}
-					ret = forFields1(_g);
-					tmp.set(key,ret);
-				}
-				return ret;
-			}
-		}
-	}
-};
-var coconut_vdom__$Html_Elt = function(tag) {
-	coconut_diffing_Factory.call(this);
-	this.tag = tag.toUpperCase();
-};
-coconut_vdom__$Html_Elt.__name__ = true;
-coconut_vdom__$Html_Elt.hydrateEvents = function(target,attr) {
-	var events = coconut_vdom__$Html_Elt.events;
-	for (var name in attr) {
-      if (name.startsWith("on")) {
-        events.push(name);
-      }
-    }
-	if(events.length > 0) {
-		var handler = target.__eventHandler = { handleEvent : function(e) {
-			this[e.type](e);
-		}};
-		var _g = 0;
-		while(_g < events.length) {
-			var event = events[_g];
-			++_g;
-			var fn = Reflect.field(attr,event);
-			event = HxOverrides.substr(event,2,null);
-			target.addEventListener(event,handler);
-			handler[event] = fn;
-		}
-		events.length = 0;
-	}
-};
-coconut_vdom__$Html_Elt.setAttributes = function(t,nu,old) {
-	coconut_diffing_Properties.set(t,nu,old,function(t,k,v,_) {
-		if(v == null) {
-			t.removeAttribute(k);
-		} else {
-			t.setAttribute(k,v);
-		}
-	});
-};
-coconut_vdom__$Html_Elt.setEvent = function(element,event,newVal,_) {
-	var event1 = HxOverrides.substr(event,2,null);
-	var handler = element.__eventHandler;
-	if(handler == null) {
-		handler = { handleEvent : function(e) {
-			this[e.type](e);
-		}};
-		element.__eventHandler = handler;
-	}
-	if(!Object.prototype.hasOwnProperty.call(handler,event1)) {
-		element.addEventListener(event1,handler);
-	}
-	handler[event1] = newVal == null ? coconut_vdom__$Html_Elt.noop : newVal;
-};
-coconut_vdom__$Html_Elt.updateStyle = function(target,newVal,oldVal) {
-	coconut_vdom__$Html_Elt.STYLES.update(target,newVal,oldVal);
-};
-coconut_vdom__$Html_Elt.noop = function(_) {
-};
-coconut_vdom__$Html_Elt.__super__ = coconut_diffing_Factory;
-coconut_vdom__$Html_Elt.prototype = $extend(coconut_diffing_Factory.prototype,{
-	create: function(attr) {
-		var ret = window.document.createElement(this.tag);
-		coconut_vdom__$Html_Elt.ELEMENTS.update(ret,attr,null);
-		return ret;
-	}
-	,adopt: function(node) {
-		if(node.nodeName == this.tag) {
-			return node;
-		} else {
-			return null;
-		}
-	}
-	,hydrate: function(target,attr) {
-		coconut_vdom__$Html_Elt.hydrateEvents(target,attr);
-	}
-	,update: function(target,nu,old) {
-		coconut_vdom__$Html_Elt.ELEMENTS.update(target,nu,old);
-	}
-});
-var coconut_vdom__$Html_Svg = function(tag) {
-	coconut_diffing_Factory.call(this);
-	this.tag = tag.toLowerCase();
-};
-coconut_vdom__$Html_Svg.__name__ = true;
-coconut_vdom__$Html_Svg.setSvgProp = function(element,name,newVal,oldVal) {
-	var _hx_tmp;
-	switch(name) {
-	case "attributes":
-		coconut_vdom__$Html_Elt.setAttributes(element,newVal,oldVal);
-		break;
-	case "className":
-		coconut_vdom__$Html_Svg.setSvgProp(element,"class",newVal,oldVal);
-		break;
-	case "style":
-		_hx_tmp = StringTools.startsWith(name,"on");
-		if(_hx_tmp == true) {
-			coconut_vdom__$Html_Elt.setEvent(element,name,newVal,oldVal);
-		} else {
-			coconut_vdom__$Html_Elt.updateStyle(element.style,newVal,oldVal);
-		}
-		break;
-	case "xmlns":
-		break;
-	default:
-		_hx_tmp = StringTools.startsWith(name,"on");
-		if(_hx_tmp == true) {
-			coconut_vdom__$Html_Elt.setEvent(element,name,newVal,oldVal);
-		} else if(newVal == null) {
-			element.removeAttribute(name);
-		} else {
-			element.setAttribute(name,newVal);
-		}
-	}
-};
-coconut_vdom__$Html_Svg.__super__ = coconut_diffing_Factory;
-coconut_vdom__$Html_Svg.prototype = $extend(coconut_diffing_Factory.prototype,{
-	adopt: function(node) {
-		if(node.namespaceURI == "http://www.w3.org/2000/svg" && node.nodeName == this.tag) {
-			return node;
-		} else {
-			return null;
-		}
-	}
-	,hydrate: function(target,attr) {
-		coconut_vdom__$Html_Elt.hydrateEvents(target,attr);
-	}
-	,create: function(attr) {
-		var ret = window.document.createElementNS("http://www.w3.org/2000/svg",this.tag);
-		this.update(ret,attr,null);
-		return ret;
-	}
-	,update: function(target,nu,old) {
-		coconut_diffing_Properties.set(target,nu,old,coconut_vdom__$Html_Svg.setSvgProp);
-	}
-});
-var coconut_vdom_Html = function() { };
-coconut_vdom_Html.__name__ = true;
-coconut_vdom_Html.nodeType = function(tag) {
-	var _g = coconut_vdom_Html.nodeTypes.h[tag];
-	var tmp;
-	if(_g == null) {
-		var this1 = coconut_vdom_Html.nodeTypes;
-		var v;
-		var _g1 = tag.split(":");
-		switch(_g1.length) {
-		case 1:
-			var _g2 = _g1[0];
-			v = new coconut_vdom__$Html_Elt(tag);
-			break;
-		case 2:
-			var _g2 = _g1[0];
-			if(_g2 == "svg") {
-				var tag1 = _g1[1];
-				v = new coconut_vdom__$Html_Svg(tag1);
-			} else {
-				var unknown = _g2;
-				throw haxe_Exception.thrown("unknown namespace " + unknown);
-			}
-			break;
-		default:
-			throw haxe_Exception.thrown("invalid tag " + tag);
-		}
-		this1.h[tag] = v;
-		tmp = v;
-	} else {
-		var v = _g;
-		tmp = v;
-	}
-	return tmp;
-};
-var coconut_vdom__$Html_Text = function() {
-	coconut_diffing_Factory.call(this);
-};
-coconut_vdom__$Html_Text.__name__ = true;
-coconut_vdom__$Html_Text.__super__ = coconut_diffing_Factory;
-coconut_vdom__$Html_Text.prototype = $extend(coconut_diffing_Factory.prototype,{
-	adopt: function(target) {
-		if(target.nodeType == 3) {
-			return target;
-		} else {
-			return null;
-		}
-	}
-	,create: function(text) {
-		return window.document.createTextNode(text);
-	}
-	,update: function(target,nu,old) {
-		if(nu != old) {
-			target.textContent = nu;
-		}
-	}
+	,__class__: coconut_ui_internal_Slot
 });
 var coconut_vdom__$Renderer_DomBackend = function() {
 	this.markers = [];
 };
 coconut_vdom__$Renderer_DomBackend.__name__ = true;
+coconut_vdom__$Renderer_DomBackend.__interfaces__ = [coconut_diffing_Applicator];
 coconut_vdom__$Renderer_DomBackend.prototype = {
 	createMarker: function() {
 		var _g = this.markers.pop();
@@ -3536,6 +2305,7 @@ coconut_vdom__$Renderer_DomBackend.prototype = {
 	,children: function(parent) {
 		return new coconut_vdom__$Renderer_DomCursor(this,parent,parent.firstChild);
 	}
+	,__class__: coconut_vdom__$Renderer_DomBackend
 };
 var coconut_vdom_Renderer = function() { };
 coconut_vdom_Renderer.__name__ = true;
@@ -3594,7 +2364,14 @@ coconut_vdom__$Renderer_DomCursor.prototype = $extend(coconut_diffing_Cursor.pro
 		}
 		this.cur = v;
 	}
+	,__class__: coconut_vdom__$Renderer_DomCursor
 });
+var haxe_IMap = function() { };
+haxe_IMap.__name__ = true;
+haxe_IMap.__isInterface__ = true;
+haxe_IMap.prototype = {
+	__class__: haxe_IMap
+};
 var haxe_Exception = function(message,previous,native) {
 	Error.call(this,message);
 	this.message = message;
@@ -3602,15 +2379,6 @@ var haxe_Exception = function(message,previous,native) {
 	this.__nativeException = native != null ? native : this;
 };
 haxe_Exception.__name__ = true;
-haxe_Exception.caught = function(value) {
-	if(((value) instanceof haxe_Exception)) {
-		return value;
-	} else if(((value) instanceof Error)) {
-		return new haxe_Exception(value.message,null,value);
-	} else {
-		return new haxe_ValueException(value,null,value);
-	}
-};
 haxe_Exception.thrown = function(value) {
 	if(((value) instanceof haxe_Exception)) {
 		return value.get_native();
@@ -3623,13 +2391,10 @@ haxe_Exception.thrown = function(value) {
 };
 haxe_Exception.__super__ = Error;
 haxe_Exception.prototype = $extend(Error.prototype,{
-	unwrap: function() {
+	get_native: function() {
 		return this.__nativeException;
 	}
-	,get_native: function() {
-		return this.__nativeException;
-	}
-	,__properties__: {get_native:"get_native"}
+	,__class__: haxe_Exception
 });
 var haxe_Timer = function(time_ms) {
 	var me = this;
@@ -3656,6 +2421,7 @@ haxe_Timer.prototype = {
 	}
 	,run: function() {
 	}
+	,__class__: haxe_Timer
 };
 var haxe_ValueException = function(value,previous,native) {
 	haxe_Exception.call(this,String(value),previous,native);
@@ -3664,14 +2430,13 @@ var haxe_ValueException = function(value,previous,native) {
 haxe_ValueException.__name__ = true;
 haxe_ValueException.__super__ = haxe_Exception;
 haxe_ValueException.prototype = $extend(haxe_Exception.prototype,{
-	unwrap: function() {
-		return this.value;
-	}
+	__class__: haxe_ValueException
 });
 var haxe_ds_IntMap = function() {
 	this.h = { };
 };
 haxe_ds_IntMap.__name__ = true;
+haxe_ds_IntMap.__interfaces__ = [haxe_IMap];
 haxe_ds_IntMap.prototype = {
 	get: function(key) {
 		return this.h[key];
@@ -3681,11 +2446,13 @@ haxe_ds_IntMap.prototype = {
 		for( var key in this.h ) if(this.h.hasOwnProperty(key)) a.push(+key);
 		return new haxe_iterators_ArrayIterator(a);
 	}
+	,__class__: haxe_ds_IntMap
 };
 var haxe_ds_ObjectMap = function() {
 	this.h = { __keys__ : { }};
 };
 haxe_ds_ObjectMap.__name__ = true;
+haxe_ds_ObjectMap.__interfaces__ = [haxe_IMap];
 haxe_ds_ObjectMap.prototype = {
 	set: function(key,value) {
 		var id = key.__id__;
@@ -3707,6 +2474,7 @@ haxe_ds_ObjectMap.prototype = {
 		}
 		return new haxe_iterators_ArrayIterator(a);
 	}
+	,__class__: haxe_ds_ObjectMap
 };
 var haxe_ds_Option = $hxEnums["haxe.ds.Option"] = { __ename__:true,__constructs__:null
 	,Some: ($_=function(v) { return {_hx_index:0,v:v,__enum__:"haxe.ds.Option",toString:$estr}; },$_._hx_name="Some",$_.__params__ = ["v"],$_)
@@ -3717,6 +2485,7 @@ var haxe_ds_StringMap = function() {
 	this.h = Object.create(null);
 };
 haxe_ds_StringMap.__name__ = true;
+haxe_ds_StringMap.__interfaces__ = [haxe_IMap];
 haxe_ds_StringMap.prototype = {
 	get: function(key) {
 		return this.h[key];
@@ -3724,6 +2493,7 @@ haxe_ds_StringMap.prototype = {
 	,keys: function() {
 		return new haxe_ds__$StringMap_StringMapKeyIterator(this.h);
 	}
+	,__class__: haxe_ds_StringMap
 };
 var haxe_ds__$StringMap_StringMapKeyIterator = function(h) {
 	this.h = h;
@@ -3739,6 +2509,7 @@ haxe_ds__$StringMap_StringMapKeyIterator.prototype = {
 	,next: function() {
 		return this.keys[this.current++];
 	}
+	,__class__: haxe_ds__$StringMap_StringMapKeyIterator
 };
 var haxe_iterators_ArrayIterator = function(array) {
 	this.current = 0;
@@ -3752,6 +2523,7 @@ haxe_iterators_ArrayIterator.prototype = {
 	,next: function() {
 		return this.array[this.current++];
 	}
+	,__class__: haxe_iterators_ArrayIterator
 };
 var haxe_iterators_MapKeyValueIterator = function(map) {
 	this.map = map;
@@ -3766,9 +2538,27 @@ haxe_iterators_MapKeyValueIterator.prototype = {
 		var key = this.keys.next();
 		return { value : this.map.get(key), key : key};
 	}
+	,__class__: haxe_iterators_MapKeyValueIterator
 };
 var js_Boot = function() { };
 js_Boot.__name__ = true;
+js_Boot.getClass = function(o) {
+	if(o == null) {
+		return null;
+	} else if(((o) instanceof Array)) {
+		return Array;
+	} else {
+		var cl = o.__class__;
+		if(cl != null) {
+			return cl;
+		}
+		var name = js_Boot.__nativeClassName(o);
+		if(name != null) {
+			return js_Boot.__resolveNativeClass(name);
+		}
+		return null;
+	}
+};
 js_Boot.__string_rec = function(o,s) {
 	if(o == null) {
 		return "null";
@@ -3861,65 +2651,116 @@ js_Boot.__string_rec = function(o,s) {
 		return String(o);
 	}
 };
-var signals_Signal = $hx_exports["Signal"] = function(fireOnAdd) {
-	if(fireOnAdd == null) {
-		fireOnAdd = false;
+js_Boot.__interfLoop = function(cc,cl) {
+	if(cc == null) {
+		return false;
 	}
-	signals_BaseSignal.call(this,fireOnAdd);
-};
-signals_Signal.__name__ = true;
-signals_Signal.__super__ = signals_BaseSignal;
-signals_Signal.prototype = $extend(signals_BaseSignal.prototype,{
-	dispatch: function() {
-		if(this.mute) {
-			return;
-		}
-		if(this.requiresSort) {
-			this.callbacks.sort($bind(this,this.sortCallbacks));
-			this.requiresSort = false;
-		}
-		var i = 0;
-		while(i < this.callbacks.length) {
-			var callbackData = this.callbacks[i];
-			if(callbackData.repeat < 0 || callbackData.callCount <= callbackData.repeat) {
-				this.toTrigger.push(callbackData);
-			} else {
-				callbackData.remove = true;
-			}
-			callbackData.callCount++;
-			++i;
-		}
-		var j = this.callbacks.length - 1;
-		while(j >= 0) {
-			var callbackData = this.callbacks[j];
-			if(callbackData.remove == true) {
-				this.callbacks.splice(j,1);
-			}
-			--j;
-		}
+	if(cc == cl) {
+		return true;
+	}
+	var intf = cc.__interfaces__;
+	if(intf != null) {
 		var _g = 0;
-		var _g1 = this.toTrigger.length;
+		var _g1 = intf.length;
 		while(_g < _g1) {
-			var l = _g++;
-			if(this.toTrigger[l] != null) {
-				this.toTrigger[l].dispatchMethod(this.toTrigger[l].callback,this.toTrigger[l]);
+			var i = _g++;
+			var i1 = intf[i];
+			if(i1 == cl || js_Boot.__interfLoop(i1,cl)) {
+				return true;
 			}
 		}
-		this.toTrigger = [];
 	}
-	,dispatchCallback: function(callback,callbackData) {
-		callback();
+	return js_Boot.__interfLoop(cc.__super__,cl);
+};
+js_Boot.__instanceof = function(o,cl) {
+	if(cl == null) {
+		return false;
 	}
-	,dispatchCallback1: function(callback,callbackData) {
-		throw haxe_Exception.thrown("Use Signal 1");
+	switch(cl) {
+	case Array:
+		return ((o) instanceof Array);
+	case Bool:
+		return typeof(o) == "boolean";
+	case Dynamic:
+		return o != null;
+	case Float:
+		return typeof(o) == "number";
+	case Int:
+		if(typeof(o) == "number") {
+			return ((o | 0) === o);
+		} else {
+			return false;
+		}
+		break;
+	case String:
+		return typeof(o) == "string";
+	default:
+		if(o != null) {
+			if(typeof(cl) == "function") {
+				if(js_Boot.__downcastCheck(o,cl)) {
+					return true;
+				}
+			} else if(typeof(cl) == "object" && js_Boot.__isNativeObj(cl)) {
+				if(((o) instanceof cl)) {
+					return true;
+				}
+			}
+		} else {
+			return false;
+		}
+		if(cl == Class ? o.__name__ != null : false) {
+			return true;
+		}
+		if(cl == Enum ? o.__ename__ != null : false) {
+			return true;
+		}
+		return o.__enum__ != null ? $hxEnums[o.__enum__] == cl : false;
 	}
-	,dispatchCallback2: function(callback,callbackData) {
-		throw haxe_Exception.thrown("Use Signal 2");
+};
+js_Boot.__downcastCheck = function(o,cl) {
+	if(!((o) instanceof cl)) {
+		if(cl.__isInterface__) {
+			return js_Boot.__interfLoop(js_Boot.getClass(o),cl);
+		} else {
+			return false;
+		}
+	} else {
+		return true;
 	}
-	,dispatchCallback3: function(callback,callbackData) {
-		throw haxe_Exception.thrown("Use Signal 3");
+};
+js_Boot.__cast = function(o,t) {
+	if(o == null || js_Boot.__instanceof(o,t)) {
+		return o;
+	} else {
+		throw haxe_Exception.thrown("Cannot cast " + Std.string(o) + " to " + Std.string(t));
 	}
-});
+};
+js_Boot.__nativeClassName = function(o) {
+	var name = js_Boot.__toStr.call(o).slice(8,-1);
+	if(name == "Object" || name == "Function" || name == "Math" || name == "JSON") {
+		return null;
+	}
+	return name;
+};
+js_Boot.__isNativeObj = function(o) {
+	return js_Boot.__nativeClassName(o) != null;
+};
+js_Boot.__resolveNativeClass = function(name) {
+	return $global[name];
+};
+var tink_Anon = function() { };
+tink_Anon.__name__ = true;
+tink_Anon.getExistentFields = function(o) {
+	var ret = { };
+	var _g = 0;
+	var _g1 = Reflect.fields(o);
+	while(_g < _g1.length) {
+		var f = _g1[_g];
+		++_g;
+		ret[f] = true;
+	}
+	return ret;
+};
 var tink_core_Callback = {};
 tink_core_Callback.invoke = function(this1,data) {
 	if(tink_core_Callback.depth < 500) {
@@ -3935,10 +2776,30 @@ tink_core_Callback.invoke = function(this1,data) {
 tink_core_Callback.defer = function(f) {
 	haxe_Timer.delay(f,0);
 };
+var tink_core_LinkObject = function() { };
+tink_core_LinkObject.__name__ = true;
+tink_core_LinkObject.__isInterface__ = true;
+tink_core_LinkObject.prototype = {
+	__class__: tink_core_LinkObject
+};
+var tink_core_CallbackLinkRef = function() {
+};
+tink_core_CallbackLinkRef.__name__ = true;
+tink_core_CallbackLinkRef.__interfaces__ = [tink_core_LinkObject];
+tink_core_CallbackLinkRef.prototype = {
+	cancel: function() {
+		var this1 = this.link;
+		if(this1 != null) {
+			this1.cancel();
+		}
+	}
+	,__class__: tink_core_CallbackLinkRef
+};
 var tink_core_SimpleLink = function(f) {
 	this.f = f;
 };
 tink_core_SimpleLink.__name__ = true;
+tink_core_SimpleLink.__interfaces__ = [tink_core_LinkObject];
 tink_core_SimpleLink.prototype = {
 	cancel: function() {
 		if(this.f != null) {
@@ -3946,6 +2807,7 @@ tink_core_SimpleLink.prototype = {
 			this.f = null;
 		}
 	}
+	,__class__: tink_core_SimpleLink
 };
 var tink_core__$Callback_LinkPair = function(a,b) {
 	this.dissolved = false;
@@ -3953,6 +2815,7 @@ var tink_core__$Callback_LinkPair = function(a,b) {
 	this.b = b;
 };
 tink_core__$Callback_LinkPair.__name__ = true;
+tink_core__$Callback_LinkPair.__interfaces__ = [tink_core_LinkObject];
 tink_core__$Callback_LinkPair.prototype = {
 	cancel: function() {
 		if(!this.dissolved) {
@@ -3969,6 +2832,7 @@ tink_core__$Callback_LinkPair.prototype = {
 			this.b = null;
 		}
 	}
+	,__class__: tink_core__$Callback_LinkPair
 };
 var tink_core__$Callback_ListCell = function(cb,list) {
 	if(cb == null) {
@@ -3978,6 +2842,7 @@ var tink_core__$Callback_ListCell = function(cb,list) {
 	this.list = list;
 };
 tink_core__$Callback_ListCell.__name__ = true;
+tink_core__$Callback_ListCell.__interfaces__ = [tink_core_LinkObject];
 tink_core__$Callback_ListCell.prototype = {
 	cancel: function() {
 		if(this.list != null) {
@@ -3989,12 +2854,14 @@ tink_core__$Callback_ListCell.prototype = {
 			}
 		}
 	}
+	,__class__: tink_core__$Callback_ListCell
 };
 var tink_core_SimpleDisposable = function(dispose) {
 	this.disposeHandlers = [];
 	this.f = dispose;
 };
 tink_core_SimpleDisposable.__name__ = true;
+tink_core_SimpleDisposable.__interfaces__ = [tink_core_OwnedDisposable];
 tink_core_SimpleDisposable.noop = function() {
 };
 tink_core_SimpleDisposable.prototype = {
@@ -4014,6 +2881,7 @@ tink_core_SimpleDisposable.prototype = {
 			}
 		}
 	}
+	,__class__: tink_core_SimpleDisposable
 };
 var tink_core_CallbackList = function(destructive) {
 	if(destructive == null) {
@@ -4184,6 +3052,7 @@ tink_core_CallbackList.prototype = $extend(tink_core_SimpleDisposable.prototype,
 	,resize: function(length) {
 		this.cells.length = length;
 	}
+	,__class__: tink_core_CallbackList
 });
 var tink_core_TypedError = function() { };
 tink_core_TypedError.__name__ = true;
@@ -4191,14 +3060,196 @@ tink_core_TypedError.tryFinally = function(f,cleanup) {
 	try { return f(); } finally { cleanup(); }
 	return null;
 };
-var tink_domspec_ClassName = {};
-tink_domspec_ClassName.ofString = function(s) {
-	if(s == null) {
-		return null;
-	} else {
-		var this1 = StringTools.trim(s);
-		return this1;
+var tink_core__$Future_FutureObject = function() { };
+tink_core__$Future_FutureObject.__name__ = true;
+tink_core__$Future_FutureObject.__isInterface__ = true;
+tink_core__$Future_FutureObject.prototype = {
+	__class__: tink_core__$Future_FutureObject
+};
+var tink_core__$Future_NeverFuture = function() {
+};
+tink_core__$Future_NeverFuture.__name__ = true;
+tink_core__$Future_NeverFuture.__interfaces__ = [tink_core__$Future_FutureObject];
+tink_core__$Future_NeverFuture.prototype = {
+	getStatus: function() {
+		return tink_core_FutureStatus.NeverEver;
 	}
+	,handle: function(callback) {
+		return null;
+	}
+	,__class__: tink_core__$Future_NeverFuture
+};
+var tink_core__$Future_SyncFuture = function(value) {
+	this.value = value;
+};
+tink_core__$Future_SyncFuture.__name__ = true;
+tink_core__$Future_SyncFuture.__interfaces__ = [tink_core__$Future_FutureObject];
+tink_core__$Future_SyncFuture.prototype = {
+	getStatus: function() {
+		return tink_core_FutureStatus.Ready(this.value);
+	}
+	,handle: function(cb) {
+		tink_core_Callback.invoke(cb,tink_core_Lazy.get(this.value));
+		return null;
+	}
+	,__class__: tink_core__$Future_SyncFuture
+};
+var tink_core_Future = {};
+tink_core_Future.flatMap = function(this1,next,gather) {
+	var _g = this1.getStatus();
+	switch(_g._hx_index) {
+	case 3:
+		var l = _g.result;
+		return new tink_core__$Future_SuspendableFuture(function(fire) {
+			return next(tink_core_Lazy.get(l)).handle(function(v) {
+				fire(v);
+			});
+		});
+	case 4:
+		return tink_core_Future.NEVER;
+	default:
+		return new tink_core__$Future_SuspendableFuture(function($yield) {
+			var inner = new tink_core_CallbackLinkRef();
+			var outer = this1.handle(function(v) {
+				var outer = next(v).handle($yield);
+				inner.link = outer;
+			});
+			return new tink_core__$Callback_LinkPair(outer,inner);
+		});
+	}
+};
+var tink_core_FutureStatus = $hxEnums["tink.core.FutureStatus"] = { __ename__:true,__constructs__:null
+	,Suspended: {_hx_name:"Suspended",_hx_index:0,__enum__:"tink.core.FutureStatus",toString:$estr}
+	,Awaited: {_hx_name:"Awaited",_hx_index:1,__enum__:"tink.core.FutureStatus",toString:$estr}
+	,EagerlyAwaited: {_hx_name:"EagerlyAwaited",_hx_index:2,__enum__:"tink.core.FutureStatus",toString:$estr}
+	,Ready: ($_=function(result) { return {_hx_index:3,result:result,__enum__:"tink.core.FutureStatus",toString:$estr}; },$_._hx_name="Ready",$_.__params__ = ["result"],$_)
+	,NeverEver: {_hx_name:"NeverEver",_hx_index:4,__enum__:"tink.core.FutureStatus",toString:$estr}
+};
+tink_core_FutureStatus.__constructs__ = [tink_core_FutureStatus.Suspended,tink_core_FutureStatus.Awaited,tink_core_FutureStatus.EagerlyAwaited,tink_core_FutureStatus.Ready,tink_core_FutureStatus.NeverEver];
+var tink_core__$Future_SuspendableFuture = function(wakeup) {
+	this.status = tink_core_FutureStatus.Suspended;
+	var _gthis = this;
+	this.wakeup = wakeup;
+	this.callbacks = new tink_core_CallbackList(true);
+	this.callbacks.ondrain = function() {
+		if(_gthis.status == tink_core_FutureStatus.Awaited) {
+			_gthis.status = tink_core_FutureStatus.Suspended;
+			var this1 = _gthis.link;
+			if(this1 != null) {
+				this1.cancel();
+			}
+			_gthis.link = null;
+		}
+	};
+	this.callbacks.onfill = function() {
+		if(_gthis.status == tink_core_FutureStatus.Suspended) {
+			_gthis.status = tink_core_FutureStatus.Awaited;
+			_gthis.arm();
+		}
+	};
+};
+tink_core__$Future_SuspendableFuture.__name__ = true;
+tink_core__$Future_SuspendableFuture.__interfaces__ = [tink_core__$Future_FutureObject];
+tink_core__$Future_SuspendableFuture.prototype = {
+	getStatus: function() {
+		return this.status;
+	}
+	,trigger: function(value) {
+		var _g = this.status;
+		if(_g._hx_index == 3) {
+			var _g1 = _g.result;
+		} else {
+			this.status = tink_core_FutureStatus.Ready(new tink_core__$Lazy_LazyConst(value));
+			var link = this.link;
+			this.link = null;
+			this.wakeup = null;
+			this.callbacks.invoke(value);
+			if(link != null) {
+				link.cancel();
+			}
+		}
+	}
+	,handle: function(callback) {
+		var _g = this.status;
+		if(_g._hx_index == 3) {
+			var result = _g.result;
+			tink_core_Callback.invoke(callback,tink_core_Lazy.get(result));
+			return null;
+		} else {
+			var _this = this.callbacks;
+			if(_this.disposeHandlers == null) {
+				return null;
+			} else {
+				var node = new tink_core__$Callback_ListCell(callback,_this);
+				_this.cells.push(node);
+				if(_this.used++ == 0) {
+					var fn = _this.onfill;
+					if(tink_core_Callback.depth < 500) {
+						tink_core_Callback.depth++;
+						fn();
+						tink_core_Callback.depth--;
+					} else {
+						tink_core_Callback.defer(fn);
+					}
+				}
+				return node;
+			}
+		}
+	}
+	,arm: function() {
+		var _gthis = this;
+		this.link = this.wakeup(function(x) {
+			_gthis.trigger(x);
+		});
+	}
+	,__class__: tink_core__$Future_SuspendableFuture
+};
+var tink_core_Lazy = {};
+tink_core_Lazy.get = function(this1) {
+	this1.compute();
+	return this1.get();
+};
+var tink_core_NamedWith = function(name,value) {
+	this.name = name;
+	this.value = value;
+};
+tink_core_NamedWith.__name__ = true;
+tink_core_NamedWith.prototype = {
+	__class__: tink_core_NamedWith
+};
+var tink_core_Outcome = $hxEnums["tink.core.Outcome"] = { __ename__:true,__constructs__:null
+	,Success: ($_=function(data) { return {_hx_index:0,data:data,__enum__:"tink.core.Outcome",toString:$estr}; },$_._hx_name="Success",$_.__params__ = ["data"],$_)
+	,Failure: ($_=function(failure) { return {_hx_index:1,failure:failure,__enum__:"tink.core.Outcome",toString:$estr}; },$_._hx_name="Failure",$_.__params__ = ["failure"],$_)
+};
+tink_core_Outcome.__constructs__ = [tink_core_Outcome.Success,tink_core_Outcome.Failure];
+var tink_core_Promise = {};
+tink_core_Promise.next = function(this1,f,gather) {
+	return tink_core_Future.flatMap(this1,function(o) {
+		switch(o._hx_index) {
+		case 0:
+			var d = o.data;
+			return f(d);
+		case 1:
+			var f1 = o.failure;
+			return new tink_core__$Future_SyncFuture(new tink_core__$Lazy_LazyConst(tink_core_Outcome.Failure(f1)));
+		}
+	});
+};
+var tink_core_Signal = {};
+tink_core_Signal.trigger = function() {
+	return new tink_core_SignalTrigger();
+};
+var tink_core__$Signal_SignalObject = function() { };
+tink_core__$Signal_SignalObject.__name__ = true;
+tink_core__$Signal_SignalObject.__isInterface__ = true;
+tink_core__$Signal_SignalObject.__interfaces__ = [tink_core_Disposable];
+var tink_core_SignalTrigger = function() {
+	this.handlers = new tink_core_CallbackList();
+};
+tink_core_SignalTrigger.__name__ = true;
+tink_core_SignalTrigger.__interfaces__ = [tink_core_OwnedDisposable,tink_core__$Signal_SignalObject];
+tink_core_SignalTrigger.prototype = {
+	__class__: tink_core_SignalTrigger
 };
 var tink_pure_NodeIterator = function(node) {
 	this.list = [];
@@ -4226,11 +3277,19 @@ tink_pure_NodeIterator.prototype = {
 			return next.value;
 		}
 	}
+	,__class__: tink_pure_NodeIterator
+};
+var tink_state__$Scheduler_SchedulerObject = function() { };
+tink_state__$Scheduler_SchedulerObject.__name__ = true;
+tink_state__$Scheduler_SchedulerObject.__isInterface__ = true;
+tink_state__$Scheduler_SchedulerObject.prototype = {
+	__class__: tink_state__$Scheduler_SchedulerObject
 };
 var tink_state__$Scheduler_DirectScheduler = function() {
 	this.queue = null;
 };
 tink_state__$Scheduler_DirectScheduler.__name__ = true;
+tink_state__$Scheduler_DirectScheduler.__interfaces__ = [tink_state__$Scheduler_SchedulerObject];
 tink_state__$Scheduler_DirectScheduler.prototype = {
 	schedule: function(s) {
 		if(this.queue != null) {
@@ -4243,6 +3302,7 @@ tink_state__$Scheduler_DirectScheduler.prototype = {
 			});
 		}
 	}
+	,__class__: tink_state__$Scheduler_DirectScheduler
 };
 var tink_state_Scheduler = {};
 tink_state_Scheduler.batched = function(run) {
@@ -4286,6 +3346,7 @@ var tink_state__$Scheduler_BatchScheduler = function(run) {
 	this.run = run;
 };
 tink_state__$Scheduler_BatchScheduler.__name__ = true;
+tink_state__$Scheduler_BatchScheduler.__interfaces__ = [tink_state__$Scheduler_SchedulerObject];
 tink_state__$Scheduler_BatchScheduler.prototype = {
 	progress: function(maxSeconds) {
 		var _gthis = this;
@@ -4323,9 +3384,9 @@ tink_state__$Scheduler_BatchScheduler.prototype = {
 			this.run(this,false);
 		}
 	}
+	,__class__: tink_state__$Scheduler_BatchScheduler
 };
 var tink_state_Observable = {};
-tink_state_Observable.__properties__ = {get_value:"get_value"};
 tink_state_Observable.get_value = function(this1) {
 	var ret = this1.getValue();
 	if(tink_state_internal_AutoObservable.cur != null && this1.canFire()) {
@@ -4333,9 +3394,22 @@ tink_state_Observable.get_value = function(this1) {
 	}
 	return ret;
 };
+tink_state_Observable.map = function(this1,f) {
+	return new tink_state_internal_AutoObservable(tink_state_internal__$AutoObservable_Computation.sync(function() {
+		var value = tink_state_Observable.get_value(this1);
+		return f(value);
+	}),null);
+};
+var tink_state_Schedulable = function() { };
+tink_state_Schedulable.__name__ = true;
+tink_state_Schedulable.__isInterface__ = true;
+tink_state_Schedulable.prototype = {
+	__class__: tink_state_Schedulable
+};
 var tink_state__$Scheduler_JustOnce = function() {
 };
 tink_state__$Scheduler_JustOnce.__name__ = true;
+tink_state__$Scheduler_JustOnce.__interfaces__ = [tink_state_Schedulable];
 tink_state__$Scheduler_JustOnce.call = function(f) {
 	var ret;
 	var _g = tink_state__$Scheduler_JustOnce.pool.pop();
@@ -4355,9 +3429,9 @@ tink_state__$Scheduler_JustOnce.prototype = {
 		tink_state__$Scheduler_JustOnce.pool.push(this);
 		f();
 	}
+	,__class__: tink_state__$Scheduler_JustOnce
 };
 var tink_state_State = {};
-tink_state_State.__properties__ = {get_value:"get_value"};
 tink_state_State.get_value = function(this1) {
 	var ret = this1.getValue();
 	if(tink_state_internal_AutoObservable.cur != null && this1.canFire()) {
@@ -4374,6 +3448,13 @@ tink_state_State._new = function(value,comparator,guard,onStatusChange) {
 		this1 = new tink_state__$State_GuardedState(value,guard,comparator,onStatusChange);
 	}
 	return this1;
+};
+var tink_state__$State_StateObject = function() { };
+tink_state__$State_StateObject.__name__ = true;
+tink_state__$State_StateObject.__isInterface__ = true;
+tink_state__$State_StateObject.__interfaces__ = [tink_state_internal_ObservableObject];
+tink_state__$State_StateObject.prototype = {
+	__class__: tink_state__$State_StateObject
 };
 var tink_state__$State_SimpleState = function(value,comparator,onStatusChange) {
 	tink_state_internal_Invalidator.call(this);
@@ -4395,6 +3476,7 @@ var tink_state__$State_SimpleState = function(value,comparator,onStatusChange) {
 	}
 };
 tink_state__$State_SimpleState.__name__ = true;
+tink_state__$State_SimpleState.__interfaces__ = [tink_state__$State_StateObject];
 tink_state__$State_SimpleState.__super__ = tink_state_internal_Invalidator;
 tink_state__$State_SimpleState.prototype = $extend(tink_state_internal_Invalidator.prototype,{
 	getValue: function() {
@@ -4422,6 +3504,7 @@ tink_state__$State_SimpleState.prototype = $extend(tink_state_internal_Invalidat
 		}
 		return value;
 	}
+	,__class__: tink_state__$State_SimpleState
 });
 var tink_state__$State_GuardedState = function(value,guard,comparator,onStatusChange) {
 	this.guardApplied = false;
@@ -4446,6 +3529,7 @@ tink_state__$State_GuardedState.prototype = $extend(tink_state__$State_SimpleSta
 		}
 		return tink_state__$State_SimpleState.prototype.set.call(this,this.guard(value));
 	}
+	,__class__: tink_state__$State_GuardedState
 });
 var tink_state_internal__$AutoObservable_Computation = {};
 tink_state_internal__$AutoObservable_Computation.sync = function(f) {
@@ -4465,6 +3549,15 @@ var tink_state_internal__$AutoObservable_SubscriptionTo = function(source,cur,ow
 	}
 };
 tink_state_internal__$AutoObservable_SubscriptionTo.__name__ = true;
+tink_state_internal__$AutoObservable_SubscriptionTo.prototype = {
+	__class__: tink_state_internal__$AutoObservable_SubscriptionTo
+};
+var tink_state_internal__$AutoObservable_Derived = function() { };
+tink_state_internal__$AutoObservable_Derived.__name__ = true;
+tink_state_internal__$AutoObservable_Derived.__isInterface__ = true;
+tink_state_internal__$AutoObservable_Derived.prototype = {
+	__class__: tink_state_internal__$AutoObservable_Derived
+};
 var tink_state_internal_AutoObservable = function(compute,comparator) {
 	this.sync = true;
 	this.waiting = false;
@@ -4508,6 +3601,7 @@ var tink_state_internal_AutoObservable = function(compute,comparator) {
 	};
 };
 tink_state_internal_AutoObservable.__name__ = true;
+tink_state_internal_AutoObservable.__interfaces__ = [tink_state_internal_ObservableObject,tink_state_internal__$AutoObservable_Derived,tink_state_internal_Invalidatable];
 tink_state_internal_AutoObservable.__super__ = tink_state_internal_Invalidator;
 tink_state_internal_AutoObservable.prototype = $extend(tink_state_internal_Invalidator.prototype,{
 	getRevision: function() {
@@ -4665,6 +3759,7 @@ tink_state_internal_AutoObservable.prototype = $extend(tink_state_internal_Inval
 			this.fire();
 		}
 	}
+	,__class__: tink_state_internal_AutoObservable
 });
 var tink_state_internal_Revision = {};
 tink_state_internal_Revision._new = function() {
@@ -4672,37 +3767,31 @@ tink_state_internal_Revision._new = function() {
 	var this2 = this1.counter += 1.0;
 	return this2;
 };
+var tink_state_internal_Transform = {};
+tink_state_internal_Transform.plain = function(f) {
+	var this1 = f;
+	return this1;
+};
 function $bind(o,m) { if( m == null ) return null; if( m.__id__ == null ) m.__id__ = $global.$haxeUID++; var f; if( o.hx__closures__ == null ) o.hx__closures__ = {}; else f = o.hx__closures__[m.__id__]; if( f == null ) { f = m.bind(o); o.hx__closures__[m.__id__] = f; } return f; }
 $global.$haxeUID |= 0;
 if(typeof(performance) != "undefined" ? typeof(performance.now) == "function" : false) {
 	HxOverrides.now = performance.now.bind(performance);
 }
+String.prototype.__class__ = String;
 String.__name__ = true;
 Array.__name__ = true;
-Object.defineProperties(signals_BaseSignal.prototype,{ "numListeners" : { get : function () { return this.get_numListeners (); }, set : function (v) { return this.set_numListeners (v); }}, "hasListeners" : { get : function () { return this.get_hasListeners (); }, set : function (v) { return this.set_hasListeners (v); }}});
+var Int = { };
+var Dynamic = { };
+var Float = Number;
+var Bool = Boolean;
+var Class = { };
+var Enum = { };
 coconut_diffing_TypeId.idCounter = 0;
 haxe_ds_ObjectMap.count = 0;
 js_Boot.__toStr = ({ }).toString;
 tink_state_internal_Revision.counter = .0;
+client_WorkItemType.AllTypes = ["Game","Tech","Tech Art","Art"];
 tink_pure__$List_Node.EMPTY = [];
-client_data_Data.$name = client_model_util_LocalizedString.fromString("Erik Kubiak");
-client_data_Data.title = client_model_util_LocalizedString.fromArrayOfString(["Développeur de Jeux polyvalent","Versatile Game Programmer"]);
-client_data_Showoff.deadsigns = tink_pure_List.fromArray([{ title : client_model_util_LocalizedString.fromArrayOfString(["Post Process d'UI sur une ancienne télévision","Old TV UI Post Process"]), link : "./images/showoff/deadsigns/ui_postprocess_compare-min.png", description : client_model_util_TextData.fromMultipleString(["Ici, l'objectif était de pouvoir déformer l'interface comme sur une ancienne télévision. " + "Il fallait donc pouvoir appliquer un post-process sur une UI ce qui est impossible directement sur Unity. " + "J'ai donc développé un outil qui permet de facilement configurer l'application d'un Post Process sur une UI placée en 3D. " + "Cela m'a permis de travailler sur deux domaines passionnants: la programmation graphique et le tooling. ","There, the goal was to deform the user interface like an old TV." + "Thus, we need to apply a post-process on the UI which is impossible directly in Unity." + "So, I developed a tool which allows us to configure easily the post process application on a 3D UI." + "It allowed me to work on two passionnatin fields: graphic programming and tooling. "])}]);
-client_data_Showoff.pristimantis = tink_pure_List.fromArray([{ title : client_model_util_LocalizedString.fromString("Dokki - Match3"), link : "./images/showoff/dokki/match3.gif", description : client_model_util_TextData.fromMultipleString(["Ce match3 est l'un des jeux que j'ai eu l'occasion de réaliser. J'étais à la fois architecte et principal développeur. " + "L'architecture était complexe car beaucoup de fonctionnalité se retrouvait aussi dans l'autre jeux. " + "J'ai alors pensé le tout comme une suite de paquets dépendants entre eux. " + "J'ai pu travailler beaucoup de choses, notamment du gameplay. " + "Les animations que vous voyez ici ont été implementés par mes soins en utilisant des scripts et des animations curves, " + "le tout sous la direction artistique du client.","This match3 is one of two game I had the opportunity to work on. I was both architect and main developer. " + "The architecture was quiet complex because a lot of features can be find in the other game. " + "I thought those projects as a list of pacakages depending on each others. " + "I had work on multiple things, especially gameplay. " + "The animations were implemented by me, combining scripts and animation curves, while following the artistic direction of the client. "])},{ title : client_model_util_LocalizedString.fromArrayOfString(["Aura - Une application de Réalité Augmentée","Aura - An Augmented Reality Application"]), link : "https://www.youtube.com/embed/VwwSeBVBqFo", description : client_model_util_TextData.fromMultipleString(["L'autre projet sur lequel j'ai travaillé était particulièrement intéressant. " + "C'est une application de RA de vulgarisation artistique à l'échelle d'une ville. " + "Il y a plusieurs points dans la ville de Bayeux ou vous pouvez scanner le batiment puis voir une oeuvre d'art. " + "Ce projet a été particulièrement intéressant car j'ai du travailler sur le base de code d'autres. " + "L'optimisation était aussi très importante vu la consommation mémoire de la réalité augmentée. ","The other project I had to work on was pretty interesting. It is an AR application to popularize art at city scale. " + "There is multiple spots in the city of Bayeux where you can scan the building and then see an art piece. " + "This project was particularly interesting as I had to work on other code base. " + "The optimisation was also really important as Augmented Reality can be really memory consuming. "]), type : client_model_util_MediaType.Video},{ title : client_model_util_LocalizedString.fromString("Dokki- Tetris Like"), link : "./images/showoff/dokki/tetris.gif", description : client_model_util_TextData.fromMultipleString(["L'autre jeu à réaliser était un tetris avec en plus l'intégration de la physique. " + "Ce projet a été particulièrement intéressant car cela m'a permis de me rendre compte que ma séparation en paquet m'a fait gagner beaucoup de temps. " + "Ce soucis du code propre m'a permis de développer ce jeu beaucoup plus rapidement. " + "J'ai alors pu me concentrer sur les algorithmes à developper pour le gameplay. ","The other game was a tetris with physics. " + "This project was particularly interesting because it showed me that speration using packages saved me a lot of time. " + "This interest for nice code allowed me to develop that game faster. " + "So, I focused on the algorithm proper to the gameplay."])}]);
-client_data_Experiences.value = { header : client_model_util_LocalizedString.fromArrayOfString(["Expériences","Experiences"]), items : tink_pure_List.fromArray([haxe_ds_Either.Left({ value : { header : client_model_util_LocalizedString.fromArrayOfString(["Développeur Unity","Unity Developer"]), subheaders : tink_pure_List.fromArray([client_model_util_LocalizedString.fromArrayOfString(["Graphique, Gameplay & Outils","Graphic, Gameplay & Tools"])]), dates : { start : client_model_util_DateYear.fromString("Jan. 2021"), end : client_model_util_DateYear.fromMultipleString(["Auj.","Now"])}, content : tink_pure_List.fromArray([client_model_util_TextData.fromMultipleString(["Sur mon temps libre, je travaille avec deux autres personnes sur le jeu Dead Signs. " + "C'est un jeu de tir à la première personne ou il faut se défendre contre des vagues ennemies. " + "Prenant ses racines dans la culture corse, vous pourrez trouver le folklore représenté harmonieusement. ","On my free time, I work with two other persons on the video game Dead Signs. " + "It is a first person shooter where you need to defend against waves of enemies. " + "With roots in the Corsican culture, you can find the folklore harmoniously represented."]),client_model_util_TextData.fromMultipleString(["J'y développe des outils en gardant en tête l'expérience utilisateur afin que tous puissent les utiliser facilement. " + "Je travaille aussi sur la programmation graphique ou je produis principalement des shaders, " + "mais je code aussi des fonctionnalités graphiques pour Unity HDRP (Custom Pass, etc.). " + "Je n'oublie pas pour autant le gameplay et j'en développe très régulièrement. " + "Je garde alors à l'esprit maintenabilité, testabilité et extensibilité. " + "C'est un projet particulièrement passionnant qui me permet de confronter mes compétences à d'autres domaines " + " et d'apprendre de nouvelles technologies.","I develop tools while keeping in my mind user experience so that all can easily use them. " + "I also work on graphic programming where I mainly produce shaders, " + "but I also code graphic features for Unity HDRP (Custom Pass, etc.). " + "I don't forget gameplay et I often develop some. " + "I keep in mind maintainability, testability and extensibility. " + "It is a passionnating project which allows me to confront my skills with other fields and learn new technologies. "])]), links : tink_pure_List.fromArray([{ name : client_model_util_LocalizedString.fromArrayOfString(["Site Web","Website"]), link : "https://www.deadsigns.fr/"},{ name : client_model_util_LocalizedString.fromString("Steam"), link : "https://www.deadsigns.fr/"},{ name : client_model_util_LocalizedString.fromString("LinkedIn"), link : "https://www.linkedin.com/company/deadsigns"}])}, medias : client_data_Showoff.deadsigns}),haxe_ds_Either.Left({ value : { header : client_model_util_LocalizedString.fromArrayOfString(["Ingénieur Développeur Logiciel","Software Developer Engineer"]), dates : { start : client_model_util_DateYear.fromString("Jan. 2021"), end : client_model_util_DateYear.fromMultipleString(["Auj.","Now"])}, place : client_model_util_LocalizedString.fromString("Climax Studio Ltd"), content : tink_pure_List.fromArray([client_model_util_TextData.fromMultipleString(["Depuis que j'ai commencé, je travaille sur un jeu AAA top secret. Malheureusement, je ne peux pas en dire plus 😥","Since I started, I work on a secret AAA game. Unfortunately, I can't say more 😥"])]), links : tink_pure_List.fromArray([{ name : client_model_util_LocalizedString.fromArrayOfString(["Site Web","Website"]), link : "https://www.climaxstudios.com/"},{ name : client_model_util_LocalizedString.fromString("LinkedIn"), link : "https://www.linkedin.com/company/climax"}])}}),haxe_ds_Either.Right({ first : { header : client_model_util_LocalizedString.fromArrayOfString(["Enseignant Vacataire","Supply Teacher"]), dates : { start : client_model_util_DateYear.fromMultipleString(["Fev. 2021","Feb. 2021"]), end : client_model_util_DateYear.fromMultipleString(["Auj.","Now"])}, place : client_model_util_LocalizedString.fromString("IUT de Saint-Lo"), content : tink_pure_List.fromArray([client_model_util_TextData.fromMultipleString(["J'enseigne les bonnes pratiques du développement sous Unity à des étudiants de deuxième année. " + "Pour cela, j'applique une méthodologie à base de projets tout en les accompagnant. " + "Ils ont deux projets à réaliser: un de Réalité Augmentée ou ils doivent proposer une application de Marketing, " + "un de jeu-vidéo ou ils doivent en produire un de A à Z. " + "Étant donné le nombre de projets possibles, je dois toujours être très alerte et à jour dans les technologies " + "afin de pouvoir satisfaire leurs curiosité.","I am teaching the good practices of development with Unity to second year students. " + "To this end, I use a project based methodology while supporting them. " + "They have to project to work on: an Augmented Reality one where they have to propose a marketing app, " + "a video-game project where they have create to create one from scratch. " + "Given the number of possible projects, I always need to be alert and up to date with technologies " + "to satisfy their curiosity."])])}, second : { header : client_model_util_LocalizedString.fromArrayOfString(["Enseignant Vacataire","Supply Teacher"]), dates : { start : client_model_util_DateYear.fromString("Oct. 2020"), end : client_model_util_DateYear.fromMultipleString(["Auj.","Now"])}, place : client_model_util_LocalizedString.fromString("Ensicaen"), content : tink_pure_List.fromArray([client_model_util_TextData.fromMultipleString(["J'enseigne les fondamentaux de la Réalité Virtuelle en cours magistraux à des étudiants de dernière année. " + "J'enseigne aussi les fondamentaux d'Unity tout en utilisant une méthodologie à base de projets.","I am teaching the fundamentals of Virtual Reality to last year students in lectures. " + "I am also teaching the fundamentals of Unity while using a project based methodology."])])}}),haxe_ds_Either.Left({ value : { header : client_model_util_LocalizedString.fromArrayOfString(["Développeur Unity","Unity Developer"]), subheaders : tink_pure_List.fromArray([client_model_util_LocalizedString.fromArrayOfString(["Stagiaire ➔ Lead Développeur","Intern ➔ Lead Developer"])]), dates : { start : client_model_util_DateYear.fromString("Mar. 2020"), end : client_model_util_DateYear.fromString("Jan. 2021")}, place : client_model_util_LocalizedString.fromString("Pristimantis"), content : tink_pure_List.fromArray([client_model_util_TextData.fromMultipleString(["Pristimantis est une entreprise de conception d'expériences intéractives. " + "Cela va du jeu \"classique\" à des expériences en RA/RV. " + "ils utilisent principalement Unity et mes compétences ont été particulièrement remarquées pendant mon stage, " + "car on m'a proposé un poste de Lead Développeur. " + "En plus de mon travail de développeur, je devais alors aider les autres membres de l'équipe en les guidant. " + "Ce travail m'a offert l'opportunité de travailler sur deux projets très intéressants: une application de RA et des jeux hyper-casuals. " + "J'étais alors le principal interlocuteur auprès du client ce qui m'a permis de devenir co-chef de projet.","Pristimantis is a company which develops interactive experiences. " + "It goes from \"classical\" games to AR/VR experiences. " + "They mainly use Unity and my skills have been noticed as I have been hired as a Lead Developer. " + "In addition to my developer work, I had to help other members by guiding them. " + "This work offered me the opportunity to work on two interesting projects: one AR application and hyper-casual games. " + "I was the main contact for the client, so it allowed to become a co-project manager. "])]), links : tink_pure_List.fromArray([{ name : client_model_util_LocalizedString.fromArrayOfString(["Site Web","Website"]), link : "https://www.pristimantis.com/"},{ name : client_model_util_LocalizedString.fromString("Youtube"), link : "https://www.youtube.com/channel/UCGgF5PdmuZVHSQt3A41R44Q"},{ name : client_model_util_LocalizedString.fromString("LinkedIn"), link : "https://www.linkedin.com/company/pristimantis-sas/"}])}, medias : client_data_Showoff.pristimantis})])};
-client_data_Formation.value = { header : client_model_util_LocalizedString.fromArrayOfString(["Formations","Education"]), items : tink_pure_List.fromArray([{ header : client_model_util_LocalizedString.fromArrayOfString(["Diplôme d'Ingénieur","Engineer Diploma"]), subheaders : tink_pure_List.fromArray([client_model_util_LocalizedString.fromArrayOfString(["en Informatique","in Computer Sciences (Master of Science)"]),client_model_util_LocalizedString.fromArrayOfString(["Spécialité Image, Son & Machine Learning","Image, Sound, & Machine Learning speciality"])]), dates : { start : client_model_util_DateYear.fromInt(2017), end : client_model_util_DateYear.fromInt(2020)}, place : client_model_util_LocalizedString.fromString("Ensicaen"), content : tink_pure_List.fromArray([client_model_util_TextData.fromMultipleString(["Durant ce cursus, j'ai pu approfondir ce que j'avais vu précédemment (programmation, gestion de projet, etc.). " + "Ça a été aussi l'occasion de découvrir de nouvelles choses: le génie logiciel, l'algèbre linéaire, la synthèse d'image, etc. " + "J'ai tout particulièrement aimer la synthèse d'image qui m'a permis de découvrir le milieu passionnant de la programmation graphique. " + "J'y ai découvert OpenGL, Unity et aussi les fondements du Raytracing en programmant un basique moteur de rendu en C++. " + "Cette formation a parfaitement complété mes compétences et me permet d'appréhender aujourd'hui la plupart des problèmes... " + "Mais j'apprends toujours de nouvelles choses car j'adore ça!","During this course, I refined what I had seen before (programming, project management, etc.). " + "It was also the opportunity to discover new things such as software engineering, linear algebra, image synthesis, etc. " + "I particularly loved image synthesis which allowed me to discover the thrilling world of graphic programming. " + "I discovered OpenGl, Unity and the foundations of Raytracing by programming a basic renderer in C++. " + "This training perfectly completed my skills and now allows me to apprehend most of the problems... " + "But I am always learning new things as I love it!"])])},{ header : client_model_util_LocalizedString.fromArrayOfString(["DUT Informatique","Associate Degree In Computer Sciences"]), dates : { start : client_model_util_DateYear.fromInt(2015), end : client_model_util_DateYear.fromInt(2017)}, place : client_model_util_LocalizedString.fromString("IUT du Havre"), content : tink_pure_List.fromArray([client_model_util_TextData.fromMultipleString(["Cette formation a été un réel bond dans la passion qu'est l'informatique. " + "J'ai pu découvrir un grand nombre de technologies et appliquer des compétences telle que la gestion de projet. " + "Cette formation est particulièrement enrichissante, car en plus du stage, les professeurs nous mettent régulièrement en conditions professionnelles. " + "Elle m'a beaucoup appris mais m'a surtout montré que l'informatique est ma voie.","This course was a big leap into the passion of computer sciences. " + "I was able to learn a lot of technologies and apply skills such as project management. " + "It was particularly enriching, in addition to the internship, the teachers often train us in professionnal conditions. " + "This course has taught me a lot, but above all it showed me that computer sciences is my path."])])}])};
-client_data_Medias.value = { header : client_model_util_LocalizedString.fromArrayOfString(["Médias","Medias"]), items : tink_pure_List.fromArray([{ link : { name : client_model_util_LocalizedString.fromString("LinkedIn"), link : "https://www.linkedin.com/in/erik-kubiak/"}, logoPath : "./images/logo/linkedin.svg"},{ link : { name : client_model_util_LocalizedString.fromString("GitHub"), link : "https://github.com/ErikRikoo"}, logoPath : "./images/logo/github.svg"},{ link : { name : client_model_util_LocalizedString.fromString("Twitter"), link : "https://twitter.com/KubiakErik"}, logoPath : "./images/logo/twitter.svg"},{ link : { name : client_model_util_LocalizedString.fromString("erikkubiak@gmail.com")}, logoPath : "./images/logo/email.svg"}])};
-client_data_Presentation.value = { name : client_data_Data.$name, title : client_data_Data.title, content : tink_pure_List.fromArray([client_model_util_LocalizedString.fromArrayOfString(["Je suis un développeur de jeu (principalement Unity) qui adore travailler sur le graphisme, le gameplay ou sur des outils. " + "Je suis actuellement développeur C++ chez Climax Studios, sur un projet AAA secret. " + "Le jeu-vidéo est pour moi une passion, ainsi, sur mon temps personnel je travaille sur le jeu Dead Signs avec deux autres personnes. " + "J'y suis principalement développeur graphique et outils mais je travaille régulièrement sur du Gameplay. ","I am a Game Developer (mainly Unity) who loves working on Graphics, Gameplay and Tooling. " + "Currently, I am a C++ developer for Climax Studios, on a secret AAA project. " + "Video game is a passion for me, thus, on my free time I work on Dead Signs with two other persons. " + "I am mainly the Graphic and Tool developer but I often work on Gameplay."]),client_model_util_LocalizedString.fromArrayOfString(["Je suis un développeur autonome et très polyvalent. J'adore tout particlièrement aider les autres personnes. " + "Apprendre de nouvelle choses me passionne et je n'hésite pas à repousser mes limites. " + "La preuve ? Je sors de mes compétences pour apprendre doucement la modélisation 3D.","I am an autonomous and really versatile developer. I love particularly helping others. " + "Learning new things thrill me and I never hesitate to push my boundaries. " + "The proof? I am currently learning 3D modeling."])])};
-client_data_Skills.value = { items : tink_pure_List.fromArray([{ header : client_model_util_LocalizedString.fromArrayOfString(["Compétences professionnelles ","Hard Skills"]), skills : tink_pure_List.fromArray([client_model_util_LocalizedString.fromString("C/C++, C#, Java, Haxe"),client_model_util_LocalizedString.fromString("HLSL, OpenGL"),client_model_util_LocalizedString.fromString("Python, Shell"),client_model_util_LocalizedString.fromString("React, NodeJS, HTML/CSS"),client_model_util_LocalizedString.fromArrayOfString(["Unity3D (Outils, SRP, etc.)","Unity3D (Tooling, SRP, etc.)"]),client_model_util_LocalizedString.fromString("Git, Perforce"),client_model_util_LocalizedString.fromString("Gitlab CI/CD, Jenkins"),client_model_util_LocalizedString.fromArrayOfString(["Géométrie 3D","3D Geometry"]),client_model_util_LocalizedString.fromArrayOfString(["Algèbre Linéaire","Linear Algebra"]),client_model_util_LocalizedString.fromArrayOfString(["Algorithmique Avancée, IA","Advanced Algorithmic, AI"]),client_model_util_LocalizedString.fromString("TDD"),client_model_util_LocalizedString.fromArrayOfString(["Méthodologie Agile","Agile Methodology"])])},{ header : client_model_util_LocalizedString.fromArrayOfString(["Compétences personnelles","Soft Skills"]), skills : tink_pure_List.fromArray([client_model_util_LocalizedString.fromString("Sociable"),client_model_util_LocalizedString.fromArrayOfString(["Polyvalent","Versatile"]),client_model_util_LocalizedString.fromArrayOfString(["Autonome","Autonomous"]),client_model_util_LocalizedString.fromArrayOfString(["Pédagogue","Pedagogist"]),client_model_util_LocalizedString.fromArrayOfString(["Créatif","Creative"]),client_model_util_LocalizedString.fromArrayOfString(["Rigoureux","Rigourous"]),client_model_util_LocalizedString.fromArrayOfString(["Dynamique","Dynamic"]),client_model_util_LocalizedString.fromArrayOfString(["Réactif","Reactive"])])}])};
-client_utilities_AppEvents.onScroll = new signals_Signal1();
-coconut_diffing_Root.byParent = new haxe_ds_ObjectMap();
-coconut_diffing_internal_VEmpty.TYPE = (function($this) {
-	var $r;
-	var this1 = coconut_diffing_TypeId.idCounter++;
-	$r = this1;
-	return $r;
-}(this));
-coconut_ui_internal_ImplicitContext.ORPHAN = new tink_core__$Lazy_LazyConst(null);
 coconut_vdom__$Html_Elt.events = [];
 coconut_vdom__$Html_Elt.ELEMENTS = new coconut_vdom__$Html_Updater(function(target,field) {
 	return "" + target + "." + field + " = null";
@@ -4737,27 +3826,38 @@ coconut_vdom__$Html_Elt.STYLES = new coconut_vdom__$Html_Updater(function(target
 	return null;
 });
 coconut_vdom_Html.nodeTypes = new haxe_ds_StringMap();
-coconut_vdom_Html.UL = coconut_vdom_Html.nodeType("ul");
 coconut_vdom_Html.SPAN = coconut_vdom_Html.nodeType("span");
-coconut_vdom_Html.P = coconut_vdom_Html.nodeType("p");
-coconut_vdom_Html.NAV = coconut_vdom_Html.nodeType("nav");
-coconut_vdom_Html.LI = coconut_vdom_Html.nodeType("li");
+coconut_vdom_Html.LABEL = coconut_vdom_Html.nodeType("label");
+coconut_vdom_Html.INPUT = coconut_vdom_Html.nodeType("input");
 coconut_vdom_Html.IMG = coconut_vdom_Html.nodeType("img");
-coconut_vdom_Html.IFRAME = coconut_vdom_Html.nodeType("iframe");
-coconut_vdom_Html.H5 = coconut_vdom_Html.nodeType("h5");
-coconut_vdom_Html.H4 = coconut_vdom_Html.nodeType("h4");
-coconut_vdom_Html.H3 = coconut_vdom_Html.nodeType("h3");
-coconut_vdom_Html.H1 = coconut_vdom_Html.nodeType("h1");
 coconut_vdom_Html.DIV = coconut_vdom_Html.nodeType("div");
-coconut_vdom_Html.BUTTON = coconut_vdom_Html.nodeType("button");
 coconut_vdom_Html.A = coconut_vdom_Html.nodeType("a");
 coconut_vdom__$Html_Text.inst = new coconut_vdom__$Html_Text();
+client_WorkData.allWorkItem = client_WorkData.sortNMapIndex([{ title : "Age of Empire 4", path : "./images/showoff/aoe4/aoe4_main.jpg", type : tink_pure_List.fromArray(["Game","Tech"]), value : 1, display : function(d) {
+	return client_WorkData.defaultDisplay(d.title);
+}, index : 0},{ title : "Custom Engine", path : "./images/presentation-background.png", type : tink_pure_List.fromArray(["Tech","Game"]), value : 0, display : function(d) {
+	return client_WorkData.defaultDisplay(d.title);
+}, index : 0},{ title : "Experiments", path : "./images/showoff/experiments/vine.jpg", type : tink_pure_List.fromArray(["Tech Art"]), value : 0, display : function(d) {
+	return client_WorkData.defaultDisplay(d.title);
+}, index : 0},{ title : "Illustrations", path : "./images/showoff/illustration/black-meowgic-main.jpg", type : tink_pure_List.fromArray(["Art"]), value : 2, display : function(d) {
+	return client_WorkData.defaultDisplay(d.title);
+}, index : 0}]);
+client_WorkData.mainWorkItem = [client_WorkData.fromTitle("Age of Empire 4"),client_WorkData.fromTitle("Custom Engine"),client_WorkData.fromTitle("Experiments"),client_WorkData.fromTitle("Illustrations")];
+coconut_diffing_Root.byParent = new haxe_ds_ObjectMap();
+coconut_diffing_internal_VEmpty.TYPE = (function($this) {
+	var $r;
+	var this1 = coconut_diffing_TypeId.idCounter++;
+	$r = this1;
+	return $r;
+}(this));
+coconut_ui_internal_ImplicitContext.ORPHAN = new tink_core__$Lazy_LazyConst(null);
 coconut_vdom_Renderer.BACKEND = new coconut_vdom__$Renderer_DomBackend();
 tink_core_Callback.depth = 0;
+tink_core_Future.NEVER = new tink_core__$Future_NeverFuture();
 tink_state_Scheduler.direct = new tink_state__$Scheduler_DirectScheduler();
 tink_state_Observable.MAX_ITERATIONS = 100;
 tink_state_Observable.scheduler = tink_state_Scheduler.batched(tink_state_Scheduler.batcher());
 tink_state_Observable.isUpdating = false;
 tink_state__$Scheduler_JustOnce.pool = [];
 client_home_Main.main();
-})(typeof exports != "undefined" ? exports : typeof window != "undefined" ? window : typeof self != "undefined" ? self : this, typeof window != "undefined" ? window : typeof global != "undefined" ? global : typeof self != "undefined" ? self : this);
+})(typeof window != "undefined" ? window : typeof global != "undefined" ? global : typeof self != "undefined" ? self : this);
