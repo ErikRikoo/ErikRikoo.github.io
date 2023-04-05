@@ -251,8 +251,9 @@ body > svg {
     transform: translateX(-50%);
 
     padding-bottom: 2rem;
+    width: 100%;
     height: 100%;
-    width: auto;
+    object-fit: cover;
 }
 
 .work-item > .title-holder {
@@ -277,6 +278,32 @@ body > svg {
     color: white;
     transition: clip-path var(--highlight-anim-duration);
     clip-path: polygon(0 0, 0 0, 0 100%, 0 100%);
+}
+
+.work-item-gif-element {
+    display: none;
+}
+
+.work-item:hover .work-item-gif-element {
+    display: inline;
+    z-index: 1;
+    animation-name: displayAtTheEnd;
+    animation-duration: var(--highlight-anim-duration);
+    animation-fill-mode: forwards;
+}
+
+@keyframes displayAtTheEnd {
+    0% {
+        opacity: 0;
+    }
+
+    99% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
 }
 
 .work-item:hover .title-holder.highlighted {
@@ -329,8 +356,9 @@ body > svg {
 }
 
 #all-work-items {
+    width: 100%;
     display: flex;
-    justify-content: center;
+    justify-content: flex;
     align-items: flex-start;
     flex-direction: row;
     flex-flow: row wrap;
@@ -343,6 +371,7 @@ body > svg {
 }
 
 #all-work-filter-holder {
+    width: 100%;
     height: 5rem;
     display: flex;
     justify-content: center;
@@ -351,6 +380,7 @@ body > svg {
 }
 
 #all-work-filter-inputs {
+    width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -366,6 +396,7 @@ body > svg {
 
 #all-checkbox {
     margin-right: 3rem;
+    flex-shrink: 0;
 }
 
 
@@ -412,7 +443,7 @@ body > svg {
     width: 100vw;
     height: 100vh;
     z-index: 1000;
-    bottom: 0;
+    top: 0;
     left: 0;
     right: 0;
 
@@ -423,6 +454,8 @@ body > svg {
 }
 
 #pop-up {
+    position: relative;
+    overflow-y: auto;
     width: 90%;
     height: 100%;
     /*background-color: var(--main-lit-color);*/
@@ -462,10 +495,24 @@ body > svg {
 }
 
 #pop-up-visual-header {
-    padding: 1rem;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: column;
+    padding: 0;
     width: 70%;
     aspect-ratio: 16/9;
     background-color: var(--background-very-dark);
+}
+
+#pop-up-visual-header > img, #pop-up-visual-header > iframe {
+    max-width: 100% !important;
+    max-height: 100% !important;
+
+}
+#pop-up-visual-header > iframe {
+    width: 100% !important;
+    height: 100% !important;
 }
 
 #pop-up-title {
@@ -476,4 +523,27 @@ body > svg {
     padding: 1rem;
     overflow-y: auto;
     width: 100%;
+    color: white;
+}
+
+#pop-up-text-content iframe {
+    margin: 1rem auto 1rem auto;
+}
+
+#pop-up-text-content iframe {
+    margin: 1rem auto 1rem auto;
+}
+
+iframe {
+    border: 0;
+}
+
+a {
+    color: white;
+    font-weight: 900;
+}
+
+a:hover {
+    color: white;
+    text-decoration: underline;
 }

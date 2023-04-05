@@ -34,6 +34,9 @@
 
     #presentation-background {
         max-height: 50%;
+        background-image: url(../images/presentation-background-mobile.jpg);
+        background-size: 150%;
+        background-position-y: -100%;
     }
 
     .presentation-phone-content {
@@ -148,4 +151,30 @@
         aspect-ratio: 16/9;
         background-color: var(--background-very-dark);
     }
+
+    body {
+        scroll-snap-type: y mandatory;
+    }
+
+    #presentation-holder {
+        scroll-snap-align: start;
+    }
+
+    #main-work-holder {
+        scroll-snap-align: start;
+    }
+
+    #all-work-holder {
+        scroll-snap-align: start;
+    }
+
+    #main-work-item-display {
+        scroll-snap-type: x mandatory;
+        scroll-padding: 50%;
+    }
+
+    #main-work-item-display > .main-work-item-holder {
+        scroll-snap-align: start;
+    }
+
 }
