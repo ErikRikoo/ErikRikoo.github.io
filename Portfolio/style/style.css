@@ -171,8 +171,14 @@ body > svg {
     color: var(--text-color);
 }
 
+@media screen and (min-aspect-ratio: 5/4) {
+    .description{
+        height: 40% !important;
+    }
+}
+
 .description{
-    height: 40% !important;
+
     text-align: justify;
     padding-right: 1.75rem;
     overflow-y: auto;
