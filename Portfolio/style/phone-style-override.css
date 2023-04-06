@@ -134,10 +134,23 @@
         flex-direction: column;
     }
 
+    .filter-checkbox .title-text {
+        width: auto;
+    }
+
+    #all-work-filter-inputs > * {
+        margin-right: 1rem;
+    }
+
+    #all-checkbox {
+        margin-right: 2rem;        
+    }
+
     #all-work-items > .main-work-item-holder {
         aspect-ratio: 3 / 4;
-        height: 33vh;
-        max-width: 33vh;
+        width: 45%;
+        margin: auto;
+        height: auto;
         margin: 2px;
     }
 
