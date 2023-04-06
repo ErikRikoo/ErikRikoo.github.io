@@ -1125,15 +1125,16 @@ client_view_MainWorkView.prototype = $extend(coconut_vdom_View.prototype,{
 	}
 	,render: function() {
 		var hxxMeta = { };
-		var __r = [];
 		var hxxMeta1 = { };
+		var __r = [];
+		var hxxMeta2 = { };
 		var __r1 = [];
 		var _g = 0;
 		var _g1 = client_WorkData.mainWorkItem;
 		while(_g < _g1.length) {
 			var d = [_g1[_g]];
 			++_g;
-			var hxxMeta2 = { };
+			var hxxMeta3 = { };
 			var attr = { className : tink_domspec_ClassName.ofString("main-work-item-holder"), onclick : (function(_this,d) {
 				return function(event) {
 					_this[0].onCurrentItemChanged(d[0].overridenItem);
@@ -1159,21 +1160,22 @@ client_view_MainWorkView.prototype = $extend(coconut_vdom_View.prototype,{
 				};
 			})(d)),null);
 			var children3 = [client_view_WorkItem.fromHxx({ },{ title : children, imagePath : children1, hasGif : children2})];
-			__r1.push(coconut_vdom_Html.DIV.vnode(attr,hxxMeta2.key,hxxMeta2.ref,children3));
+			__r1.push(coconut_vdom_Html.DIV.vnode(attr,hxxMeta3.key,hxxMeta3.ref,children3));
 		}
-		var hxxMeta2 = { };
+		var hxxMeta3 = { };
 		var attr = { className : tink_domspec_ClassName.ofString("main-work-item-holder"), onclick : $bind(this,this.onMoreAsked)};
 		var children = new tink_state__$Observable_ConstObservable("More...");
 		var children1 = new tink_state__$Observable_ConstObservable("./images/plus.svg");
 		var children2 = [client_view_WorkItem.fromHxx({ },{ title : children, imagePath : children1, hasGif : new tink_state__$Observable_ConstObservable(false)})];
-		__r1.push(coconut_vdom_Html.DIV.vnode(attr,hxxMeta2.key,hxxMeta2.ref,children2));
-		__r.push(coconut_vdom_Html.DIV.vnode({ id : "main-work-item-display"},hxxMeta1.key,hxxMeta1.ref,__r1));
-		var hxxMeta1 = { };
-		var attr = { id : "main-work-controller", className : tink_domspec_ClassName.ofString("full-width"), onclick : $bind(this,this.onMoreAsked)};
+		__r1.push(coconut_vdom_Html.DIV.vnode(attr,hxxMeta3.key,hxxMeta3.ref,children2));
+		__r.push(coconut_vdom_Html.DIV.vnode({ id : "main-work-item-display"},hxxMeta2.key,hxxMeta2.ref,__r1));
 		var hxxMeta2 = { };
-		var children = [coconut_vdom_Html.SPAN.vnode({ className : tink_domspec_ClassName.ofString("arrow bouncing-top")},hxxMeta2.key,hxxMeta2.ref,null)];
-		__r.push(coconut_vdom_Html.DIV.vnode(attr,hxxMeta1.key,hxxMeta1.ref,children));
-		return coconut_vdom_Html.DIV.vnode({ id : "main-work-holder"},hxxMeta.key,hxxMeta.ref,__r);
+		var attr = { id : "main-work-controller", className : tink_domspec_ClassName.ofString("full-width"), onclick : $bind(this,this.onMoreAsked)};
+		var hxxMeta3 = { };
+		var children = [coconut_vdom_Html.SPAN.vnode({ className : tink_domspec_ClassName.ofString("arrow bouncing-top")},hxxMeta3.key,hxxMeta3.ref,null)];
+		__r.push(coconut_vdom_Html.DIV.vnode(attr,hxxMeta2.key,hxxMeta2.ref,children));
+		var children = [coconut_vdom_Html.DIV.vnode({ id : "main-work-secondary-holder"},hxxMeta1.key,hxxMeta1.ref,__r)];
+		return coconut_vdom_Html.DIV.vnode({ id : "main-work-holder"},hxxMeta.key,hxxMeta.ref,children);
 	}
 	,__initAttributes: function(attributes) {
 		this.__coco_onMoreAsked.setData(attributes.onMoreAsked);

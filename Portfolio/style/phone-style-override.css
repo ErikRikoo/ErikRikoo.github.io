@@ -87,6 +87,11 @@
         margin: 5vh 0 5vh 0;
     }
 
+    #main-work-secondary-holder {
+        height: auto;
+        width: auto;
+    }
+
     #main-work-item-display {
         height: 100%;
         min-width: 100%;
@@ -99,7 +104,7 @@
     }
 
     #main-work-holder .main-work-item-holder {
-        height: 25vh;
+        height: 30vh;
         display: flex;
         justify-content: center;
         align-items: center;
