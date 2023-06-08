@@ -3868,7 +3868,43 @@ coconut_vdom_Html.BR = coconut_vdom_Html.nodeType("br");
 coconut_vdom_Html.B = coconut_vdom_Html.nodeType("b");
 coconut_vdom_Html.A = coconut_vdom_Html.nodeType("a");
 coconut_vdom__$Html_Text.inst = new coconut_vdom__$Html_Text();
-client_WorkData.allWorkItem = client_WorkData.sortNMapIndex([{ title : "Age of Empire 4", path : "./images/showoff/aoe4/aoe4_main.jpg", type : tink_pure_List.fromArray(["Game","Tech"]), value : 1, display : function(d) {
+client_WorkData.allWorkItem = client_WorkData.sortNMapIndex([{ title : "Balance of Power", path : "./images/showoff/balance-of-power/balance-of-power.png", type : tink_pure_List.fromArray(["Game","Tech"]), value : -1, display : function(d) {
+	var d1 = d.title;
+	var hxxMeta = { };
+	var __r = [];
+	var tmp = coconut_vdom_Html.IFRAME.vnode({ width : 1000, height : 1434, src : "https://www.youtube.com/embed/VDaQ-bodBNg", title : "Balance of Power - Gameplay Trailer", allow : "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share", allowFullscreen : true},hxxMeta.key,hxxMeta.ref,__r);
+	var hxxMeta = { };
+	var __r = [];
+	__r.push(coconut_vdom__$Html_Text.inst.vnode("This game was created during the 2 Technically 2 Jam with 8 other person (all informations are on the itch page).\r\n                        The theme was \"Ying Yang\" & \"Wizard\", so we decided to go on a game where you keep balance in the world between Ice and Fire.\r\n\t\t\t\t\t\tTo do that, you will have to move to tiles to defeat their bastions.",null,null,null));
+	var hxxMeta1 = { };
+	__r.push(coconut_vdom_Html.BR.vnode({ },hxxMeta1.key,hxxMeta1.ref));
+	__r.push(coconut_vdom__$Html_Text.inst.vnode("During this game, while joining the design meetings and decisions, I mainly did:",null,null,null));
+	var hxxMeta1 = { };
+	var __r1 = [];
+	var hxxMeta2 = { };
+	var children = [coconut_vdom__$Html_Text.inst.vnode("3C Programming",null,null,null)];
+	__r1.push(coconut_vdom_Html.LI.vnode({ },hxxMeta2.key,hxxMeta2.ref,children));
+	var hxxMeta2 = { };
+	var children = [coconut_vdom__$Html_Text.inst.vnode("Integration",null,null,null)];
+	__r1.push(coconut_vdom_Html.LI.vnode({ },hxxMeta2.key,hxxMeta2.ref,children));
+	var hxxMeta2 = { };
+	var children = [coconut_vdom__$Html_Text.inst.vnode("And helped here and there",null,null,null)];
+	__r1.push(coconut_vdom_Html.LI.vnode({ },hxxMeta2.key,hxxMeta2.ref,children));
+	__r.push(coconut_vdom_Html.UL.vnode({ },hxxMeta1.key,hxxMeta1.ref,__r1));
+	var hxxMeta1 = { };
+	__r.push(coconut_vdom_Html.BR.vnode({ },hxxMeta1.key,hxxMeta1.ref));
+	var hxxMeta1 = { };
+	var children = [coconut_vdom__$Html_Text.inst.vnode("Links:",null,null,null)];
+	__r.push(coconut_vdom_Html.B.vnode({ },hxxMeta1.key,hxxMeta1.ref,children));
+	var hxxMeta1 = { };
+	var hxxMeta2 = { };
+	var hxxMeta3 = { };
+	var children = [coconut_vdom__$Html_Text.inst.vnode("Play it on Itch ☯️",null,null,null)];
+	var children1 = [coconut_vdom_Html.A.vnode({ href : "https://rikoo.itch.io/balance-of-power", target : "blank"},hxxMeta3.key,hxxMeta3.ref,children)];
+	var children = [coconut_vdom_Html.LI.vnode({ },hxxMeta2.key,hxxMeta2.ref,children1)];
+	__r.push(coconut_vdom_Html.UL.vnode({ },hxxMeta1.key,hxxMeta1.ref,children));
+	return client_WorkData.defaultDisplay(d1,tmp,coconut_vdom_Html.DIV.vnode({ },hxxMeta.key,hxxMeta.ref,__r));
+}, index : 0},{ title : "Age of Empire 4", path : "./images/showoff/aoe4/aoe4_main.jpg", type : tink_pure_List.fromArray(["Game","Tech"]), value : 1, display : function(d) {
 	var d1 = d.title;
 	var hxxMeta = { };
 	var tmp = coconut_vdom_Html.IMG.vnode({ src : "./images/showoff/aoe4/credits.jpg"},hxxMeta.key,hxxMeta.ref);
@@ -4414,7 +4450,7 @@ client_WorkData.allWorkItem = client_WorkData.sortNMapIndex([{ title : "Age of E
 	__r.push(coconut_vdom_Html.UL.vnode({ },hxxMeta1.key,hxxMeta1.ref,children));
 	return client_WorkData.defaultDisplay(d1,tmp,coconut_vdom_Html.DIV.vnode({ },hxxMeta.key,hxxMeta.ref,__r));
 }, index : 0, hasGif : false}]);
-client_WorkData.mainWorkItem = [client_WorkData.fromTitle("Age of Empire 4"),client_WorkData.fromTitle("Custom Engine"),client_WorkData.fromTitle("Vineyard","Experiments"),client_WorkData.fromTitle("Black Meowgic","Illustrations")];
+client_WorkData.mainWorkItem = [client_WorkData.fromTitle("Age of Empire 4"),client_WorkData.fromTitle("Balance of Power"),client_WorkData.fromTitle("Vineyard","Experiments"),client_WorkData.fromTitle("Black Meowgic","Illustrations")];
 coconut_diffing_Root.byParent = new haxe_ds_ObjectMap();
 coconut_diffing_internal_VEmpty.TYPE = (function($this) {
 	var $r;
